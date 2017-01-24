@@ -11,7 +11,7 @@
  */
 appModule.controller('appSharedController', ['$scope', '$translate', '$state', '$location', '$stateParams', '$http', '$window', function($scope, $translate, $state, $location, $anchorScroll, $stateParams, $http, $window) {
     
-    $scope.ougsUID = 'g7k6NQmqJY2'; //BtFXTpKRl6n';//
+    $scope.ougsUID = 'g7k6NQmqJY2'; //BtFXTpKRl6n//
     $scope.userAdminGroup = 'Administrators';
     
     

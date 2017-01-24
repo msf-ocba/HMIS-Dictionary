@@ -38,32 +38,44 @@ searchModule.controller('searchController', ['ExcelFactory', '$timeout', '$scope
      * Filter dataElements and indicators that are not associated to a dataSet or an indicatorGroup
      */
     var blacklist_datasets = [
-        'bdvY3RdEQhr', // HIV
         'AjwuNAGMSFM', // HIV program
-        'fWSy0WgqDHt', // EVD Screening - Weekly
         'kraMkBJg3JI', // Hospital Ward Multiservice SRH comp - Monthly
-        'Hp68S9muoCn'  // Intentional Violence
+        'Hp68S9muoCn', // Intentional Violence
     ];
     var blacklist_indicatorgroups = [
-        'rD7MJ3LaakW' // Individual Indicators
+        'rD7MJ3LaakW', // Individual Indicators
+        'vnoUusJDY1Z', // Vaccination
+        'vCfO0z5igGT'  // Vaccination 2015
     ];
 
     var filterObjects = function(obj,type) {
         if(type == 'dataElement'){
             var temp = obj.dataSetElements.length > 0;
             if (temp && blacklist_datasets.length > 0) {
-                 obj.dataSetElements.forEach(function(ds) {
-                    temp = temp && (blacklist_datasets.indexOf(ds.id) == -1);
+                 temp = false;
+                 obj.dataSetElements.forEach(function(dse) {
+                    temp = temp || (blacklist_datasets.indexOf(dse.dataSet.id) == -1);
                  });
             }
+            /*if (obj.dataSetElements.length == 0) {
+                console.log('search: dataElement filtered - empty: ', [obj]);
+            }else if (!temp) {
+                console.log('search: dataElement filtered - blacklisted: ', [obj]);
+            }*/
             return temp;
         }else if (type == 'indicator') {
             var temp = obj.indicatorGroups.length > 0;
             if (temp && blacklist_indicatorgroups.length > 0) {
+                temp = false;
                 obj.indicatorGroups.forEach(function(ig) {
-                    temp = temp && (blacklist_indicatorgroups.indexOf(ig.id) == -1);
+                    temp = temp || (blacklist_indicatorgroups.indexOf(ig.id) == -1);
                 });
             }
+            /*if (obj.indicatorGroups.length == 0) {
+                console.log('search: indicator filtered - empty: ', [obj]);
+            }else if (!temp) {
+                console.log('search: indicator filtered - blacklisted: ', [obj]);
+            }*/
             return temp;
         }
     };

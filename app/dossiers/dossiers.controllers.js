@@ -90,6 +90,8 @@ dossiersModule.controller('dossiersMainController', ['$scope', '$translate', '$a
                 languageCode: $translate.use(),
                 serviceId: $scope.selectedService.id
             });
+            
+            endLoadingState(true);
         }
     });
 }]);
@@ -133,9 +135,8 @@ dossiersModule.controller('dossiersSectionController', ['$scope', '$translate', 
         $scope.sections = dossiersSectionsFactory.get({
             datasetId: $scope.$parent.selectedSet.id
         }, function() {
-            $scope.sections = filterSections($scope.sections, "Comments");
+            $scope.sections = filterSections($scope.sections, "dos_Comments");
             addtoTOC($scope.toc, $scope.sections.sections, $scope.$parent.selectedSet, "Data Set");
-            startLoadingState(false);
         });
     });
 }]);
@@ -153,7 +154,7 @@ dossiersModule.controller('dossiersElementsTableController', ['$scope', function
      */
     $scope.getElementsInSection = function(section) {
         $scope.dataElements = section;
-        endLoadingState();
+        endLoadingState(true);
     }
 
 }]);
@@ -175,7 +176,7 @@ dossiersModule.controller('dossiersIndicatorController', ['$scope', 'dossiersInd
                 indicatorGrpId: $scope.$parent.selectedGrp.id
             }, function() {
                 addtoTOC($scope.toc, null, $scope.indicatorGrpParent4Toc, "Indicator Group");
-                endLoadingState();
+                endLoadingState(true);
             });
         }
     });

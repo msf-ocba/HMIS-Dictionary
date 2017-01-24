@@ -36,10 +36,11 @@ searchModule.filter('filterOR', function() {
             cols = cols.filter(function(item) {
                 return item !== "$$hashKey";
             });
-            var temp1 = false;
-            var temp2 = false;
-            //console.log(phrases, keys);
+            var temp_bool = {};
+
             keys.forEach(function(key) {
+                temp_bool[key] = false;
+                
                 var phrase_temp = phrases[key].replace(/[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$]/g, "\\$&");
                 var mots = phrase_temp.split('|');
                 mots = mots.map(function(s) { return s.trim() });
@@ -50,24 +51,24 @@ searchModule.filter('filterOR', function() {
                         //console.log(key);
                         if(row[key] && (row[key].toLowerCase().search(mot.toLowerCase()) !== -1)){
                             //console.log(key, mot, row[key]);
-                            temp1 = true;
+                            temp_bool[key] = true;
                         }
                     }else{
                         cols.forEach(function(col) {
                             if(row[col] && (row[col].toLowerCase().search(mot.toLowerCase()) !== -1)){
                                 //console.log(col, mot, row[col]);
-                                temp2 = true;
+                                temp_bool[key] = true;
                             }
                         });
                     }
                 });
             });
-            if (keys.length == 1 && keys[0] == '$') {
-                var temp1 = true;
-            }
-            return temp1 && (temp2 || phrases.$ == undefined);
+            var result = true;
+            keys.forEach(function(key) {
+                result = result && temp_bool[key];
+            });
+            return result;
         });
-        //console.log(temp1);
         return temp;
     };
 });
