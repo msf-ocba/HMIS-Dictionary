@@ -158,7 +158,7 @@
 		</div>
 	</div>
 
-	<table id="searchTable" ng-table="table.tableParams" class="table table-condensed table-bordered table-striped" ng-table-columns-binding="table.cols" show-filter="table.isFiltersVisible">
+	<table style='table-layout:fixed;' id="searchTable" ng-table="table.tableParams" class="table table-condensed table-bordered table-striped" ng-table-columns-binding="table.cols" show-filter="table.isFiltersVisible">
 		<tr ng-repeat="object in $data">
 
 			<td sortable="'object_type'" filter="{object_type:'./app/search/search.table.html'}" ng-if="true" data-title="'object_type' | translate">
