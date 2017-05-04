@@ -59,8 +59,8 @@
     "object_description": "Description",
     "object_den_description": "Description du Dénominateur (ind. seulement)",
     "object_num_description": "Description du Numérateur (ind. seulement)",
-    "object_den_ids": "IDs du Dénominateur (ind. seulement)",
-    "object_num_ids": "IDs du Numérateur (ind. seulement)",
+    "object_den_ids": "Formule du Dénominateur (ind. seulement)",
+    "object_num_ids": "Formule du Numérateur (ind. seulement)",
 
     "srch_SelectColumns_grpBasics": "Ensembles de Données ou Groupes Indicateurs - Essentiel",
     "objectGroup_name": "Nom du Groupe",

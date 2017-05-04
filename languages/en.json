@@ -59,8 +59,8 @@
     "object_description": "Description",
     "object_den_description": "Denominator Description (ind. only)",
     "object_num_description": "Numerator Description (ind. only)",
-    "object_den_ids": "Denominator IDs (ind. only)",
-    "object_num_ids": "Numerator IDs (ind. only)",
+    "object_den_ids": "Denominator Formula (ind. only)",
+    "object_num_ids": "Numerator Formula (ind. only)",
 
     "srch_SelectColumns_grpBasics": "Data Sets or Indicator Groups - Basics",
     "objectGroup_name": "Group Name",

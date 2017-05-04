@@ -178,22 +178,23 @@ adminModule.controller('adminMainController', ['$scope', '$translate', 'adminOUG
     
     $scope.submitDS = function() {
         console.log($scope.selectedDS);
-        adminDSFactory.get_DS_set.query($scope.selectedDS,function(response1){
-            adminDSFactory.upd_DS.query($scope.selectedDS,function(response2){
+        adminDSFactory.get_DS_set.query($scope.selectedDS).$promise.then(function(response1){
+            return adminDSFactory.upd_DS.query($scope.selectedDS,function(response2){
                 console.log(response2);
                 if (response2) {
                     $scope.blacklist_datasets = $scope.selectedDS;    
                 }
             });
         }, function() {   
-            adminDSFactory.set_DS.query($scope.selectedDS,function(response2){
+            return adminDSFactory.set_DS.query($scope.selectedDS,function(response2){
                 console.log(response2);
                 if (response2) {
                     $scope.blacklist_datasets = $scope.selectedDS;
                 }
             });
+        }).then(function(){
+            window.location.reload(true)
         });
-        window.location.reload(true);
     };
     
     if ($scope.blacklist_indicatorgroups) {
@@ -201,22 +202,23 @@ adminModule.controller('adminMainController', ['$scope', '$translate', 'adminOUG
     }
     
     $scope.submitIG = function() {
-        console.log($scope.selectedIG);;
-        adminIGFactory.get_IG_set.query($scope.selectedIG,function(response1){
-            adminIGFactory.upd_IG.query($scope.selectedIG,function(response2){
-                console.log(response);
-                if (response) {
+        console.log($scope.selectedIG);
+        adminIGFactory.get_IG_set.query($scope.selectedIG).$promise.then(function(response1){
+            return adminIGFactory.upd_IG.query($scope.selectedIG,function(response2){
+                console.log(response2);
+                if (response2) {
                     $scope.blacklist_indicatorgroups = $scope.selectedIG;    
                 }
             });
         }, function() {  
-            adminIGFactory.set_IG.query($scope.selectedIG,function(response){
+            return adminIGFactory.set_IG.query($scope.selectedIG,function(response){
                 console.log(response);
                 if (response) {
                     $scope.blacklist_indicatorgroups = $scope.selectedIG;    
                 }
             });
+        }).then(function(){
+            window.location.reload(true)
         });
-        window.location.reload(true);
     };
 }]);
