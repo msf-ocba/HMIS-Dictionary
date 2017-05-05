@@ -10,8 +10,9 @@ var dossiersEditorModule = angular.module('dossiersEditorModule', ['ui.tinymce']
 var dossiersReaderModule = angular.module('dossiersReaderModule', []);
 var searchModule = angular.module('searchModule', ['ngTable', 'ui.bootstrap']);
 var dossiersModule = angular.module('dossiersModule', ['dossiersEditorModule','dossiersReaderModule']);
+var dossierProgramsModule = angular.module('dossierProgramsModule', []);
 
-var appModule = angular.module('appModule', ['ui.router', 'd2Menu', 'ngSanitize', 'pascalprecht.translate', 'ngResource', 'dossiersModule', 'searchModule', 'adminModule'/*, 'graphModule'*/]);
+var appModule = angular.module('appModule', ['ui.router', 'd2Menu', 'ngSanitize', 'pascalprecht.translate', 'ngResource', 'dossiersModule', 'dossierProgramsModule', 'searchModule', 'adminModule'/*, 'graphModule'*/]);
 
 /*
  * 	@alias appModule.config
@@ -37,6 +38,10 @@ appModule.config(['$stateProvider', '$urlRouterProvider', '$translateProvider', 
                 url:'/editor',
                 templateUrl: 'app/dossiersEditor/dossiersEditor.template.html'
             })
+        .state('dossierPrograms', {
+            url:'/dossierPrograms',
+            templateUrl: 'app/dossierPrograms/dossierPrograms.view.html'
+        })
         .state('search', {
             url:'/search',
             templateUrl: 'app/search/search.view.html',
