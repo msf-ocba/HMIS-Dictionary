@@ -33,32 +33,29 @@
 			<div ui-view></div>
 		</div> 
 
-		<!--<div id="ServiceDataSetContainer" class="col-md-12 service" ng-repeat="selectedSet in serviceDataSets.dataSets" ng-model="selectedSet">
-			<h2 class="dataset" id="{{selectedSet.id}}">{{selectedSet.displayName}}</h2>-->
-			<div id="sectionContainer"  ng-model="sectionList" ng-controller="dossiersProgramSectionController">
-				<div class="col-md-12"  ng-repeat="section in sections.programStageSections">
-					<h3 class="section" id="{{section.id}}">{{section.displayName}}</h3>
-					<p>{{'Number of Elements in Section'| translate}}: {{section.programStageDataElements.length}}</p>
-					<table class="sectionElementsTable table table-striped">
-						<thead>
-							<tr>
-								<th>{{'NameElement'| translate}}</th>
-								<th>{{'FormNameElement'| translate}}</th>
-								<th>{{'DescriptionElement'| translate}}</th>
-							</tr>
-						</thead>
-						<tbody>
-							<tr ng-repeat="dataElement in section.programStageDataElements">
-								<td>{{dataElement.dataElement.displayName}}</td>
-								<td>{{dataElement.dataElement.formName}}</td>
-								<td>{{dataElement.dataElement.description}}</td>
-							</tr>
-						</tbody>
-					</table>
-					
-				</div>
-			</div><!--
-		</div>-->
+		<div id="sectionContainer"  ng-model="sectionList" ng-controller="dossiersProgramSectionController">
+			<div class="col-md-12"  ng-repeat="section in sections.programStageSections">
+				<h3 class="section" id="{{section.id}}">{{section.displayName}}</h3>
+				<p>{{'Number of Elements in Section'| translate}}: {{section.programStageDataElements.length}}</p>
+				<table class="sectionElementsTable table table-striped">
+					<thead>
+						<tr>
+							<th>{{'NameElement'| translate}}</th>
+							<th>{{'FormNameElement'| translate}}</th>
+							<th>{{'DescriptionElement'| translate}}</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr ng-repeat="dataElement in section.programStageDataElements">
+							<td>{{dataElement.dataElement.displayName}}</td>
+							<td>{{dataElement.dataElement.formName}}</td>
+							<td>{{dataElement.dataElement.description}}</td>
+						</tr>
+					</tbody>
+				</table>
+				
+			</div>
+		</div>
 
 		
 		<div class="col-md-12"  ng-controller="dossiersIndicatorController" id="IndicatorGroupsContainer" ng-show="indicators.programIndicators[0]">
