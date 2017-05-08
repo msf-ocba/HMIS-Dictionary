@@ -5,7 +5,7 @@
 
 dossierProgramsModule.controller('dossierProgramsMainController', ['$scope', '$translate', '$anchorScroll', 'dossiersProgramsFactory', 'dossiersProgramStageSectionsFactory', 'dossiersProgramIndicatorsFactory', 'dossiersExpressionFactory',
 function($scope, $translate, $anchorScroll, dossiersProgramsFactory, dossiersProgramStageSectionsFactory, dossiersProgramIndicatorsFactory, dossiersExpressionFactory) {
-    $('#dossiers').tab('show');
+    $('#dossiersPrograms').tab('show');
 
     /*
      * 	@alias appModule.controller~addtoTOC
