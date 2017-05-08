@@ -48,7 +48,7 @@ dossierProgramsModule.factory('dossiersProgramIndicatorsFactory', ['$resource',
     }
 ]);
 
-dossierProgramsModule.factory('dossiersExpressionFactory', ['$resource',
+dossierProgramsModule.factory('dossiersProgramExpressionFactory', ['$resource',
     function($resource) {
         return $resource(qryProgramIndicatorExpressions, {
         }, {
@@ -61,7 +61,7 @@ dossierProgramsModule.factory('dossiersExpressionFactory', ['$resource',
     }
 ]);
 
-dossierProgramsModule.factory('dossiersFilterFactory', ['$resource',
+dossierProgramsModule.factory('dossiersProgramFilterFactory', ['$resource',
     function($resource) {
         return $resource(qryProgramIndicatorFilters, {
         }, {

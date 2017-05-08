@@ -3,8 +3,8 @@
     Please refer to the LICENSE.md and LICENSES-DEP.md for complete licenses.
 ------------------------------------------------------------------------------------*/
 
-dossierProgramsModule.controller('dossierProgramsMainController', ['$scope', '$translate', '$anchorScroll', 'dossiersProgramsFactory', 'dossiersProgramStageSectionsFactory', 'dossiersProgramIndicatorsFactory', 'dossiersExpressionFactory',
-function($scope, $translate, $anchorScroll, dossiersProgramsFactory, dossiersProgramStageSectionsFactory, dossiersProgramIndicatorsFactory, dossiersExpressionFactory) {
+dossierProgramsModule.controller('dossierProgramsMainController', ['$scope', '$translate', '$anchorScroll', 'dossiersProgramsFactory', 'dossiersProgramStageSectionsFactory', 'dossiersProgramIndicatorsFactory', 'dossiersProgramExpressionFactory',
+function($scope, $translate, $anchorScroll, dossiersProgramsFactory, dossiersProgramStageSectionsFactory, dossiersProgramIndicatorsFactory, dossiersProgramExpressionFactory) {
     $('#dossiersPrograms').tab('show');
 
     /*
@@ -74,7 +74,7 @@ dossierProgramsModule.controller('dossiersProgramSectionController', ['$scope', 
 }]);
 
 
-dossierProgramsModule.controller('dossiersIndicatorController', ['$scope', 'dossiersExpressionFactory', 'dossiersFilterFactory', 'dossiersProgramIndicatorsFactory', function($scope, dossiersExpressionFactory, dossiersFilterFactory, dossiersProgramIndicatorsFactory) {
+dossierProgramsModule.controller('dossiersProgramIndicatorController', ['$scope', 'dossiersProgramExpressionFactory', 'dossiersProgramFilterFactory', 'dossiersProgramIndicatorsFactory', function($scope, dossiersProgramExpressionFactory, dossiersProgramFilterFactory, dossiersProgramIndicatorsFactory) {
 
     $scope.indicators4TOC = {   
                 displayName: "Program indicators",
@@ -85,7 +85,7 @@ dossierProgramsModule.controller('dossiersIndicatorController', ['$scope', 'doss
     //gets the "readable" expressions for each indicator expression
     recursiveAssignExpression = function(i) {
         if (i >= $scope.indicators.programIndicators.length) return;
-        dossiersExpressionFactory.save({}, $scope.indicators.programIndicators[i].expression,
+        dossiersProgramExpressionFactory.save({}, $scope.indicators.programIndicators[i].expression,
                          function (data) {
                             $scope.indicators.programIndicators[i].expression = data.description;
                             recursiveAssignExpression(i+1);
@@ -100,7 +100,7 @@ dossierProgramsModule.controller('dossiersIndicatorController', ['$scope', 'doss
             recursiveAssignFilter(i+1);
             return;
         }
-        dossiersFilterFactory.save({}, $scope.indicators.programIndicators[i].filter,
+        dossiersProgramFilterFactory.save({}, $scope.indicators.programIndicators[i].filter,
                          function (data) {
                             $scope.indicators.programIndicators[i].filter = data.description;
                             recursiveAssignFilter(i+1);
