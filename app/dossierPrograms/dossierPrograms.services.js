@@ -4,7 +4,7 @@
 ------------------------------------------------------------------------------------*/
 
 var qryPrograms = dhisUrl + 'programs.json?fields=id,displayName,programStages[id]&paging=false';
-var qryProgramStageSections = dhisUrl + 'programStages/:programStageId.json?fields=programStageSections[id,displayName,programStageDataElements[dataElement[displayName,formName,description]]]&paging=false';
+var qryProgramStageSections = dhisUrl + 'programStages/:programStageId.json?fields=programStageSections[id,displayName,programStageDataElements[dataElement[displayName,formName,description,valueType,optionSetValue,optionSet[options[displayName]]]&paging=false';
 
 var qryProgramIndicators = dhisUrl + 'programs/:programId.json?fields=programIndicators[displayName,description,expression,filter]';
 

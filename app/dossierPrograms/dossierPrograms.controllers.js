@@ -71,7 +71,18 @@ dossierProgramsModule.controller('dossiersProgramSectionController', ['$scope', 
         }
     });
 
+    $scope.getOptions = function(dataE) {
+    if (dataE.optionSetValue) {
+        var result = "";
+        for (var i in dataE.optionSet.options) result += dataE.optionSet.options[i].displayName + " | ";
+        return result;
+    }
+    return '-';
+    }
+
 }]);
+
+
 
 
 dossierProgramsModule.controller('dossiersProgramIndicatorController', ['$scope', 'dossiersProgramExpressionFactory', 'dossiersProgramFilterFactory', 'dossiersProgramIndicatorsFactory', function($scope, dossiersProgramExpressionFactory, dossiersProgramFilterFactory, dossiersProgramIndicatorsFactory) {
