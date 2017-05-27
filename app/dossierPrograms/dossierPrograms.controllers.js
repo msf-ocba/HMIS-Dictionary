@@ -49,67 +49,43 @@ function($scope, $translate, $anchorScroll, dossiersProgramsFactory, dossiersPro
     });
 }]);
 
-dossierProgramsModule.controller('dossiersProgramSectionController', ['$scope', '$translate', 'dossiersProgramStageSectionsFactory', 'dossiersProgramStageDataElementsFactory', 'Ping', 
-function($scope, $translate, dossiersProgramStageSectionsFactory, dossiersProgramStageDataElementsFactory, Ping) {
+dossierProgramsModule.controller('dossiersProgramSectionController', ['$scope', '$translate', 'dossiersProgramStageSectionsFactory', 'Ping', 
+function($scope, $translate, dossiersProgramStageSectionsFactory, Ping) {
 
     $scope.stages4TOC = {
-                displayName: "Program sections",
-                id: "sectionContainer",
-                index: '0'
-            };
-
-    $scope.sectionwithout = {
-                displayName: "DataElements",
-                id: "dataElements",
-                index: '1'
-            };
-
-   $scope.showProgramWithoutSections = function() {
-        console.log("in");
-            startLoadingState(false);
-            //get sections and data elements, add to TOC
-            $scope.sections.programStageSections =  [{displayName: "DataElements", id:"DataElements", programStageSections: dossiersProgramStageDataElementsFactory.get({
-                programStageId: $scope.selectedProgram.programStages[0].id
-            }, function () {
-                addtoTOC($scope.toc, $scope.sections.programStageSections, $scope.sectionwithout, "dataset");
-                endLoadingState(true);
-                console.log($scope.sections);
-                $scope.sections.programStageSections = $scope.sections.programStageSections.programStageSections;
-                console.log($scope.sections);
-            })}];
-        };
-    
-
-    $scope.showProgramWithSections = function() {
-                    startLoadingState(false);
-            //get sections and data elements, add to TOC
-            $scope.sections = dossiersProgramStageSectionsFactory.get({
-                programStageId: $scope.selectedProgram.programStages[0].id
-            }, function () {
-                if ($scope.sections.programStageSections.length == 0) {
-                    $scope.showProgramWithoutSections();    
-                    return;
-                }
-                addtoTOC($scope.toc, $scope.sections.programStageSections, $scope.stages4TOC, "dataset");
-                endLoadingState(true);
-            });
-    }
+        displayName: "",
+        id: "sectionContainer",
+        index: '0'
+    };
 
     $scope.$watch('selectedProgram', function() {
         ping();
         if ($scope.selectedProgram) {
-            $scope.showProgramWithSections();
+            startLoadingState(false);
+            //Query sections and data elements
+            $scope.sections = dossiersProgramStageSectionsFactory.get({
+                programStageId: $scope.selectedProgram.programStages[0].id
+            }, function () {
+                //if there are no sections rearrange/change TOC name
+                if ($scope.sections.programStageSections.length == 0) $scope.showProgramWithoutSections();    
+                else $scope.showProgramWithSections();            
+            endLoadingState(true);
+        });
         }
     });
 
-    $scope.getOptions = function(dataE) {
-    if (dataE.optionSetValue) {
-        var result = "";
-        for (var i in dataE.optionSet.options) result += dataE.optionSet.options[i].displayName + " | ";
-        return result;
+   $scope.showProgramWithoutSections = function() {
+        $scope.stages4TOC.displayName = "Data elements";
+        //line needed to reuse code of the ng-repeat on the view
+        $scope.sections.programStageSections =  [{displayName: "Data Elements", id:"DataElements", programStageDataElements: $scope.sections.programStageDataElements}];
+        addtoTOC($scope.toc, null, $scope.stages4TOC, "programs");
+    };
+
+    $scope.showProgramWithSections = function() {
+        $scope.stages4TOC.displayName = "Program Stages";
+        addtoTOC($scope.toc, $scope.sections.programStageSections, $scope.stages4TOC, "programs");
     }
-    return '-';
-    }
+
 
 }]);
 
@@ -159,7 +135,7 @@ dossierProgramsModule.controller('dossiersProgramIndicatorController', ['$scope'
                 programId: $scope.selectedProgram.id
             }, function() {
                 if ($scope.indicators.programIndicators.length > 0) {
-                    addtoTOC($scope.toc,null,$scope.indicators4TOC,"…Indicator Group");
+                    addtoTOC($scope.toc,null,$scope.indicators4TOC,"Indicators");
                     recursiveAssignExpression(0);
                     recursiveAssignFilter(0);
                 }

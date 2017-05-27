@@ -4,13 +4,14 @@
 ------------------------------------------------------------------------------------*/
 
 var qryPrograms = dhisUrl + 'programs.json?fields=id,displayName,programStages[id]&paging=false';
-var qryProgramStageSections = dhisUrl + 'programStages/:programStageId.json?fields=programStageSections[id,displayName,programStageDataElements[dataElement[displayName,formName,description,valueType,optionSetValue,optionSet[options[displayName]]]&paging=false';
-var qryProgramStageDataElements = dhisUrl + 'programStages/:programStageId.json?fields=programStageDataElements[dataElement[displayName,formName,description,valueType,optionSetValue,optionSet[options[displayName]]]'
+
+var qryProgramStageSections = dhisUrl + 'programStages/:programStageId.json?fields=programStageSections[id,displayName,programStageDataElements[dataElement[displayName,formName,description,valueType,optionSetValue,optionSet[options[displayName]]]]],programStageDataElements[dataElement[displayName,formName,description,valueType,optionSetValue,optionSet[options[displayName]]]]&paging=false';
 
 var qryProgramIndicators = dhisUrl + 'programs/:programId.json?fields=programIndicators[displayName,description,expression,filter]';
 
 var qryProgramIndicatorExpressions = dhisUrl + 'programIndicators/expression/description'
 var qryProgramIndicatorFilters = dhisUrl + 'programIndicators/filter/description'
+
 
 dossierProgramsModule.factory('dossiersProgramsFactory', ['$resource',
     function($resource) {
@@ -26,19 +27,6 @@ dossierProgramsModule.factory('dossiersProgramsFactory', ['$resource',
 dossierProgramsModule.factory('dossiersProgramStageSectionsFactory', ['$resource',
     function($resource) {
         return $resource(qryProgramStageSections, {
-            programStageId: '@programStageId'
-        }, {
-            query: {
-                method: 'GET',
-                isArray: false
-            }
-        });
-    }
-]);
-
-dossierProgramsModule.factory('dossiersProgramStageDataElementsFactory', ['$resource',
-    function($resource) {
-        return $resource(qryProgramStageDataElements, {
             programStageId: '@programStageId'
         }, {
             query: {
