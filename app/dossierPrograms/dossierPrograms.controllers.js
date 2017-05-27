@@ -49,7 +49,8 @@ function($scope, $translate, $anchorScroll, dossiersProgramsFactory, dossiersPro
     });
 }]);
 
-dossierProgramsModule.controller('dossiersProgramSectionController', ['$scope', '$translate', 'dossiersProgramStageSectionsFactory', 'Ping', function($scope, $translate, dossiersProgramStageSectionsFactory, Ping) {
+dossierProgramsModule.controller('dossiersProgramSectionController', ['$scope', '$translate', 'dossiersProgramStageSectionsFactory', 'dossiersProgramStageDataElementsFactory', 'Ping', 
+function($scope, $translate, dossiersProgramStageSectionsFactory, dossiersProgramStageDataElementsFactory, Ping) {
 
     $scope.stages4TOC = {
                 displayName: "Program sections",
@@ -57,17 +58,47 @@ dossierProgramsModule.controller('dossiersProgramSectionController', ['$scope', 
                 index: '0'
             };
 
-    $scope.$watch('selectedProgram', function() {
-        ping();
-        if ($scope.selectedProgram) {
+    $scope.sectionwithout = {
+                displayName: "DataElements",
+                id: "dataElements",
+                index: '1'
+            };
+
+   $scope.showProgramWithoutSections = function() {
+        console.log("in");
             startLoadingState(false);
+            //get sections and data elements, add to TOC
+            $scope.sections.programStageSections =  [{displayName: "DataElements", id:"DataElements", programStageSections: dossiersProgramStageDataElementsFactory.get({
+                programStageId: $scope.selectedProgram.programStages[0].id
+            }, function () {
+                addtoTOC($scope.toc, $scope.sections.programStageSections, $scope.sectionwithout, "dataset");
+                endLoadingState(true);
+                console.log($scope.sections);
+                $scope.sections.programStageSections = $scope.sections.programStageSections.programStageSections;
+                console.log($scope.sections);
+            })}];
+        };
+    
+
+    $scope.showProgramWithSections = function() {
+                    startLoadingState(false);
             //get sections and data elements, add to TOC
             $scope.sections = dossiersProgramStageSectionsFactory.get({
                 programStageId: $scope.selectedProgram.programStages[0].id
             }, function () {
+                if ($scope.sections.programStageSections.length == 0) {
+                    $scope.showProgramWithoutSections();    
+                    return;
+                }
                 addtoTOC($scope.toc, $scope.sections.programStageSections, $scope.stages4TOC, "dataset");
                 endLoadingState(true);
             });
+    }
+
+    $scope.$watch('selectedProgram', function() {
+        ping();
+        if ($scope.selectedProgram) {
+            $scope.showProgramWithSections();
         }
     });
 
