@@ -50,8 +50,8 @@
 					<tbody>
 						<tr ng-repeat="dataElement in section.programStageDataElements">
 							<td>{{dataElement.dataElement.displayName}}</td>
-							<td>{{dataElement.dataElement.formName}}</td>
-							<td>{{dataElement.dataElement.description}}</td>
+							<td>{{dataElement.dataElement.displayFormName}}</td>
+							<td>{{dataElement.dataElement.displayDescription}}</td>
 							<td>{{dataElement.dataElement.valueType}}</td>
 							<td><ul>
 								<li ng-repeat="option in dataElement.dataElement.optionSet.options">
@@ -83,7 +83,7 @@
 					<tbody>
 						<tr ng-repeat="indicator in  indicators.programIndicators | orderBy: 'displayName'">
 							<td>{{indicator.displayName}}</td>
-							<td>{{indicator.description}}</td>
+							<td>{{indicator.displayDescription}}</td>
 							<td>{{indicator.expression}}</td>
 							<td>{{indicator.filter}}</td>
 						</tr>
