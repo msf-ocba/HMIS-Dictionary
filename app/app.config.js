@@ -11,8 +11,9 @@ var dossiersReaderModule = angular.module('dossiersReaderModule', []);
 var searchModule = angular.module('searchModule', ['ngTable', 'ui.bootstrap']);
 var dossiersModule = angular.module('dossiersModule', ['dossiersEditorModule','dossiersReaderModule']);
 var dossierProgramsModule = angular.module('dossierProgramsModule', []);
+var datasetsModule = angular.module('datasetsModule', [])
 
-var appModule = angular.module('appModule', ['ui.router', 'd2Menu', 'ngSanitize', 'pascalprecht.translate', 'ngResource', 'dossiersModule', 'dossierProgramsModule', 'searchModule', 'adminModule'/*, 'graphModule'*/]);
+var appModule = angular.module('appModule', ['ui.router', 'd2Menu', 'ngSanitize', 'pascalprecht.translate', 'ngResource', 'dossiersModule', 'dossierProgramsModule', 'datasetsModule','searchModule', 'adminModule'/*, 'graphModule'*/]);
 
 /*
  * 	@alias appModule.config
@@ -41,6 +42,10 @@ appModule.config(['$stateProvider', '$urlRouterProvider', '$translateProvider', 
         .state('dossierPrograms', {
             url:'/dossierPrograms',
             templateUrl: 'app/dossierPrograms/dossierPrograms.view.html'
+        })
+        .state('datasets', {
+            url:'/datasets',
+            templateUrl: 'app/datasets/datasets.view.html'
         })
         .state('search', {
             url:'/search',

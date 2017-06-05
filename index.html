@@ -53,6 +53,10 @@
 		<script src="app/dossiersReader/dossiersReader.controllers.js">						</script>
 
 		<!-- app: module-dossiers-programs -->
+		<script src="app/datasets/datasets.services.js">									</script>
+		<script src="app/datasets/datasets.controllers.js">									</script>
+
+		<!-- app: module-dossiers-programs -->
 		<script src="app/dossierPrograms/dossierPrograms.services.js">						</script>
 		<script src="app/dossierPrograms/dossierPrograms.controllers.js">					</script>
 
@@ -129,6 +133,7 @@
 			<ul id="menu-container" class="nav nav-tabs tabs-left sideways" onclick="tabSwitch()" role="tablist" >
 		      	<li id="dossiers" class="active" role="presentation" style="margin-top:48px;"><a href="#dossiers" data-toggle="tab">{{'idx_Dossiers' | translate}}</a></li>
 				<li id="dossierPrograms" role="presentation"><a href="#dossierPrograms" data-toggle="tab">{{'Programs' | translate}}</a></li>
+				<li id="datasets" role="presentation"><a href="#datasets" data-toggle="tab">{{'Data Sets' | translate}}</a></li>
 			  	<li id="search" role="presentation"><a href="#search" data-toggle="tab">{{'idx_Search' | translate}}</a></li>
 				<li id="admin" ng-show="show_admin" role="presentation"><a href="#admin" data-toggle="tab">{{'idx_Admin' | translate}}</a></li>
 		    <!--<li id="graph" role="presentation"><a href="#graph" data-toggle="tab">{{'idx_Graph' | translate}}</a></li> -->
