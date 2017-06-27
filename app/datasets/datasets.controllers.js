@@ -7,8 +7,8 @@
  *  @name datasetsMainController
  *  @description Clears the table of content when a data set is selected and adds the scrollto function
  */
-datasetsModule.controller('datasetsMainController', ['$scope', '$translate', '$anchorScroll', 'datasetsFactory',
-function($scope, $translate, $anchorScroll, datasetsFactory) {
+datasetsModule.controller('datasetsMainController', ['$scope', '$translate', '$anchorScroll', 'datasetsFactory', 'datasetsDataelementsFactory',
+function($scope, $translate, $anchorScroll, datasetsFactory, datasetsDataelementsFactory) {
     $('#datasets').tab('show');
     
     /*
@@ -35,7 +35,7 @@ function($scope, $translate, $anchorScroll, datasetsFactory) {
      *  @scope datasetsMainController
      */
     $scope.scrollTo = function(id,yOffset) {
-        $anchorScroll.yOffset = yOffset; //66;
+        $anchorScroll.yOffset = 66; //66;
         $anchorScroll(id);
     };
 
@@ -51,33 +51,39 @@ function($scope, $translate, $anchorScroll, datasetsFactory) {
         endLoadingState(false);
     });
 
+    $scope.datasetDataElements = {};
+
     /*
      * @name none
-     * @description Clear the table of content
+     * @description Clear the table of content, get the dataset sections and data elements
+     *  @dependencies datasetsDataelementsFactory
      * @scope datasetsMainController
      */
     $scope.$watch('selectedDataset', function() {
         ping();
-        $scope.toc = {
-            entries: [],
-            dataSets: false,
-            indicatorGroups: false
-        };
+        if ($scope.selectedDataset) {
+            $scope.categoryComboIDs = [];
+            $scope.toc = {
+                entries: [],
+                dataSets: false,
+                indicatorGroups: false
+            };
+            //digest is triggered before the variable is stored
+            var aux = datasetsDataelementsFactory.get({
+                datasetId: $scope.selectedDataset.id
+            }, function() {
+                $scope.datasetDataElements = aux;
+            });
+        }
     });
 }]);
 
 /*
  *  @name dossiersSectionController
- *  @description Gets the dataset data elements and updates the TOC with sections
+ *  @description Updates the TOC with sections
  */
 datasetsModule.controller('datasetSectionController', ['$scope', '$translate', 'datasetsDataelementsFactory', 'Ping', function($scope, $translate, datasetsDataelementsFactory, Ping) {
         
-    /*
-     *  @name $scope.dataSets
-     *  @description Gets the list of data sets
-     *  @dependencies datasetsFactory
-     *  @scope datasetsMainController
-     */
     $scope.stages4TOC = {
         displayName: "",
         id: "sectionContainer",
@@ -85,35 +91,28 @@ datasetsModule.controller('datasetSectionController', ['$scope', '$translate', '
     };
 
     /*
-     *  @name $scope.dataSets
-     *  @description Gets the list of data sets
-     *  @dependencies datasetsFactory
-     *  @scope datasetsMainController
+     * @name none
+     * @description add the sections to the TOC, show them
+     * @scope datasetsMainController
      */
-    $scope.$watch('selectedDataset', function() {
+    $scope.$watch('datasetDataElements', function() {
         ping();
-        if ($scope.selectedDataset) {
+        if (typeof $scope.datasetDataElements.dataSetElements != 'undefined') {
             startLoadingState(false);
-            //Query sections and data elements
-            $scope.datasetDataElements = datasetsDataelementsFactory.get({
-                datasetId: $scope.selectedDataset.id
-            }, function () {
-                console.log($scope.datasetDataElements);
-                //if there are no sections rearrange/change TOC name
-                if ($scope.datasetDataElements.sections.length == 0) $scope.showProgramWithoutSections();    
-                else $scope.showProgramWithSections();            
+            //if there are no sections rearrange/change TOC name
+            if ($scope.datasetDataElements.sections.length == 0) $scope.showWithoutSections();    
+            else $scope.showWithSections();            
             endLoadingState(true);
-        });
+        
         }
     });
 
     /*
-     *  @name $scope.dataSets
-     *  @description Gets the list of data sets
-     *  @dependencies datasetsFactory
+     *  @name $scope.showWithoutSections
+     *  @description Rearranges the data elements in case there were no sections in the data set so they can be shown in the view, adds it to the TOC
      *  @scope datasetsMainController
      */
-   $scope.showProgramWithoutSections = function() {
+   $scope.showWithoutSections = function() {
         $scope.stages4TOC.displayName = "Data elements";
         //line needed to reuse code of the ng-repeat on the view
         $scope.datasetDataElements.sections =  [{displayName: "Data Elements", id:"DataElements", dataElements: $scope.datasetDataElements.dataSetElements}];
@@ -122,95 +121,80 @@ datasetsModule.controller('datasetSectionController', ['$scope', '$translate', '
 
     /*
      *  @name $scope.dataSets
-     *  @description Gets the list of data sets
-     *  @dependencies datasetsFactory
+     *  @description Adds the sections to the TOC
      *  @scope datasetsMainController
      */
-    $scope.showProgramWithSections = function() {
+    $scope.showWithSections = function() {
         $scope.stages4TOC.displayName = "Sections";
         addtoTOC($scope.toc, $scope.datasetDataElements.sections, $scope.stages4TOC, "Data Set");
     }
-}]);
-
-/*
- * @name dossiersElementsTableController
- * @description
- *
-dossiersModule.controller('dossiersElementsTableController', ['$scope', function($scope) {
 
     /*
-     * @name $scope.getElementsInSection
-     * @description Lists the dataElements in a section and get the information back
-     * @scope dossiersElementsTableController
-     *
-    $scope.getElementsInSection = function(section) {
-        $scope.dataElements = section;
-        endLoadingState(true);
+     *  @name $scope.getCategoryCombinationName
+     *  @description Gets the category combination name for a data element
+     *  @scope datasetsMainController
+     */
+    $scope.getCategoryCombinationName = function(id) {
+        for (i = 0; i < $scope.datasetDataElements.dataSetElements.length; ++i) {
+             if ($scope.datasetDataElements.dataSetElements[i].dataElement.id == id) {
+                return $scope.datasetDataElements.dataSetElements[i].categoryCombo.displayName;
+            }
+        }
+        return '-';
+    }
+
+        /*
+     *  @name $scope.getCategoryCombinationID
+     *  @description Gets the category combination ID for a data element
+     *  @scope datasetsMainController
+     */
+    $scope.getCategoryCombinationID = function(id) {
+        for (i = 0; i < $scope.datasetDataElements.dataSetElements.length; ++i) {
+             if ($scope.datasetDataElements.dataSetElements[i].dataElement.id == id) {
+                return $scope.datasetDataElements.dataSetElements[i].categoryCombo.id;
+            }
+        }
+        return '-';
     }
 
 }]);
 
 /*
- * @name dossiersIndicatorController
- * @description
- *
-dossiersModule.controller('dossiersIndicatorController', ['$scope', 'dossiersIndicatorGroupFactory', function($scope, dossiersIndicatorGroupFactory) {
+ *  @name dossiersSectionController
+ *  @description Gets the dataset data elements and updates the TOC with sections
+ */
+datasetsModule.controller('datasetCategoryComboController', ['$scope', '$translate', 'datasetsCategoryCombosFactory', 'Ping', function($scope, $translate, datasetsCategoryCombosFactory, Ping) {
+    
+    $scope.categoryCombos4TOC = {
+        displayName: "Category combinations",
+        id: "categoryCombinations",
+        index: '1'
+    };
 
-    $scope.$watch('selectedGrp', function() {
+    /*
+     *  @name none
+     *  @description Gets the category combo information and shows it
+     *  @dependencies datasetsCategoryCombosFactory
+     *  @scope datasetCategoryComboController
+     */
+    $scope.$watch('datasetDataElements', function() {
         ping();
-        if ($scope.$parent.selectedGrp) {
-            $scope.indicatorGrpParent4Toc = {
-                displayName: $scope.$parent.selectedGrp.displayName,
-                id: $scope.$parent.selectedGrp.id
+        if (typeof $scope.datasetDataElements.dataSetElements != 'undefined') {
+            //get the category combination ids from the different data elements without repetitions
+            for (i = 0; i < $scope.datasetDataElements.dataSetElements.length; ++i) {
+                var CCID = $scope.datasetDataElements.dataSetElements[i].categoryCombo.id;
+                if ($scope.categoryComboIDs.indexOf(CCID) == -1) $scope.categoryComboIDs.push(CCID);
             }
-            $scope.indicatorGroup = dossiersIndicatorGroupFactory.get({
-                indicatorGrpId: $scope.$parent.selectedGrp.id
-            }, function() {
-                addtoTOC($scope.toc, null, $scope.indicatorGrpParent4Toc, "Indicator Group");
+            startLoadingState(false);
+            //Query category combination information
+            $scope.categoryCombos = datasetsCategoryCombosFactory.get({
+                ids: 'id:in:'+'['+$scope.categoryComboIDs.toString()+']',
+            }, function () {
+                addtoTOC($scope.toc, null, $scope.categoryCombos4TOC, "Category combination");     
                 endLoadingState(true);
-            });
+            },true);
         }
     });
 
-    // The next three functions are repeated from search controllers!
-    // numerator and denominator description is in indicator description
-    // (translatation doesn't work for denom and num columns) so have be extracted
-    $scope.getNumerator = function(indicator) {
-        var re = /(NUM:)(.*)(DENOM:)/;
-        var result = re.exec(indicator.displayDescription);
-        if (result !== null) {
-            return result.length > 1 ? result[2] : "x";
-        }
-    }
 
-    $scope.getDenominator = function(indicator) {
-        var re = /(DENOM:)(.*)/;
-        var result = re.exec(indicator.displayDescription);
-        if (result !== null) {
-            return result.length > 1 ? result[2] : "x";
-        }
-    }
-
-    $scope.getDescription = function(indicator) {
-        var re = /(.*)(NUM:)/;
-        var result = re.exec(indicator.displayDescription);
-        if (result !== null) {
-            return result[1];
-        } else {
-            return indicator.displayDescription;
-        }
-    }
-
-    $scope.getIndicatorGroupNames = function(indicator) {
-        var indicatorGroupNames;
-
-        angular.forEach(indicator.indicatorGroups, function(indicatorGroup, key) {
-            if (key != 0) {
-                indicatorGroupNames += "," + indicatorGroup.displayName;
-            } else {
-                indicatorGroupNames = indicatorGroup.displayName;
-            }
-        });
-        return indicatorGroupNames;
-    }
-}]);*/
+}]);
