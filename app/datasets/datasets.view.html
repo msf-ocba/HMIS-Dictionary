@@ -51,17 +51,25 @@
 					</thead>
 					<tbody>
 						<tr ng-repeat="dataElement in section.dataElements">
-							<td>{{dataElement.displayName}}</td>
-							<td>{{dataElement.displayFormName}}</td>
-							<td>{{dataElement.displayDescription}}</td>
-							<td>{{dataElement.valueType}}</td>
-							<td><ul>
+							<td>{{dataElement.displayName || dataElement.dataElement.displayName}}</td>
+							<td>{{dataElement.displayFormName || dataElement.dataElement.displayFormName}}</td>
+							<td>{{dataElement.displayDescription || dataElement.dataElement.displayDescription}}</td>
+							<td>{{dataElement.valueType || dataElement.dataElement.valueType}}</td>
+							<!--choose between having or not having section-->
+							<td ng-if="dataElement.displayName"><ul>
 								<li ng-repeat="option in dataElement.optionSet.options">
-								<div>{{option.displayName}}</div>
+								<div>{{option.displayName || "-"}}</div>
 								</li>
 								</ul>
 							</td>
-							<td><a href="" class="pageref" ng-click="scrollTo(getCategoryCombinationID(dataElement.id))" target="_self">{{getCategoryCombinationName(dataElement.id)}}</a></td>
+							<td ng-if="!dataElement.displayName"><ul>
+								<li ng-repeat="option in dataElement.dataElement.optionSet.options">
+								<div>{{option.displayName || "-"}}</div>
+								</li>
+								</ul>
+							</td>
+							<!-- -->
+							<td ng-init="categoryCombo=getCategoryCombination(dataElement.id || dataElement.dataElement.id, $parent.$index, $index)"><a href="" class="pageref" ng-click="scrollTo(categoryCombo.id)" target="_self">{{categoryCombo.displayName}}</a></td>
 						</tr>
 					</tbody>
 				</table>

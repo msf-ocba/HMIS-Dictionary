@@ -39,7 +39,7 @@ function($scope, $translate, $anchorScroll, datasetsFactory, datasetsDataelement
         $anchorScroll(id);
     };
 
-    startLoadingState(true);
+    startLoadingState(false);
 
     /*
      *  @name $scope.dataSets
@@ -48,7 +48,7 @@ function($scope, $translate, $anchorScroll, datasetsFactory, datasetsDataelement
      *  @scope datasetsMainController
      */
     $scope.datasets = datasetsFactory.get(function() {
-        endLoadingState(false);
+        endLoadingState(true);
     });
 
     $scope.datasetDataElements = {};
@@ -69,10 +69,12 @@ function($scope, $translate, $anchorScroll, datasetsFactory, datasetsDataelement
                 indicatorGroups: false
             };
             //digest is triggered before the variable is stored
+            startLoadingState(false);
             var aux = datasetsDataelementsFactory.get({
                 datasetId: $scope.selectedDataset.id
             }, function() {
                 $scope.datasetDataElements = aux;
+                endLoadingState(true);
             });
         }
     });
@@ -98,12 +100,9 @@ datasetsModule.controller('datasetSectionController', ['$scope', '$translate', '
     $scope.$watch('datasetDataElements', function() {
         ping();
         if (typeof $scope.datasetDataElements.dataSetElements != 'undefined') {
-            startLoadingState(false);
             //if there are no sections rearrange/change TOC name
             if ($scope.datasetDataElements.sections.length == 0) $scope.showWithoutSections();    
-            else $scope.showWithSections();            
-            endLoadingState(true);
-        
+            else $scope.showWithSections();                    
         }
     });
 
@@ -117,6 +116,7 @@ datasetsModule.controller('datasetSectionController', ['$scope', '$translate', '
         //line needed to reuse code of the ng-repeat on the view
         $scope.datasetDataElements.sections =  [{displayName: "Data Elements", id:"DataElements", dataElements: $scope.datasetDataElements.dataSetElements}];
         addtoTOC($scope.toc, null, $scope.stages4TOC, "Data Set");
+        console.log($scope.datasetDataElements);
     };
 
     /*
@@ -130,33 +130,28 @@ datasetsModule.controller('datasetSectionController', ['$scope', '$translate', '
     }
 
     /*
-     *  @name $scope.getCategoryCombinationName
-     *  @description Gets the category combination name for a data element
+     *  @name $scope.getCategoryCombination
+     *  @description Gets the category combination for a data element, updates the array of categoryCombos
      *  @scope datasetsMainController
      */
-    $scope.getCategoryCombinationName = function(id) {
+    $scope.getCategoryCombination = function(id, sectionIndex, dataElementIndex) {
+        console.log(id);
+        console.log($scope.datasetDataElements);
+        var result;
+        //search for overrides
         for (i = 0; i < $scope.datasetDataElements.dataSetElements.length; ++i) {
              if ($scope.datasetDataElements.dataSetElements[i].dataElement.id == id) {
-                return $scope.datasetDataElements.dataSetElements[i].categoryCombo.displayName;
+                result = $scope.datasetDataElements.dataSetElements[i].categoryCombo;
+                break;
             }
         }
-        return '-';
+        //if there was an override
+        if (typeof result != "undefined") return result;
+        //search for normal combination
+        result = $scope.datasetDataElements.sections[sectionIndex].dataElements[dataElementIndex].categoryCombo;
+        if (typeof result != "undefined") return result;
+        return $scope.datasetDataElements.sections[sectionIndex].dataElements[dataElementIndex].dataElement.categoryCombo;
     }
-
-        /*
-     *  @name $scope.getCategoryCombinationID
-     *  @description Gets the category combination ID for a data element
-     *  @scope datasetsMainController
-     */
-    $scope.getCategoryCombinationID = function(id) {
-        for (i = 0; i < $scope.datasetDataElements.dataSetElements.length; ++i) {
-             if ($scope.datasetDataElements.dataSetElements[i].dataElement.id == id) {
-                return $scope.datasetDataElements.dataSetElements[i].categoryCombo.id;
-            }
-        }
-        return '-';
-    }
-
 }]);
 
 /*
@@ -179,13 +174,18 @@ datasetsModule.controller('datasetCategoryComboController', ['$scope', '$transla
      */
     $scope.$watch('datasetDataElements', function() {
         ping();
-        if (typeof $scope.datasetDataElements.dataSetElements != 'undefined') {
-            //get the category combination ids from the different data elements without repetitions
-            for (i = 0; i < $scope.datasetDataElements.dataSetElements.length; ++i) {
-                var CCID = $scope.datasetDataElements.dataSetElements[i].categoryCombo.id;
-                if ($scope.categoryComboIDs.indexOf(CCID) == -1) $scope.categoryComboIDs.push(CCID);
-            }
+        if (typeof $scope.datasetDataElements.sections !== 'undefined') {
             startLoadingState(false);
+            for (i = 0; i < $scope.datasetDataElements.sections.length; ++i) {
+                var currentSection = $scope.datasetDataElements.sections[i];
+                for (j = 0; j < currentSection.dataElements.length; ++j) {
+                    var currentElement = currentSection.dataElements[j];
+                    var CCID;
+                    if (currentElement.displayName) CCID = currentElement.categoryCombo.id;
+                    else CCID = currentElement.dataElement.categoryCombo.id;
+                    if ($scope.categoryComboIDs.indexOf(CCID) == -1) $scope.categoryComboIDs.push(CCID);
+                }
+            }
             //Query category combination information
             $scope.categoryCombos = datasetsCategoryCombosFactory.get({
                 ids: 'id:in:'+'['+$scope.categoryComboIDs.toString()+']',

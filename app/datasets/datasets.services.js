@@ -18,7 +18,7 @@ datasetsModule.factory('datasetsFactory', ['$resource',
 ]);
 
 
-var qryDatasetDataelements = dhisUrl + 'dataSets/:datasetId?fields=id,displayName,sections[id,displayName,dataElements[id,displayName,displayFormName,displayDescription,valueType,optionSetValue,optionSet[options[displayName]]]],dataSetElements[categoryCombo[id,displayName],dataElement[id,displayName,displayFormName,displayDescription,valueType,optionSetValue,optionSet[options[displayName]]]]&paging=false'
+var qryDatasetDataelements = dhisUrl + 'dataSets/:datasetId?fields=id,displayName,sections[id,displayName,dataElements[id,displayName,displayFormName,displayDescription,valueType,optionSetValue,optionSet[options[displayName]],categoryCombo[id,displayName]]],dataSetElements[categoryCombo[id,displayName],dataElement[id,displayName,displayFormName,displayDescription,valueType,optionSetValue,optionSet[options[displayName]],categoryCombo[id,displayName]]]&paging=false'
 
 datasetsModule.factory('datasetsDataelementsFactory', ['$resource',
     function($resource) {
