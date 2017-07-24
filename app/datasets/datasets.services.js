@@ -47,3 +47,31 @@ datasetsModule.factory('datasetsCategoryCombosFactory', ['$resource',
         });
     }
 ]);
+
+var qryDatasetIndicators = dhisUrl + 'indicators?fields=displayName,indicatorType[displayName],description,numerator,numeratorDescription,denominator,denominatorDescription&paging=false'
+
+datasetsModule.factory('datasetsIndicatorsFactory', ['$resource',
+    function($resource) {
+        return $resource(qryDatasetIndicators, {}, {
+            query: {
+                method: 'GET',
+                isArray: false
+            }
+        });
+    }
+]);
+
+var qryIndicatorExpression = dhisUrl + 'expressions/description?expression=:expression'
+
+datasetsModule.factory('datasetsIndicatorExpressionFactory', ['$resource',
+    function($resource) {
+        return $resource(qryIndicatorExpression, {
+            expression: '@expression'
+        }, {
+            query: {
+                method: 'GET',
+                isArray: false
+            }
+        });
+    }
+]);

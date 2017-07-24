@@ -35,6 +35,8 @@ function($scope, $translate, $anchorScroll, datasetsFactory, datasetsDataelement
      *  @scope datasetsMainController
      */
     $scope.scrollTo = function(id,yOffset) {
+        console.log(id);
+        console.log("in");
         $anchorScroll.yOffset = 66; //66;
         $anchorScroll(id);
     };
@@ -116,7 +118,6 @@ datasetsModule.controller('datasetSectionController', ['$scope', '$translate', '
         //line needed to reuse code of the ng-repeat on the view
         $scope.datasetDataElements.sections =  [{displayName: "Data Elements", id:"DataElements", dataElements: $scope.datasetDataElements.dataSetElements}];
         addtoTOC($scope.toc, null, $scope.stages4TOC, "Data Set");
-        console.log($scope.datasetDataElements);
     };
 
     /*
@@ -135,8 +136,6 @@ datasetsModule.controller('datasetSectionController', ['$scope', '$translate', '
      *  @scope datasetsMainController
      */
     $scope.getCategoryCombination = function(id, sectionIndex, dataElementIndex) {
-        console.log(id);
-        console.log($scope.datasetDataElements);
         var result;
         //search for overrides
         for (i = 0; i < $scope.datasetDataElements.dataSetElements.length; ++i) {
@@ -145,12 +144,16 @@ datasetsModule.controller('datasetSectionController', ['$scope', '$translate', '
                 break;
             }
         }
-        //if there was an override
-        if (typeof result != "undefined") return result;
-        //search for normal combination
-        result = $scope.datasetDataElements.sections[sectionIndex].dataElements[dataElementIndex].categoryCombo;
-        if (typeof result != "undefined") return result;
-        return $scope.datasetDataElements.sections[sectionIndex].dataElements[dataElementIndex].dataElement.categoryCombo;
+        //if there wasn't an override
+        if (typeof result == "undefined") {
+            //search for normal combination
+            result = $scope.datasetDataElements.sections[sectionIndex].dataElements[dataElementIndex].categoryCombo;
+            //check without sections
+            if (typeof result == "undefined") result = $scope.datasetDataElements.sections[sectionIndex].dataElements[dataElementIndex].dataElement.categoryCombo;
+        }
+        var CCID = result.id;
+        if ($scope.categoryComboIDs.indexOf(CCID) == -1) $scope.categoryComboIDs.push(CCID);
+        return result;
     }
 }]);
 
@@ -176,16 +179,6 @@ datasetsModule.controller('datasetCategoryComboController', ['$scope', '$transla
         ping();
         if (typeof $scope.datasetDataElements.sections !== 'undefined') {
             startLoadingState(false);
-            for (i = 0; i < $scope.datasetDataElements.sections.length; ++i) {
-                var currentSection = $scope.datasetDataElements.sections[i];
-                for (j = 0; j < currentSection.dataElements.length; ++j) {
-                    var currentElement = currentSection.dataElements[j];
-                    var CCID;
-                    if (currentElement.displayName) CCID = currentElement.categoryCombo.id;
-                    else CCID = currentElement.dataElement.categoryCombo.id;
-                    if ($scope.categoryComboIDs.indexOf(CCID) == -1) $scope.categoryComboIDs.push(CCID);
-                }
-            }
             //Query category combination information
             $scope.categoryCombos = datasetsCategoryCombosFactory.get({
                 ids: 'id:in:'+'['+$scope.categoryComboIDs.toString()+']',
@@ -197,4 +190,87 @@ datasetsModule.controller('datasetCategoryComboController', ['$scope', '$transla
     });
 
 
+}]);
+
+    datasetsModule.controller('datasetsIndicatorsController', ['$scope', '$translate', 'datasetsIndicatorsFactory', 'datasetsIndicatorExpressionFactory' , 'Ping', function($scope, $translate, datasetsIndicatorsFactory, datasetsIndicatorExpressionFactory, Ping) {
+    
+    $scope.indicators4TOC = {
+        displayName: "Indicators",
+        id: "indicators",
+        index: '2'
+    };
+
+    /*
+     *  @name recursiveAssignNumerator
+     *  @description Gets the "readable" expressions for each indicator numerator
+     *  @scope datasetsIndicatorsController
+     */
+    recursiveAssignNumerator = function(i) {
+        if (i >= $scope.indicators.length) return;
+        datasetsIndicatorExpressionFactory.get({
+                expression: $scope.indicators[i].numerator,
+            }, function (data) {
+                $scope.indicators[i].numerator = data.description;
+                recursiveAssignNumerator(i+1);
+            },true);
+
+    }
+
+    /*
+     *  @name recursiveAssignNumerator
+     *  @description Gets the "readable" expressions for each indicator denominator
+     *  @scope datasetsIndicatorsController
+     */
+    recursiveAssignDenominator = function(i) {
+        if (i >= $scope.indicators.length) return;
+        datasetsIndicatorExpressionFactory.get({
+                expression: $scope.indicators[i].denominator,
+            }, function (data) {
+                $scope.indicators[i].denominator = data.description;
+                recursiveAssignDenominator(i+1);
+            },true);
+    }
+
+    $scope.indicators = [];
+
+    /*
+     *  @name none
+     *  @description Gets the indicator information, translates it and shows it
+     *  @dependencies datasetsCategoryCombosFactory
+     *  @scope datasetsIndicatorsController
+     */
+    $scope.$watch('datasetDataElements', function() {
+        ping();
+        if (typeof $scope.datasetDataElements.dataSetElements != 'undefined') {
+            startLoadingState(false);
+            $scope.indicators = [];
+            //Query indicator information
+            $scope.allIndicators = datasetsIndicatorsFactory.get(function () {     
+                endLoadingState(true);
+                $scope.datasetDataElements.dataSetElements.forEach(function(dataElement) {
+                    $scope.allIndicators.indicators.forEach(function(indicator) {
+                        const regex = /#{(\w+)\.?\w+?}/g;
+                        const str = indicator.numerator;
+                        let m;
+                        while ((m = regex.exec(str)) !== null) {
+                            // This is necessary to avoid infinite loops with zero-width matches
+                            if (m.index === regex.lastIndex) {
+                                regex.lastIndex++;
+                            }
+                            if (m[1] == dataElement.dataElement.id) {
+                                if ($scope.indicators.indexOf(indicator) == -1) $scope.indicators.push(indicator);
+                                return;
+                            }
+                        }
+                    }, this);
+                }, this);
+                if ($scope.indicators.length > 0) {
+                    addtoTOC($scope.toc, null, $scope.indicators4TOC, "Indicators");
+                    recursiveAssignNumerator(0);
+                    recursiveAssignDenominator(0);
+                }
+            });
+            
+        }
+    });
 }]);
