@@ -36,7 +36,7 @@
 		<div id="sectionContainer"  ng-model="sectionList" ng-controller="dossiersProgramSectionController">
 			<div class="col-md-12"  ng-repeat="section in sections.programStageSections">
 				<h3 class="section" id="{{section.id}}">{{section.displayName}}</h3>
-				<p>{{'Number of Elements in Section'| translate}}: {{section.programStageDataElements.length}}</p>
+				<p>{{'Number of Elements in Section'| translate}}: {{section.dataElements.length}}</p>
 				<table class="sectionElementsTable table table-striped">
 					<thead>
 						<tr>
@@ -48,13 +48,13 @@
 						</tr>
 					</thead>
 					<tbody>
-						<tr ng-repeat="dataElement in section.programStageDataElements">
-							<td>{{dataElement.dataElement.displayName}}</td>
-							<td>{{dataElement.dataElement.displayFormName}}</td>
-							<td>{{dataElement.dataElement.displayDescription}}</td>
-							<td>{{dataElement.dataElement.valueType}}</td>
+						<tr ng-repeat="dataElement in section.dataElements">
+							<td>{{dataElement.displayName}}</td>
+							<td>{{dataElement.displayFormName}}</td>
+							<td>{{dataElement.displayDescription}}</td>
+							<td>{{dataElement.valueType}}</td>
 							<td><ul>
-								<li ng-repeat="option in dataElement.dataElement.optionSet.options">
+								<li ng-repeat="option in dataElement.optionSet.options">
 								<div>{{option.displayName}}</div>
 								</li>
 								</ul>
