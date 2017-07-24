@@ -35,8 +35,6 @@ function($scope, $translate, $anchorScroll, datasetsFactory, datasetsDataelement
      *  @scope datasetsMainController
      */
     $scope.scrollTo = function(id,yOffset) {
-        console.log(id);
-        console.log("in");
         $anchorScroll.yOffset = 66; //66;
         $anchorScroll(id);
     };
