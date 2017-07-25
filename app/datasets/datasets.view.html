@@ -34,8 +34,8 @@
 			</ul>
 		</div>
 
-		<div id="sectionContainer" ng-controller="datasetSectionController">
-			<div class="col-md-12"  ng-repeat="section in datasetDataElements.sections">
+		<div class="col-md-12" id="sectionContainer" ng-controller="datasetSectionController">
+			<div ng-repeat="section in datasetDataElements.sections">
 				<h3 class="section" id="{{section.id}}">{{section.displayName}}</h3>
 				<p>{{'Number of Elements in Section'| translate}}: {{section.dataElements.length}}</p>
 				<table class="sectionElementsTable table table-striped">
@@ -77,7 +77,7 @@
 			</div>
 		</div>
 
-		<div id="categoryComboContainer" ng-controller="datasetCategoryComboController">
+		<div class="col-md-12" id="categoryComboContainer" ng-controller="datasetCategoryComboController">
 			<div ng-if="selectedDataset" class="col-md-12">
 				<h3 class="section" id="categoryCombinations">Category combinations</h3>
 				<table class="sectionElementsTable table table-striped">
@@ -105,7 +105,7 @@
 		</div>
 
 
-		<div id="indicatorContainer" ng-controller="datasetsIndicatorsController">
+		<div class="col-md-12" id="indicatorContainer" ng-controller="datasetsIndicatorsController">
 			<div ng-if="indicators.length > 0" col-md-12>
 				<h3 class="section" id="indicators">Indicators</h3>
 				<table class="sectionElementsTable table table-striped">

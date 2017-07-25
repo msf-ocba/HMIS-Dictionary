@@ -163,7 +163,7 @@ datasetsModule.controller('datasetCategoryComboController', ['$scope', '$transla
     
     $scope.categoryCombos4TOC = {
         displayName: "Category combinations",
-        id: "categoryCombinations",
+        id: "categoryComboContainer",
         index: '1'
     };
 
@@ -194,7 +194,7 @@ datasetsModule.controller('datasetCategoryComboController', ['$scope', '$transla
     
     $scope.indicators4TOC = {
         displayName: "Indicators",
-        id: "indicators",
+        id: "indicatorContainer",
         index: '2'
     };
 
