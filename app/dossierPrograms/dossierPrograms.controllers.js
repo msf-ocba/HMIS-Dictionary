@@ -77,12 +77,18 @@ function($scope, $translate, dossiersProgramStageSectionsFactory, Ping) {
    $scope.showProgramWithoutSections = function() {
         $scope.stages4TOC.displayName = "Data elements";
         //line needed to reuse code of the ng-repeat on the view
-        $scope.sections.programStageSections =  [{displayName: "Data Elements", id:"DataElements", programStageDataElements: $scope.sections.programStageDataElements}];
+        $scope.sections.programStageSections =  [{displayName: "Data Elements", id:"DataElements", dataElements: $scope.sections.programStageDataElements}];
+        console.log($scope.sections);
+        for (i = 0; i < $scope.sections.programStageSections[0].dataElements.length; ++i) {
+            $scope.sections.programStageSections[0].dataElements[i] = $scope.sections.programStageSections[0].dataElements[i].dataElement;
+        }
+        console.log("out");
+        console.log($scope.sections);
         addtoTOC($scope.toc, null, $scope.stages4TOC, "programs");
     };
 
     $scope.showProgramWithSections = function() {
-        $scope.stages4TOC.displayName = "Program Stages";
+        $scope.stages4TOC.displayName = "Program Sections";
         addtoTOC($scope.toc, $scope.sections.programStageSections, $scope.stages4TOC, "programs");
     }
 
