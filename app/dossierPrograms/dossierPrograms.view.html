@@ -93,5 +93,35 @@
 		</div>
 
 
+		<div class="col-md-12" id="indicatorContainer" ng-controller="dossierProgramGlobalIndicatorController">
+			<div ng-if="indicators.length > 0" col-md-12>
+				<h3 class="section" id="indicators">Indicators</h3>
+				<table class="sectionElementsTable table table-striped">
+					<thead>
+						<tr>
+							<th>{{'Name'| translate}}</th>
+							<th>{{'Type'| translate}}</th>
+							<th>{{'Numerator' | translate}}</th>
+							<th>{{'Numerator description'| translate}}</th>
+							<th>{{'Denominator'| translate}}</th>
+							<th>{{'Denominator description' | translate}}</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr ng-repeat="indicator in indicators |  orderBy: 'displayName'">
+							<td>{{indicator.displayName}}</td>
+							<td>{{indicator.indicatorType.displayName}}</td>
+							<td>{{indicator.numerator}}</td>
+							<td>{{indicator.numeratorDescription}}</td>
+							<td>{{indicator.denominator}}</td>
+							<td>{{indicator.denominatorDescription}}</td>
+						</tr>
+					</tbody>
+				</table>
+				
+			</div>
+		</div>
+
+
 	</div>
 </div>
