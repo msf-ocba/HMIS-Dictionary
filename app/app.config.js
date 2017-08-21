@@ -23,7 +23,7 @@ var appModule = angular.module('appModule', ['ui.router', 'd2Menu', 'ngSanitize'
  */
 appModule.config(['$stateProvider', '$urlRouterProvider', '$translateProvider', function($stateProvider, $urlRouterProvider, $translateProvider) {
 
-    $urlRouterProvider.otherwise("/dossiers")
+    $urlRouterProvider.otherwise("/search")
 
     $stateProvider
         .state('dossiers', {
