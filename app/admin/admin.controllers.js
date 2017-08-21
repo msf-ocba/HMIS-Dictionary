@@ -38,7 +38,7 @@ adminModule.controller('adminMainController', ['$scope', '$translate', 'adminOUG
         adminOUGSFactory.get_OUGS_set.query(function(response){
             console.log(response);
             if (response.value) {
-                $scope.ougsUID = response.value; //BtFXTpKRl6n//
+                $scope.serviceSetUID = response.value; //BtFXTpKRl6n//
                 $scope.OUGSList.organisationUnitGroupSets.forEach(function(ougs) {
                     if (ougs.id == response.object.id) {
                         $scope.selectedOUGS = ougs;      
@@ -49,7 +49,7 @@ adminModule.controller('adminMainController', ['$scope', '$translate', 'adminOUG
                 $('#divOUGS').addClass('alert-success');
                 
                 adminOUGFactory.get({
-                    ougsUID: $scope.ougsUID
+                    ougsUID: $scope.serviceSetUID
                 }, function(result) {
                     var test = true;
                     if(result.organisationUnitGroups.length > 0){
@@ -128,11 +128,11 @@ adminModule.controller('adminMainController', ['$scope', '$translate', 'adminOUG
     $scope.submitOUGS = function() {
         console.log($scope.selectedOUGS);
         var payload = '{"value":"' + $scope.selectedOUGS.id + '", "object":'+ JSON.stringify($scope.selectedOUGS) +'}';
-        if ($scope.ougsUID) {
+        if ($scope.serviceSetUID) {
             adminOUGSFactory.upd_OUGS.query(payload,function(response){
                 console.log(response);
                 if (response) {
-                    $scope.ougsUID = $scope.selectedOUGS.id;   
+                    $scope.serviceSetUID = $scope.selectedOUGS.id;   
                     $('#divOUGS').removeClass('alert-warning');
                     $('#divOUGS').removeClass('alert-danger');
                     $('#divOUGS').addClass('alert-success');
@@ -142,7 +142,7 @@ adminModule.controller('adminMainController', ['$scope', '$translate', 'adminOUG
             adminOUGSFactory.set_OUGS.query(payload,function(response){
                 console.log(response);
                 if (response) {
-                    $scope.ougsUID = $scope.selectedOUGS.id;    
+                    $scope.serviceSetUID = $scope.selectedOUGS.id;    
                     $('#divOUGS').removeClass('alert-warning');
                     $('#divOUGS').removeClass('alert-danger');
                     $('#divOUGS').addClass('alert-success');

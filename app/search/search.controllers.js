@@ -8,7 +8,7 @@ searchModule.controller('searchController', ['ExcelFactory', '$timeout', '$scope
     $('#search').tab('show');
 
     searchAllFactory.get_organisationUnitGroupSets.query({
-        ougsUID: $scope.ougsUID
+        ougsUID: $scope.serviceSetUID
     }, function(response){
         //console.log('get_organisationUnitGroupSets', response);
         var temp = {};
