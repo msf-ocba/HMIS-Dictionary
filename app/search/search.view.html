@@ -83,7 +83,7 @@
 										</label>
 									</div>
 								</div>
-								<div class="col-xs-3">
+								<div class="col-xs-3" ng-if="serviceSetUID">
 									<p><b>{{'srch_SelectColumns_servBasics' | translate}}</b></p>
 									<div class="col-xs-1"></div>
 									<div class="col-xs-11">
@@ -118,7 +118,7 @@
 										</label>
 									</div>
 								</div>
-								<div class="col-xs-3">
+								<div class="col-xs-3" ng-if="serviceSetUID">
 									<div class="col-xs-1"></div>
 									<div class="col-xs-11">
 										<label class="checkbox" ng-repeat="col in table.cols" ng-if="cols_service_advanced[col.code]">
@@ -209,7 +209,7 @@
 			<td sortable="'service_code'" filter="{service_code:'./app/search/search.table.html'}" ng-if="false" data-title="'service_code' | translate">
 				<span ng-bind-html='object.service_code | highlight: table.globalSearchTerm:params.filter():"service_code"'></span>
 			</td>
-			<td sortable="'service_name'" filter="{service_name:'./app/search/search.table.html'}" ng-if="true" data-title="'service_name' | translate">
+			<td sortable="'service_name'" filter="{service_name:'./app/search/search.table.html'}" ng-if="serviceSetUID" data-title="'service_name' | translate">
 				<span ng-bind-html='object.service_name | highlight: table.globalSearchTerm:params.filter():"service_name"'></span>
 			</td>
 

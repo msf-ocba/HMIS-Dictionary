@@ -226,7 +226,8 @@ searchModule.controller('searchController', ['ExcelFactory', '$timeout', '$scope
 
         var start = new Date();
         //console.log('servicesList available?', $scope.servicesList);
-        if ($scope.servicesList) {
+        // if ($scope.servicesList) {
+        if (true) {
 
             var temp = {};
             var categoryOptionCombosTemp = {};
@@ -248,7 +249,7 @@ searchModule.controller('searchController', ['ExcelFactory', '$timeout', '$scope
                         };
 
                         obj.dataSetElements.forEach(function(grp) {
-                            if(grp.dataSet.attributeValues.length > 0 && grp.dataSet.attributeValues[0].value){
+                            if($scope.servicesList && grp.dataSet.attributeValues.length > 0 && grp.dataSet.attributeValues[0].value){
                                 var servicesCode = grp.dataSet.attributeValues[0].value.split('_');
                                 servicesCode.shift();
                                 servicesCode.forEach(function(code) {
@@ -290,6 +291,8 @@ searchModule.controller('searchController', ['ExcelFactory', '$timeout', '$scope
                 $scope.loaded.get_dataElementsDescriptions = true;
                 $scope.loaded.get_dataElementsGroups = true;
 
+                console.log("searchModule: Data Elements loaded")
+
                 return "done";
 
             }).then(function() {
@@ -319,7 +322,7 @@ searchModule.controller('searchController', ['ExcelFactory', '$timeout', '$scope
                             };
 
                             obj.indicatorGroups.forEach(function(grp) {
-                                if(grp.attributeValues.length > 0 && grp.attributeValues[0].value){
+                                if($scope.servicesList && grp.attributeValues.length > 0 && grp.attributeValues[0].value){
                                     var servicesCode = grp.attributeValues[0].value.split('_');
                                     servicesCode.shift();
                                     servicesCode.forEach(function(code) {
@@ -365,6 +368,8 @@ searchModule.controller('searchController', ['ExcelFactory', '$timeout', '$scope
                     $scope.loaded.get_indicatorsDescriptions = true;
                     $scope.loaded.get_indicatorGroups = true;
                     $scope.allObjects = Object.keys(temp).map(function(key) { return temp[key]; });
+
+                    console.log("searchModule: Indicators loaded")
 
                     return "done";
                 });
