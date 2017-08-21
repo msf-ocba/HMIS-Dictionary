@@ -7,22 +7,29 @@ searchModule.controller('searchController', ['ExcelFactory', '$timeout', '$scope
 
     $('#search').tab('show');
 
-    searchAllFactory.get_organisationUnitGroupSets.query({
-        ougsUID: $scope.serviceSetUID
-    }, function(response){
-        //console.log('get_organisationUnitGroupSets', response);
-        var temp = {};
-        response.organisationUnitGroups.forEach(function(serv) {
-            temp[serv.code.split('_')[2]] = {
-                service_id: serv.id,
-                service_code: serv.code,
-                service_name: serv.displayName
-            };
+    
+    if ($scope.serviceSetUID) {
+        console.log("searchModule: Service set defined " + $scope.serviceSetUID);
+        searchAllFactory.get_organisationUnitGroupSets.query({
+            ougsUID: $scope.serviceSetUID
+        }, function(response){
+            var temp = {};
+            response.organisationUnitGroups.forEach(function(serv) {
+                temp[serv.code.split('_')[2]] = {
+                    service_id: serv.id,
+                    service_code: serv.code,
+                    service_name: serv.displayName
+                };
+            });
+            //console.log('get_organisationUnitGroupSets refactored', temp);
+            $scope.servicesList = temp;
+            load_table();
         });
-        //console.log('get_organisationUnitGroupSets refactored', temp);
-        $scope.servicesList = temp;
-    });
-
+    } else {
+        console.log("searchModule: Service set is not defined");
+        load_table();
+    }
+    
     var concatObjects = function(tablesList) {
         var temp = [];
         tablesList.forEach(function(table) {
@@ -215,7 +222,7 @@ searchModule.controller('searchController', ['ExcelFactory', '$timeout', '$scope
             });
     };
 
-    $scope.$watch('servicesList', function(){
+    function load_table() {
 
         var start = new Date();
         //console.log('servicesList available?', $scope.servicesList);
@@ -365,7 +372,7 @@ searchModule.controller('searchController', ['ExcelFactory', '$timeout', '$scope
                 console.log("Loading time of search table: " + (Date.now() - start) + " milliseconds.");
             });
         }
-    });
+    }
 
     $scope.exportToExcel = function(tableId){ // ex: '#my-table'
         var exportHref = ExcelFactory.tableToExcel(tableId,'hmis_table');
@@ -374,4 +381,4 @@ searchModule.controller('searchController', ['ExcelFactory', '$timeout', '$scope
         a.download = 'hmis_table.xls';
         a.click();
     }
-}]);
+}])
