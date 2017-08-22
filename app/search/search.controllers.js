@@ -6,7 +6,6 @@
 searchModule.controller('searchController', ['ExcelFactory', '$timeout', '$scope', '$translate', 'NgTableParams', 'searchAllFactory', function(ExcelFactory, $timeout, $scope, $translate, NgTableParams, searchAllFactory) {
 
     $('#search').tab('show');
-
     
     if ($scope.serviceSetUID) {
         console.log("searchModule: Service set defined " + $scope.serviceSetUID);
@@ -21,13 +20,12 @@ searchModule.controller('searchController', ['ExcelFactory', '$timeout', '$scope
                     service_name: serv.displayName
                 };
             });
-            //console.log('get_organisationUnitGroupSets refactored', temp);
             $scope.servicesList = temp;
-            load_table();
+            load_table_info();
         });
     } else {
         console.log("searchModule: Service set is not defined");
-        load_table();
+        load_table_info();
     }
     
     var concatObjects = function(tablesList) {
@@ -66,11 +64,6 @@ searchModule.controller('searchController', ['ExcelFactory', '$timeout', '$scope
                     temp = temp || ($scope.blacklist_datasets.indexOf(dse.dataSet.id) == -1);
                  });
             }
-            /*if (obj.dataSetElements.length == 0) {
-                console.log('search: dataElement filtered - empty: ', [obj]);
-            }else if (!temp) {
-                console.log('search: dataElement filtered - blacklisted: ', [obj]);
-            }*/
             return temp;
         }else if (type == 'indicator') {
             var temp = obj.indicatorGroups.length > 0;
@@ -80,11 +73,6 @@ searchModule.controller('searchController', ['ExcelFactory', '$timeout', '$scope
                     temp = temp || ($scope.blacklist_indicatorgroups.indexOf(ig.id) == -1);
                 });
             }
-            /*if (obj.indicatorGroups.length == 0) {
-                console.log('search: indicator filtered - empty: ', [obj]);
-            }else if (!temp) {
-                console.log('search: indicator filtered - blacklisted: ', [obj]);
-            }*/
             return temp;
         }
     };
@@ -222,21 +210,86 @@ searchModule.controller('searchController', ['ExcelFactory', '$timeout', '$scope
             });
     };
 
-    function load_table() {
+    function load_table_info() {
 
         var start = new Date();
-        //console.log('servicesList available?', $scope.servicesList);
-        // if ($scope.servicesList) {
-        if (true) {
 
-            var temp = {};
-            var categoryOptionCombosTemp = {};
+        var temp = {};
+        var categoryOptionCombosTemp = {};
 
-            searchAllFactory.qry_dataElementsAll.query().$promise.then(function(response){
-                //console.log('get_dataElements', response);
-                response.dataElements.forEach(function(obj) {
+        searchAllFactory.qry_dataElementsAll.query().$promise.then(function(response){
+            response.dataElements.forEach(function(obj) {
 
-                    if(filterObjects(obj,"dataElement")){
+                if(filterObjects(obj,"dataElement")){
+
+                    //objectGroup + service
+                    var temp_arr = {
+                        objectGroup_id: [],
+                        objectGroup_code: [],
+                        objectGroup_name: [],
+                        service_id: [],
+                        service_code: [],
+                        service_name: []
+                    };
+
+                    obj.dataSetElements.forEach(function(grp) {
+                        if($scope.servicesList && grp.dataSet.attributeValues.length > 0 && grp.dataSet.attributeValues[0].value){
+                            var servicesCode = grp.dataSet.attributeValues[0].value.split('_');
+                            servicesCode.shift();
+                            servicesCode.forEach(function(code) {
+                                if($scope.servicesList[code]){
+                                    temp_arr.service_id.push($scope.servicesList[code].service_id);
+                                    temp_arr.service_code.push($scope.servicesList[code].service_code);
+                                    temp_arr.service_name.push($scope.servicesList[code].service_name);
+                                }else{
+                                    console.log("search: Cannot find any service with code: " + code);
+                                }
+                            });
+                        }
+                        temp_arr.objectGroup_id.push(grp.dataSet.id);
+                        temp_arr.objectGroup_code.push(grp.dataSet.code);
+                        temp_arr.objectGroup_name.push(grp.dataSet.displayName);
+                    });
+
+                    temp[obj.id] = {
+                        object_type: 'dataElement',
+                        object_id: obj.id,
+                        object_code: obj.code,
+                        object_name: obj.displayName,
+                        object_form: obj.displayFormName,
+                        object_description: obj.displayDescription,
+                        objectGroup_id: temp_arr.objectGroup_id.join(', '),
+                        objectGroup_code: temp_arr.objectGroup_code.join(', '),
+                        objectGroup_name: temp_arr.objectGroup_name.join(', '),
+                        service_id: temp_arr.service_id.join(', '),
+                        service_code: temp_arr.service_code.join(', '),
+                        service_name: temp_arr.service_name.join(', ')
+                    };
+                }
+            });
+
+            $scope.loaded.get_dataElements = true;
+            $scope.loaded.get_dataElementsDescriptions = true;
+            $scope.loaded.get_dataElementsGroups = true;
+
+            console.log("searchModule: Data Elements loaded")
+
+            return "done";
+
+        }).then(function() {
+            return searchAllFactory.get_categoryOptionCombosAll.query().$promise.then(function(response){
+                response.categoryOptionCombos.forEach(function(obj) {
+                    categoryOptionCombosTemp[obj.id] = {
+                        id: obj.id,
+                        object_name: obj.displayName
+                    }
+                });
+            });
+        }).then(function(){
+            return searchAllFactory.get_indicatorsAll.query().$promise.then(function(response){
+                response.indicators.forEach(function(obj) {
+
+                    if(filterObjects(obj,"indicator")){
 
                         //objectGroup + service
                         var temp_arr = {
@@ -248,12 +301,12 @@ searchModule.controller('searchController', ['ExcelFactory', '$timeout', '$scope
                             service_name: []
                         };
 
-                        obj.dataSetElements.forEach(function(grp) {
-                            if($scope.servicesList && grp.dataSet.attributeValues.length > 0 && grp.dataSet.attributeValues[0].value){
-                                var servicesCode = grp.dataSet.attributeValues[0].value.split('_');
+                        obj.indicatorGroups.forEach(function(grp) {
+                            if($scope.servicesList && grp.attributeValues.length > 0 && grp.attributeValues[0].value){
+                                var servicesCode = grp.attributeValues[0].value.split('_');
                                 servicesCode.shift();
                                 servicesCode.forEach(function(code) {
-                                    if($scope.servicesList[code]){
+                                    if ($scope.servicesList[code]) {
                                         temp_arr.service_id.push($scope.servicesList[code].service_id);
                                         temp_arr.service_code.push($scope.servicesList[code].service_code);
                                         temp_arr.service_name.push($scope.servicesList[code].service_name);
@@ -262,20 +315,22 @@ searchModule.controller('searchController', ['ExcelFactory', '$timeout', '$scope
                                     }
                                 });
                             }
-                            temp_arr.objectGroup_id.push(grp.dataSet.id);
-                            temp_arr.objectGroup_code.push(grp.dataSet.code);
-                            temp_arr.objectGroup_name.push(grp.dataSet.displayName);
-
-
+                            temp_arr.objectGroup_id.push(grp.id);
+                            temp_arr.objectGroup_code.push(grp.code);
+                            temp_arr.objectGroup_name.push(grp.displayName);
                         });
 
                         temp[obj.id] = {
-                            object_type: 'dataElement',
+                            object_type: 'indicator',
                             object_id: obj.id,
                             object_code: obj.code,
                             object_name: obj.displayName,
                             object_form: obj.displayFormName,
-                            object_description: obj.displayDescription,
+                            object_den_description: $scope.getDenominator(obj),
+                            object_den_ids: $scope.parseFormula(obj.denominator, temp, categoryOptionCombosTemp),
+                            object_num_description: $scope.getNumerator(obj),
+                            object_num_ids: $scope.parseFormula(obj.numerator,temp, categoryOptionCombosTemp),
+                            object_description: $scope.getDescription(obj),
                             objectGroup_id: temp_arr.objectGroup_id.join(', '),
                             objectGroup_code: temp_arr.objectGroup_code.join(', '),
                             objectGroup_name: temp_arr.objectGroup_name.join(', '),
@@ -283,100 +338,23 @@ searchModule.controller('searchController', ['ExcelFactory', '$timeout', '$scope
                             service_code: temp_arr.service_code.join(', '),
                             service_name: temp_arr.service_name.join(', ')
                         };
+
                     }
+
                 });
 
-                //console.log('get_dataElements refactored', temp);
-                $scope.loaded.get_dataElements = true;
-                $scope.loaded.get_dataElementsDescriptions = true;
-                $scope.loaded.get_dataElementsGroups = true;
+                $scope.loaded.get_indicators = true;
+                $scope.loaded.get_indicatorsDescriptions = true;
+                $scope.loaded.get_indicatorGroups = true;
+                $scope.allObjects = Object.keys(temp).map(function(key) { return temp[key]; });
 
-                console.log("searchModule: Data Elements loaded")
+                console.log("searchModule: Indicators loaded")
 
                 return "done";
-
-            }).then(function() {
-                return searchAllFactory.get_categoryOptionCombosAll.query().$promise.then(function(response){
-                    response.categoryOptionCombos.forEach(function(obj) {
-                        categoryOptionCombosTemp[obj.id] = {
-                            id: obj.id,
-                            object_name: obj.displayName
-                        }
-                    });
-                });
-            }).then(function(){
-                return searchAllFactory.get_indicatorsAll.query().$promise.then(function(response){
-                    //console.log('get_indicators', response);
-                    response.indicators.forEach(function(obj) {
-
-                        if(filterObjects(obj,"indicator")){
-
-                            //objectGroup + service
-                            var temp_arr = {
-                                objectGroup_id: [],
-                                objectGroup_code: [],
-                                objectGroup_name: [],
-                                service_id: [],
-                                service_code: [],
-                                service_name: []
-                            };
-
-                            obj.indicatorGroups.forEach(function(grp) {
-                                if($scope.servicesList && grp.attributeValues.length > 0 && grp.attributeValues[0].value){
-                                    var servicesCode = grp.attributeValues[0].value.split('_');
-                                    servicesCode.shift();
-                                    servicesCode.forEach(function(code) {
-                                        if ($scope.servicesList[code]) {
-                                            temp_arr.service_id.push($scope.servicesList[code].service_id);
-                                            temp_arr.service_code.push($scope.servicesList[code].service_code);
-                                            temp_arr.service_name.push($scope.servicesList[code].service_name);
-                                        }else{
-                                            console.log("search: Cannot find any service with code: " + code);
-                                        }
-                                    });
-                                }
-                                temp_arr.objectGroup_id.push(grp.id);
-                                temp_arr.objectGroup_code.push(grp.code);
-                                temp_arr.objectGroup_name.push(grp.displayName);
-
-                            });
-
-                            temp[obj.id] = {
-                                object_type: 'indicator',
-                                object_id: obj.id,
-                                object_code: obj.code,
-                                object_name: obj.displayName,
-                                object_form: obj.displayFormName,
-                                object_den_description: $scope.getDenominator(obj),
-                                object_den_ids: $scope.parseFormula(obj.denominator, temp, categoryOptionCombosTemp),
-                                object_num_description: $scope.getNumerator(obj),
-                                object_num_ids: $scope.parseFormula(obj.numerator,temp, categoryOptionCombosTemp),
-                                object_description: $scope.getDescription(obj),
-                                objectGroup_id: temp_arr.objectGroup_id.join(', '),
-                                objectGroup_code: temp_arr.objectGroup_code.join(', '),
-                                objectGroup_name: temp_arr.objectGroup_name.join(', '),
-                                service_id: temp_arr.service_id.join(', '),
-                                service_code: temp_arr.service_code.join(', '),
-                                service_name: temp_arr.service_name.join(', ')
-                            };
-
-                        }
-
-                    });
-                    //console.log('get_indicators refactored', temp);
-                    $scope.loaded.get_indicators = true;
-                    $scope.loaded.get_indicatorsDescriptions = true;
-                    $scope.loaded.get_indicatorGroups = true;
-                    $scope.allObjects = Object.keys(temp).map(function(key) { return temp[key]; });
-
-                    console.log("searchModule: Indicators loaded")
-
-                    return "done";
-                });
-            }).then(function log(){
-                console.log("Loading time of search table: " + (Date.now() - start) + " milliseconds.");
             });
-        }
+        }).then(function log(){
+            console.log("Loading time of search table: " + (Date.now() - start) + " milliseconds.");
+        });
     }
 
     $scope.exportToExcel = function(tableId){ // ex: '#my-table'
