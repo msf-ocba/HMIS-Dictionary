@@ -11,9 +11,7 @@ adminModule.controller('adminMainController', ['$scope', '$translate', 'adminOUG
     
     
     $scope.UGList = adminUGFactory.get_UG.query(function(response) {
-        console.log(response);
         adminUGFactory.get_UG_set.query(function(response){
-            console.log(response);
             if (response.value) {
                 $scope.userAdminGroup = response.value;
                 $scope.UGList.userGroups.forEach(function(ug) {
@@ -34,11 +32,9 @@ adminModule.controller('adminMainController', ['$scope', '$translate', 'adminOUG
     });
 
     $scope.OUGSList = adminOUGSFactory.get_OUGS.query(function(response) {
-        console.log(response);
         adminOUGSFactory.get_OUGS_set.query(function(response){
-            console.log(response);
             if (response.value) {
-                $scope.serviceSetUID = response.value; //BtFXTpKRl6n//
+                $scope.serviceSetUID = response.value;
                 $scope.OUGSList.organisationUnitGroupSets.forEach(function(ougs) {
                     if (ougs.id == response.object.id) {
                         $scope.selectedOUGS = ougs;      
@@ -99,11 +95,9 @@ adminModule.controller('adminMainController', ['$scope', '$translate', 'adminOUG
     });
     
     $scope.submitUG = function() {
-        console.log($scope.selectedUG);
         var payload = '{"value":"' + $scope.selectedUG.name + '", "object":'+ JSON.stringify($scope.selectedUG) +'}';
         if ($scope.userAdminGroup) {
             adminUGFactory.upd_UG.query(payload,function(response){
-                console.log(response);
                 if (response) {
                     $scope.userAdminGroup = $scope.selectedUG.name;    
                     $('#divUG').removeClass('alert-warning');
@@ -113,7 +107,6 @@ adminModule.controller('adminMainController', ['$scope', '$translate', 'adminOUG
             });
         }else{    
             adminUGFactory.set_UG.query(payload,function(response){
-                console.log(response);
                 if (response) {
                     $scope.userAdminGroup = $scope.selectedUG.name;    
                     $('#divUG').removeClass('alert-warning');
@@ -126,11 +119,9 @@ adminModule.controller('adminMainController', ['$scope', '$translate', 'adminOUG
     };
     
     $scope.submitOUGS = function() {
-        console.log($scope.selectedOUGS);
         var payload = '{"value":"' + $scope.selectedOUGS.id + '", "object":'+ JSON.stringify($scope.selectedOUGS) +'}';
         if ($scope.serviceSetUID) {
             adminOUGSFactory.upd_OUGS.query(payload,function(response){
-                console.log(response);
                 if (response) {
                     $scope.serviceSetUID = $scope.selectedOUGS.id;   
                     $('#divOUGS').removeClass('alert-warning');
@@ -140,7 +131,6 @@ adminModule.controller('adminMainController', ['$scope', '$translate', 'adminOUG
             });
         }else{
             adminOUGSFactory.set_OUGS.query(payload,function(response){
-                console.log(response);
                 if (response) {
                     $scope.serviceSetUID = $scope.selectedOUGS.id;    
                     $('#divOUGS').removeClass('alert-warning');
@@ -153,7 +143,6 @@ adminModule.controller('adminMainController', ['$scope', '$translate', 'adminOUG
     };
     
     adminAFactory.get(function(result) {
-        console.log(result);
         var test = false;
         result.attributes.forEach(function(attr) {
             if (attr.name == "serviceCode" && attr.dataSetAttribute && attr.indicatorGroupAttribute) {
@@ -177,17 +166,14 @@ adminModule.controller('adminMainController', ['$scope', '$translate', 'adminOUG
     }
     
     $scope.submitDS = function() {
-        console.log($scope.selectedDS);
         adminDSFactory.get_DS_set.query($scope.selectedDS).$promise.then(function(response1){
             return adminDSFactory.upd_DS.query($scope.selectedDS,function(response2){
-                console.log(response2);
                 if (response2) {
                     $scope.blacklist_datasets = $scope.selectedDS;    
                 }
             });
         }, function() {   
             return adminDSFactory.set_DS.query($scope.selectedDS,function(response2){
-                console.log(response2);
                 if (response2) {
                     $scope.blacklist_datasets = $scope.selectedDS;
                 }
@@ -202,17 +188,14 @@ adminModule.controller('adminMainController', ['$scope', '$translate', 'adminOUG
     }
     
     $scope.submitIG = function() {
-        console.log($scope.selectedIG);
         adminIGFactory.get_IG_set.query($scope.selectedIG).$promise.then(function(response1){
             return adminIGFactory.upd_IG.query($scope.selectedIG,function(response2){
-                console.log(response2);
                 if (response2) {
                     $scope.blacklist_indicatorgroups = $scope.selectedIG;    
                 }
             });
         }, function() {  
             return adminIGFactory.set_IG.query($scope.selectedIG,function(response){
-                console.log(response);
                 if (response) {
                     $scope.blacklist_indicatorgroups = $scope.selectedIG;    
                 }

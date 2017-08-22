@@ -11,10 +11,6 @@
  */
 appModule.controller('appSharedController', ['$scope', '$translate', '$state', '$location', '$stateParams', '$http', '$window', function($scope, $translate, $state, $location, $anchorScroll, $stateParams, $http, $window) {
 
-    
-    //$scope.serviceSetUID = 'g7k6NQmqJY2'; //BtFXTpKRl6n//
-    //$scope.userAdminGroup = 'Administrators';    
-
     this.$route = $state;
     this.$location = $location;
     this.$routeParams = $stateParams;
