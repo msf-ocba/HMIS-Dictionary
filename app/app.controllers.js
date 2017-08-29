@@ -11,10 +11,6 @@
  */
 appModule.controller('appSharedController', ['$scope', '$translate', '$state', '$location', '$stateParams', '$http', '$window', function($scope, $translate, $state, $location, $anchorScroll, $stateParams, $http, $window) {
 
-    
-    //$scope.ougsUID = 'g7k6NQmqJY2'; //BtFXTpKRl6n//
-    //$scope.userAdminGroup = 'Administrators';    
-
     this.$route = $state;
     this.$location = $location;
     this.$routeParams = $stateParams;
@@ -50,8 +46,8 @@ appModule.controller('appSharedController', ['$scope', '$translate', '$state', '
         async: false
     }).success(function(servicelist) {
         servicelist = jQuery.parseJSON(servicelist);
-        $scope.ougsUID = servicelist.value;
-        if ($scope.ougsUID) {
+        $scope.serviceSetUID = servicelist.value;
+        if ($scope.serviceSetUID) {
             console.log('appModule: List of services taken from organisationUnitGroupSet: ' + servicelist.value);
         }else{
             console.log('appModule: organisationUnitGroupSet to take the list of services has not been defined yet, go to the admin panel!');
