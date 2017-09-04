@@ -13,6 +13,7 @@ var qryProgramIndicatorExpressions = dhisUrl + 'programIndicators/expression/des
 var qryProgramIndicatorFilters = dhisUrl + 'programIndicators/filter/description'
 
 var qryEventReports = dhisUrl + 'eventReports.json?filter=program.id\\:eq\\::programId&fields=id,displayName,displayDescription&paging=false'
+var qryEventCharts = dhisUrl + 'eventCharts.json?filter=program.id\\:eq\\::programId&fields=id,displayName,displayDescription&paging=false'
 
 
 dossierProgramsModule.factory('dossiersProgramsFactory', ['$resource',
@@ -81,6 +82,19 @@ dossierProgramsModule.factory('dossiersProgramFilterFactory', ['$resource',
 dossierProgramsModule.factory('dossiersProgramEventReportFactory', ['$resource',
     function($resource) {
         return $resource(qryEventReports, {
+            programId: '@programId'
+        }, {
+            query: {
+                method: 'GET',
+                isArray: false
+            }
+        });
+    }
+]);
+
+dossierProgramsModule.factory('dossiersProgramEventChartFactory', ['$resource',
+    function($resource) {
+        return $resource(qryEventCharts, {
             programId: '@programId'
         }, {
             query: {

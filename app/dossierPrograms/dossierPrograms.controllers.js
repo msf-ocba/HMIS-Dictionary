@@ -154,7 +154,8 @@ dossierProgramsModule.controller('dossiersProgramIndicatorController', ['$scope'
 
 
 
-dossierProgramsModule.controller('dossiersProgramAnalysisController', ['$scope', '$q', 'dossiersProgramEventReportFactory', function($scope, $q, dossiersProgramEventReportFactory) {
+dossierProgramsModule.controller('dossiersProgramAnalysisController', ['$scope', '$q', 'dossiersProgramEventReportFactory', 'dossiersProgramEventChartFactory', 
+        function($scope, $q, dossiersProgramEventReportFactory, dossiersProgramEventChartFactory) {
 
     $scope.eventReports4TOC = {   
         displayName: "Event Reports",
@@ -162,8 +163,18 @@ dossierProgramsModule.controller('dossiersProgramAnalysisController', ['$scope',
         index: '2'
     };
 
+    $scope.eventCharts4TOC = {   
+        displayName: "Event Charts",
+        id: "EventChartsContainer",
+        index: '3'
+    };
+
     getEventReportUrl = function(eventReportId) {
         return dhisroot + '/dhis-web-event-reports/index.html?id=' + eventReportId;
+    }
+
+    getEventChartUrl = function(eventChartId) {
+        return dhisroot + '/dhis-web-event-visualizer/index.html?id=' + eventChartId;
     }
 
     $scope.$watch('selectedProgram', function() {
@@ -172,7 +183,8 @@ dossierProgramsModule.controller('dossiersProgramAnalysisController', ['$scope',
             startLoadingState(false);
             
             var analysisElementPromises = [
-                dossiersProgramEventReportFactory.get({programId: $scope.selectedProgram.id}).$promise
+                dossiersProgramEventReportFactory.get({programId: $scope.selectedProgram.id}).$promise,
+                dossiersProgramEventChartFactory.get({programId: $scope.selectedProgram.id}).$promise
             ]
 
             $q.all(analysisElementPromises).then(function(data) {
@@ -180,10 +192,13 @@ dossierProgramsModule.controller('dossiersProgramAnalysisController', ['$scope',
                     eventReport.url = getEventReportUrl(eventReport.id);
                     return eventReport;
                 });
-                
-                if($scope.eventReports.length > 0) {
-                    addtoTOC($scope.toc,null,$scope.eventReports4TOC)
-                }
+                $scope.eventCharts = data[1].eventCharts.map(function(eventChart){
+                    eventChart.url = getEventChartUrl(eventChart.id);
+                    return eventChart;
+                });
+
+                if($scope.eventReports.length > 0) { addtoTOC($scope.toc, null, $scope.eventReports4TOC, "Event Reports") }
+                if($scope.eventCharts.length > 0) { addtoTOC($scope.toc, null, $scope.eventCharts4TOC, "Event Charts") }
             });
         }
     });
