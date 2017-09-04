@@ -1,22 +1,25 @@
 {
-  "name": "HMIS dossier",
-  "description": "dossier repository for HMIS",
+  "name": "HMIS_Dictionary",
+  "description": "Dossiers and Medical terminology browser for MSF OCBA HMIS",
   "version": "0.0.0",
   "private": true,
   "resolutions"    : {
-    "angular": "1.5.8"
+    "angular": "1.5.9"
   },
   "dependencies": {
-    "angular-animate": "1.5.8",
-    "angular-resource": "1.5.8",
-    "angular-sanitize": "1.5.8",
+    "angucomplete-alt": "2.5.0",
+    "angular-resource": "1.5.9",
+    "angular-sanitize": "1.5.9",
+    "angular-table": "2.1.0",
     "angular-translate": "2.9.0",
-    "angular-translate-loader-static-files": "2.9.0",
-    "angular-ui-router": "0.2.18",
-    "angular-ui-tinymce": "0.0.16",
-    "bootstrap": "3.3.6",
+    "angular-translate-loader-static-files": "2.11.0",
+    "angular-ui-bootstrap": "2.3.0",
+    "angular-ui-router": "0.3.2",
+    "angular-ui-tinymce": "0.0.17",
+    "bootstrap": "3.3.7",
     "bootstrap-vertical-tabs": "1.2.1",
-    "jquery": "2.2.0",
-    "tinymce": "4.4.1"
+    "jquery": "2.2.4",
+    "tinymce": "4.5",
+    "d3": "4.4.0"
   }
 }

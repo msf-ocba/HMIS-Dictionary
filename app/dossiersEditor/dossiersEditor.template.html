@@ -4,9 +4,8 @@
  - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
 
 
-<div ng-controller="dossiersEditorMainController">
+<div ng-controller="dossiersEditorMainController" class="row">
 	<div class="col-md-11" id="dossierDescription">
-		<br>
 		<form id="editForm" class="col-md-12" method="post">
 			<textarea ui-tinymce="tinymceOptions" ng-model="tinymceModel"></textarea>
 		</form>
@@ -18,7 +17,8 @@
 		<br>
 		<select class="btn btn-default dropdown-toggle  btn-xs" style="width:55px;" ng-init="selectedLanguage = languages.languages[0]" ng-options="language.language for language in languages.languages | orderBy: 'language'" id="drpBoxLanguage" name="selectedLanguage" ng-model="selectedLanguage">{{selectedLanguage.language}}
 		</select>
-		<button id="saveButton" type="button" class="btn btn-default" style="width:55px;" ng-click="saveDescription()">
+		<br>
+		<button ng-if="autho" id="saveButton" type="button" class="btn btn-default" style="width:55px;" ng-click="saveDescription()">
 			<span id="saveIcon" class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span>
 		</button>
 	<div>

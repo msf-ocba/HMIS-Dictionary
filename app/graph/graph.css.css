@@ -1,0 +1,43 @@
+/*------------------------------------------------------------------------------------
+    List of contributors: https://github.com/MSFOCBA
+    Please refer to the LICENSE.md and LICENSES-DEP.md for complete licenses.
+------------------------------------------------------------------------------------*/
+
+.links line {
+    stroke: #999;
+    stroke-opacity: 0.6;
+}
+
+.nodes circle {
+    stroke: #fff;
+    stroke-width: 1.5px;
+}
+
+.label-Services {
+    font-size: 8px !important;
+    stroke: #7B7D7D;
+    stroke-width: 0.1px;
+    pointer-events: none;
+}
+
+.label-dataSets {
+    font-size: 6px !important;
+    fill: #424949;
+    stroke: #7B7D7D;
+    stroke-width: 0.1px;
+    pointer-events: none;
+}
+
+.label-Sections {
+    font-size: 4px !important;
+    fill: #626567;
+    stroke: #7B7D7D;
+    stroke-width: 0.1px;
+    pointer-events: none;
+}
+
+.legend {
+    top: 20px;
+    left: 10px;
+    position: absolute;
+}

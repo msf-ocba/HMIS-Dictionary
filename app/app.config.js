@@ -3,12 +3,17 @@
     Please refer to the LICENSE.md and LICENSES-DEP.md for complete licenses.
 ------------------------------------------------------------------------------------*/
 
+/*var graphModule = angular.module('graphModule', ['angucomplete-alt']);*/
+var adminModule = angular.module('adminModule', []);
+
 var dossiersEditorModule = angular.module('dossiersEditorModule', ['ui.tinymce']);
 var dossiersReaderModule = angular.module('dossiersReaderModule', []);
-var searchModule = angular.module('searchModule', []);
+var searchModule = angular.module('searchModule', ['ngTable', 'ui.bootstrap']);
 var dossiersModule = angular.module('dossiersModule', ['dossiersEditorModule','dossiersReaderModule']);
+var dossierProgramsModule = angular.module('dossierProgramsModule', []);
+var datasetsModule = angular.module('datasetsModule', [])
 
-var appModule = angular.module('appModule', ['ui.router', 'd2Menu', 'ngSanitize', 'pascalprecht.translate', 'ngResource', 'dossiersModule', 'searchModule']);
+var appModule = angular.module('appModule', ['ui.router', 'd2Menu', 'ngSanitize', 'pascalprecht.translate', 'ngResource', 'dossiersModule', 'dossierProgramsModule', 'datasetsModule','searchModule', 'adminModule'/*, 'graphModule'*/]);
 
 /*
  * 	@alias appModule.config
@@ -18,7 +23,7 @@ var appModule = angular.module('appModule', ['ui.router', 'd2Menu', 'ngSanitize'
  */
 appModule.config(['$stateProvider', '$urlRouterProvider', '$translateProvider', function($stateProvider, $urlRouterProvider, $translateProvider) {
 
-    $urlRouterProvider.otherwise("/dossiers")
+    $urlRouterProvider.otherwise("/search")
 
     $stateProvider
         .state('dossiers', {
@@ -34,11 +39,26 @@ appModule.config(['$stateProvider', '$urlRouterProvider', '$translateProvider', 
                 url:'/editor',
                 templateUrl: 'app/dossiersEditor/dossiersEditor.template.html'
             })
+        .state('dossierPrograms', {
+            url:'/dossierPrograms',
+            templateUrl: 'app/dossierPrograms/dossierPrograms.view.html'
+        })
+        .state('datasets', {
+            url:'/datasets',
+            templateUrl: 'app/datasets/datasets.view.html'
+        })
         .state('search', {
             url:'/search',
             templateUrl: 'app/search/search.view.html',
-        });
-
+        })
+        .state('admin', {
+            url:'/admin',
+            templateUrl: 'app/admin/admin.view.html'
+        })
+        /*.state('graph', {
+            url:'/graph',
+            templateUrl: 'app/graph/graph.view.html',
+        })*/;
 
     $translateProvider.useStaticFilesLoader({
         prefix: 'languages/',

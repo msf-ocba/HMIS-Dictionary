@@ -1,8 +1,79 @@
 {
-  "IN_PROGRESS": "EM PROCESSO",
-  "PRINT": "Imprimir",
-  "EXPORT_EXCEL": "Exportar para Excel",
-  "HOME": "Principal",
-  "SELECT_DATASET": "Selecione um conjunto de dados",
-  "ADD_FORM": "Adicionar forma"
+    "INDEX.HTML": "****************************",
+
+    "idx_Dossiers": "Dossiers",
+    "idx_Search": "Pesquisar",
+    "idx_Graph": "Graph",
+    "idx_Admin": "Admin",
+
+
+    "MODULE: DOSSIERS": "****************************",
+
+    "dos_Dossiers": "Dossiers",
+    "dos_Number of Services": "Número de Serviços",
+    "dos_Number of DataSets in Service": "Número de conjuntos de dados no serviço",
+    "dos_Number of IndicatorGroups in Service": "Número de grupos de indicadores em serviço",
+    "dos_Select a service": "Selecione um serviço",
+
+    "dos_Table of Content": "Tabela de Conteúdo",
+    "dos_Description of Service": "Descrição do Serviço",
+    "dos_Data Sets": "Conjuntos de dados> Seções> Elementos de dados (Tabela 1)",
+    "dos_Data Set": "Conjunto de Dados",
+    "dos_Section": "Seçõesn",
+    "dos_Indicator Groups": "Grupo de Indicadores> Indicadores (Tabela 2)",
+    "dos_Indicator Group": "Grupo Indicador",
+
+    "dos_BackToTop": "Voltar ao topo",
+
+    "dos_Number of Elements in Section": "Número de Elementos de Dados na Seção",
+    "dos_NameElement": "Nome",
+    "dos_FormNameElement": "Form Name",
+    "dos_DescriptionElement": "Descrição",
+
+    "dos_Number of Indicators in Group": "Número de Indicadores no Grupo de Indicadores",
+    "dos_NameIndicator": "Nome",
+    "dos_DescriptionIndicator": "Descrição",
+    "dos_NumeratorIndicator": "Numerator",
+    "dos_DenominatorIndicator": "Denominator",
+
+    "dos_Comments": "Comentários",
+
+
+    "MÓDULO: PROCURAR": "****************************",
+
+    "srch_SearchAll": "Pesquisar",
+    "srch_SearchAll_Clear": "Limpar filtros",
+    "srch_SearchAll_Row": "Mostrar / Ocultar filtros de coluna",
+    "srch_SearchAll_Here": "Escreva aqui ...",
+
+    "srch_SelectColumns": "Selecione Colunas",
+
+    "srch_SelectColumns_objBasics": "Elementos de Dados ou Indicadores - Noções Básicas",
+    "object_type": "Tipo",
+    "object_name": "Nome",
+    "object_form": "Nome do formulário (somente datae)",
+    "object_id": "ID",
+    "object_code": "Código",
+
+    "srch_SelectColumns_objDescs": "Elementos de Dados ou Indicadores - Descrições",
+    "object_description": "Descrição",
+    "object_den_description": "Denominador Descrição (ind. Somente)",
+    "object_num_description": "Numerador Descrição (ind. Somente)",
+    "object_den_ids": "Fórmula Denominador (ind. Somente)",
+    "object_num_ids": "Fórmula Numerador (ind. Somente)",
+
+    "srch_SelectColumns_grpBasics": "Conjuntos de Dados ou Grupos de Indicadores - Noções Básicas",
+    "objectGroup_name": "Nome do Grupo",
+    "objectGroup_id": "ID de grupo",
+    "objectGroup_code": "Código de grupo",
+
+    "srch_SelectColumns_servBasics": "Serviços - Noções básicas",
+    "service_name": "Nome do Serviço",
+    "service_id": "ID de Serviço",
+    "service_code": "Código de Serviço",
+
+    "srch_Help": "Ajuda",
+    "srch_Help_Text": "<p>Esta interface é feita para simplificar o acesso do usuário à terminologia associada às informações coletadas com o HMIS.<br><ul><li>Através da guia <b>Pesquisar</b> você pode diretamente Procure um termo em todas as colunas da tabela. Você também pode exibir os filtros de coluna, que permitem pesquisar informações em uma coluna específica. Utilize 'Limpar filtros' para redefinir todos os filtros.<i>Os usuários experientes podem usar palavra-chave '|' (OR) para pesquisar vários objetos.</i></li><li>Através da guia <b>Selecionar colunas</b> você pode selecionar colunas a serem exibidas na tabela. <i>Os usuários experientes podem usar as colunas avançadas para realizar pesquisas detalhadas através de IDs.</i></li></ul>Você pode finalmente exportar os resultados da sua pesquisa para o Excel (página por página, e não se esqueça de salvar como .xls).</p>",
+    "srch_exportToExcel": "Exportar esta página para o Excel"
+
 }

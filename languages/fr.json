@@ -1,36 +1,79 @@
 {
-    "Dossiers": "Dossiers",
-    "Data Sets": "Ensemble de Données",
-    "Indicators": "Indicateurs",
-    "Services": "Services",
-    "HMIS Data Sets": "HMIS Ensembles de Données",
-    "number of datasets": "Nombre d'Ensembles de Données",
-    "number of sections in dataset": "Nombre de Sections dans l'Ensemble de Données",
-    "Number of elements in section": "Nombre d'Eléments dans la Section",
-    "HMIS Indicator Groups": "HMIS Groupes d'Indicateurs",
-    "HMIS Indicators": "HMIS Indicateurs",
+    "INDEX.HTML":       "****************************",
 
-    "Table Of Content": "Table des Matières",
+    "idx_Dossiers": "Dossiers",
+    "idx_Search": "Recherche",
+    "idx_Graph": "Graph",
+    "idx_Admin": "Admin",
 
-    "NameElement": "Nom",
-    "FormNameElement": "Nom du Formulaire",
-    "DescriptionElement": "Description",
 
-    "Number of Indicator Groups": "Nombre de Groupes d'Indicateurs",
-    "Number of indicators in group": "Nombre d'Indicateurs dans le Groupe",
-    "Number of indicators": "Nombre d'Indicateurs",
-    "Indicator Group": "Groupe d'Indicateurs",
-    "Indicator Groups": "Groupes d'Indicateurs",
-    "Nameindicator": "Nom",
-    "DescriptionIndicator": "Description",
-    "NumeratorIndicator": "Numérateur",
-    "DenominatorIndicator": "Dénominateur",
+    "MODULE:DOSSIERS":  "****************************",
 
-    "Health Services": "Services de Santé",
-    "Number of Services": "Nombre de Services",
-    "Number of DataSets in Service": "Nombre d'Ensemble de Données dans le Service",
-    "Number of Sections in Service": "Nombre de Sections dans le Service",
-    "Number of IndicatorGroups in Service": "Nombre de Groupes d'Indicateurs dans le Service",
+    "dos_Dossiers": "Dossiers",
+    "dos_Number of Services": "Nombre de Services",
+    "dos_Number of DataSets in Service": "Nombre d'Ensembles de Données dans le Service",
+    "dos_Number of IndicatorGroups in Service": "Nombre de Groupes d'Indicateurs dans le Service",
+    "dos_Select a service": "Selectionner un service",
 
-    "Comments": "Commentaires"
+    "dos_Table of Content": "Table des Matières",
+    "dos_Description of Service": "Description du Service",
+    "dos_Data Sets": "Ensembles de Données > Sections > Eléments de Données (Table 1)",
+    "dos_Data Set": "Ensemble de Données",
+    "dos_Section": "Section",
+    "dos_Indicator Groups": "Groupes d'Indicateurs > Indicateurs (Table 2)",
+    "dos_Indicator Group": "Groupe d'Indicateurs",
+
+    "dos_BackToTop": "Haut de Page",
+
+    "dos_Number of Elements in Section": "Nombre d'Eléments de Données dans la Section",
+    "dos_NameElement": "Nom",
+    "dos_FormNameElement": "Nom dans le Formulaire",
+    "dos_DescriptionElement": "Description",
+
+    "dos_Number of Indicators in Group": "Nombre d'Indicateurs dans le Group d'Indicateur",
+    "dos_NameIndicator": "Nom",
+    "dos_DescriptionIndicator": "Description",
+    "dos_NumeratorIndicator": "Numérateur",
+    "dos_DenominatorIndicator": "Dénominateur",
+
+    "dos_Comments": "Commentaires",
+
+
+    "MODULE:SEARCH":    "****************************",
+
+    "srch_SearchAll": "Recherche",
+    "srch_SearchAll_Clear": "Effacer les filtres",
+    "srch_SearchAll_Row": "Montrer / Cacher les filtres de colonnes",
+    "srch_SearchAll_Here": "Ecrire ici...",
+
+    "srch_SelectColumns": "Selectionner les Colonnes",
+
+    "srch_SelectColumns_objBasics": "Eléments de Données ou Indicateurs - Essentiel",
+    "object_type": "Type",
+    "object_name": "Nom",
+    "object_form": "Nom dans le Formulaire (datae. seulement)",
+    "object_id": "ID",
+    "object_code": "Code",
+
+    "srch_SelectColumns_objDescs": "Eléments de Données ou Indicateurs - Descriptions",
+    "object_description": "Description",
+    "object_den_description": "Description du Dénominateur (ind. seulement)",
+    "object_num_description": "Description du Numérateur (ind. seulement)",
+    "object_den_ids": "Formule du Dénominateur (ind. seulement)",
+    "object_num_ids": "Formule du Numérateur (ind. seulement)",
+
+    "srch_SelectColumns_grpBasics": "Ensembles de Données ou Groupes Indicateurs - Essentiel",
+    "objectGroup_name": "Nom du Groupe",
+    "objectGroup_id": "ID du Groupe",
+    "objectGroup_code": "Code du Groupe",
+
+    "srch_SelectColumns_servBasics": "Services - Essentiel",
+    "service_name": "Nom du Service",
+    "service_id": "ID du Service",
+    "service_code": "Code du Service",
+
+    "srch_Help": "Aide",
+    "srch_Help_Text": "<p>Cette interface permet de simplifier l'accès des utilisateurs à la terminologie associée aux informations collectées avec HMIS. <ul> <li> Via l'onglet <b>Rechercher</b>, vous pouvez rechercher directement un terme dans toutes les colonnes de la table. Vous pouvez également afficher des filtres de colonne ce qui vous permet de rechercher des informations dans une colonne spécifique. Utilisez 'Effacer les filtres' pour réinitialiser tous les filtres. <i> Les utilisateurs experts peuvent utiliser le mot clé '|' (OR) pour chercher plusieurs objets à la fois. </i> </li> <li> Grâce à l'onglet <b>Sélectionner les Colonnes</b>, vous pouvez sélectionner les colonnes à afficher dans la table. <i>Les utilisateurs expérimentés peuvent utiliser les colonnes avancées pour effectuer des recherches détaillées via les IDs. </i> </li> </ul>Vous pouvez enfin exporter les résultats de votre recherche vers Excel (page par page, et n'oubliez pas d'enregistrer sous .xls).</p>",
+    "srch_exportToExcel": "Exporter cette page vers Excel"
+
 }

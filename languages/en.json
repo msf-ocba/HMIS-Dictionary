@@ -1,42 +1,79 @@
 {
-    "Dossiers": "Dossiers",
-    "Data Sets": "DataSets",
-    "Indicators": "Indicators",
-    "Services": "Services",
-    "Search": "Search",
-    "HMIS Data Sets": "HMIS DataSets",
-    "number of datasets": "Number of Datasets",
-    "number of sections in dataset": "Number of Sections in Dataset",
-    "Number of elements in section": "Number of Elements in Section",
-    "HMIS Indicator Groups": "HMIS Indicator Groups",
-	"HMIS Indicators": "HMIS Indicators",
+    "INDEX.HTML":       "****************************",
 
-    "Table Of Content": "Table of Content",
+    "idx_Dossiers": "Dossiers",
+    "idx_Search": "Search",
+    "idx_Graph": "Graph",
+    "idx_Admin": "Admin",
 
-    "Type": "Type",
-    "NameObject": "Name",
-    "DescriptionObject": "Description",
-    "ParentsObject": "Parents",
 
-    "NameElement": "Name",
-    "FormNameElement": "Form Name",
-    "DescriptionElement": "Description",
+    "MODULE:DOSSIERS":  "****************************",
 
-    "Number of Indicator Groups": "Number of Indicator Groups",
-    "Number of indicators in group": "Number of Indicators in Group",
-	"Number of indicators": "Number of Indicators",
-    "Indicator Group": "Indicator Group",
-    "Indicator Groups": "Indicator Groups",
-    "Nameindicator": "Name",
-    "DescriptionIndicator": "Description",
-    "NumeratorIndicator": "Numerator",
-    "DenominatorIndicator": "Denominator",
+    "dos_Dossiers": "Dossiers",
+    "dos_Number of Services": "Number of Services",
+    "dos_Number of DataSets in Service": "Number of Data Sets in Service",
+    "dos_Number of IndicatorGroups in Service": "Number of Indicator Groups in Service",
+    "dos_Select a service": "Select a service",
 
-    "Health Services": "Health Services",
-    "Number of Services": "Number of Services",
-    "Number of DataSets in Service": "Number of DataSets in Service",
-    "Number of Sections in Service": "Number of Sections in Service",
-    "Number of IndicatorGroups in Service": "Number of IndicatorGroups in Service",
+    "dos_Table of Content": "Table of Content",
+    "dos_Description of Service": "Description of Service",
+    "dos_Data Sets": "Data Sets > Sections > Data Elements (Table 1)",
+    "dos_Data Set": "Data Set",
+    "dos_Section": "Section",
+    "dos_Indicator Groups": "Indicator Groups > Indicators (Table 2)",
+    "dos_Indicator Group": "Indicator Group",
 
-    "Comments": "Comments"
+    "dos_BackToTop": "Back to Top",
+
+    "dos_Number of Elements in Section": "Number of Data Elements in Section",
+    "dos_NameElement": "Name",
+    "dos_FormNameElement": "Form Name",
+    "dos_DescriptionElement": "Description",
+
+    "dos_Number of Indicators in Group": "Number of Indicators in Indicator Group",
+    "dos_NameIndicator": "Name",
+    "dos_DescriptionIndicator": "Description",
+    "dos_NumeratorIndicator": "Numerator",
+    "dos_DenominatorIndicator": "Denominator",
+
+    "dos_Comments": "Comments",
+
+
+    "MODULE:SEARCH":    "****************************",
+
+    "srch_SearchAll": "Search",
+    "srch_SearchAll_Clear": "Clear filters",
+    "srch_SearchAll_Row": "Show / Hide column filters",
+    "srch_SearchAll_Here": "Type here...",
+
+    "srch_SelectColumns": "Select Columns",
+
+    "srch_SelectColumns_objBasics": "Data Elements or Indicators - Basics",
+    "object_type": "Type",
+    "object_name": "Name",
+    "object_form": "Form name (datae. only)",
+    "object_id": "ID",
+    "object_code": "Code",
+
+    "srch_SelectColumns_objDescs": "Data Elements or Indicators - Descriptions",
+    "object_description": "Description",
+    "object_den_description": "Denominator Description (ind. only)",
+    "object_num_description": "Numerator Description (ind. only)",
+    "object_den_ids": "Denominator Formula (ind. only)",
+    "object_num_ids": "Numerator Formula (ind. only)",
+
+    "srch_SelectColumns_grpBasics": "Data Sets or Indicator Groups - Basics",
+    "objectGroup_name": "Group Name",
+    "objectGroup_id": "Group ID",
+    "objectGroup_code": "Group Code",
+
+    "srch_SelectColumns_servBasics": "Services - Basics",
+    "service_name": "Service Name",
+    "service_id": "Service ID",
+    "service_code": "Service Code",
+
+    "srch_Help": "Help",
+    "srch_Help_Text": "<p>This interface is made to simplify user access the terminology associated with information collected with HMIS.<br><ul><li>Via the <b>Search</b> tab you can directly search a term in all the columns of the table. You can display column filters as well, this which allow you to search information in one specific column. Use 'Clear filters' to reset all the filters. <i>Expert users can use the key word '|' (OR) to search multiple objects.</i></li><li>Via the <b>Select Columns</b> tab you can select columns to be displayed in the table. <i>Expert users can use the advanced columns to perfom detailed researchs via IDs.</i></li></ul>You can finally export the results of your search to Excel (page by page, and do not forget to save as .xls).</p>",
+    "srch_exportToExcel": "Export this page to Excel"
+
 }

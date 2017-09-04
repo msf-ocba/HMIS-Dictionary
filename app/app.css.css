@@ -45,7 +45,7 @@ a {
 
 #view-container {
     margin-top: 44px;
-    margin-left: 88px;
+    margin-left: 66px;
     margin-right: 44px;
 }
 
@@ -68,15 +68,31 @@ a {
 }
 
 @media print {
-    #header, #menu-container, #menu-background, #headerDossierPanel /*dossiers.view*/, #editDescButton /*dossiersReader.view*/ {
+    #header, #menu-container, #menu-background, #headerDossierPanel /*dossiers.view*/, #editDescButton /*dossiersReader.view*/, #backtotop {
         display: none;
     }
+    a[href]:after {
+        content: none !important;
+    }
+    
+    body {
+        zoom: 85%;
+    }
+
     /* works only properly in firefox */
     #print-foot {
         display: block;
         position: fixed;
         bottom: 0pt;
         right: 0pt;
+    }
+
+    .headerGroup {
+        page-break-before: always;
+    }
+
+    .service>.dataset:first-child, .indicatorGroup:first-child {
+        page-break-before: avoid;
     }
     .service>.dataset, .indicatorGroup {
         page-break-before: always;
@@ -87,6 +103,13 @@ a {
             content: counter(page);
             counter-increment: page;
         }
+    }
+    @page
+    {
+        /*size: auto;   /* auto is the initial value */
+
+        /* this affects the margin in the printer settings */
+        margin: 15mm 10mm 15mm -5mm;
     }
 }
 
@@ -125,10 +148,12 @@ a {
 /*----------------------------------------------------------------------------*/
 
 #menu-container {
-    margin-top: 54px !important;
+    margin-top: 1px !important;
     margin-left: 6px !important;
     background-color: #fff;
     position: fixed;
+    height: 100%;
+    z-index: 9;
 }
 
 #menu-background {
@@ -140,4 +165,5 @@ a {
     height: 100%;
     width: 48px;
     border: 1px solid #dcdcdc;
+    z-index: 10;
 }
