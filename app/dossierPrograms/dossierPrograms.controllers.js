@@ -151,3 +151,40 @@ dossierProgramsModule.controller('dossiersProgramIndicatorController', ['$scope'
     });
 
 }]);
+
+
+
+dossierProgramsModule.controller('dossiersProgramAnalysisController', ['$scope', '$q', 'dossiersProgramEventReportFactory', function($scope, $q, dossiersProgramEventReportFactory) {
+
+    $scope.eventReports4TOC = {   
+        displayName: "Event Reports",
+        id: "EventReportsContainer",
+        index: '2'
+    };
+
+    getEventReportUrl = function(eventReportId) {
+        return dhisroot + '/dhis-web-event-reports/index.html?id=' + eventReportId;
+    }
+
+    $scope.$watch('selectedProgram', function() {
+        ping();
+        if ($scope.selectedProgram) {
+            startLoadingState(false);
+            
+            var analysisElementPromises = [
+                dossiersProgramEventReportFactory.get({programId: $scope.selectedProgram.id}).$promise
+            ]
+
+            $q.all(analysisElementPromises).then(function(data) {
+                $scope.eventReports = data[0].eventReports.map(function(eventReport){
+                    eventReport.url = getEventReportUrl(eventReport.id);
+                    return eventReport;
+                });
+                
+                if($scope.eventReports.length > 0) {
+                    addtoTOC($scope.toc,null,$scope.eventReports4TOC)
+                }
+            });
+        }
+    });
+}]);
