@@ -6,8 +6,8 @@
 searchModule.controller('searchController', ['ExcelFactory', '$timeout', '$scope', '$translate', 'NgTableParams', 'searchAllFactory', function(ExcelFactory, $timeout, $scope, $translate, NgTableParams, searchAllFactory) {
 
     $('#search').tab('show');
-    
-    if ($scope.serviceSetUID) {
+
+    if ($scope.show_dossiers) {
         console.log("searchModule: Service set defined " + $scope.serviceSetUID);
         searchAllFactory.get_organisationUnitGroupSets.query({
             ougsUID: $scope.serviceSetUID
@@ -27,7 +27,7 @@ searchModule.controller('searchController', ['ExcelFactory', '$timeout', '$scope
         console.log("searchModule: Service set is not defined");
         load_table_info();
     }
-    
+
     var concatObjects = function(tablesList) {
         var temp = [];
         tablesList.forEach(function(table) {
@@ -41,7 +41,7 @@ searchModule.controller('searchController', ['ExcelFactory', '$timeout', '$scope
 
     /*
      * Filter dataElements and indicators that are not associated to a dataSet or an indicatorGroup
-     
+
     var blacklist_datasets = [
         'AjwuNAGMSFM', // HIV program
         'kraMkBJg3JI', // Hospital Ward Multiservice SRH comp - Monthly
@@ -146,7 +146,6 @@ searchModule.controller('searchController', ['ExcelFactory', '$timeout', '$scope
                 filterOptions: { filterFilterName: "filterOR" },
                 dataset: $scope.allObjects
             });
-            console.log($scope.table);
             if($scope.table.cols){
                 $scope.table.cols.forEach(function(col) {
                     col.code = Object.keys(col.filter())[0];
@@ -242,7 +241,7 @@ searchModule.controller('searchController', ['ExcelFactory', '$timeout', '$scope
                                     temp_arr.service_code.push($scope.servicesList[code].service_code);
                                     temp_arr.service_name.push($scope.servicesList[code].service_name);
                                 }else{
-                                    console.log("search: Cannot find any service with code: " + code);
+                                    console.log("searchModule: Cannot find any service with code: " + code);
                                 }
                             });
                         }
@@ -311,7 +310,7 @@ searchModule.controller('searchController', ['ExcelFactory', '$timeout', '$scope
                                         temp_arr.service_code.push($scope.servicesList[code].service_code);
                                         temp_arr.service_name.push($scope.servicesList[code].service_name);
                                     }else{
-                                        console.log("search: Cannot find any service with code: " + code);
+                                        console.log("searchModule: Cannot find any service with code: " + code);
                                     }
                                 });
                             }
@@ -353,7 +352,7 @@ searchModule.controller('searchController', ['ExcelFactory', '$timeout', '$scope
                 return "done";
             });
         }).then(function log(){
-            console.log("Loading time of search table: " + (Date.now() - start) + " milliseconds.");
+            console.log("searchModule: Loading time of search table: " + (Date.now() - start) + " milliseconds.");
         });
     }
 

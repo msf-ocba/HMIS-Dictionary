@@ -9,14 +9,20 @@
 		<p>{{'Number of Programs' | translate}}: {{programs.programs.length}}</p>
 		<!--<p>{{'Number of Data Elements in Program' | translate}}: {{programDataElements.programStageDataElements.length}}</p>
 		<p>{{'Number of Indicators in Program' | translate}}: {{selectedProgram.programIndicators.length}}</p>-->
-		<div class="col-md-12">
-			<select class="col-md-2" ng-options="program.displayName for program in programs.programs | orderBy: 'displayName'" name="selectProgram" id="drpBoxServices" ng-model="selectedProgram">
+		<div class="col-md-2">
+			<select class="form-control col-md-2" ng-options="program.displayName for program in programs.programs | orderBy: 'displayName'" name="selectProgram" id="drpBoxServices" ng-model="selectedProgram">
 				<option value="" disabled selected>Select a program</option>
 			</select>
 		</div>
 	</div>
+
 	<div class="col-md-12">
-		<h1 class="col-md-12">{{selectedProgram.displayName}}</h1>
+
+		<div id="DossierTitleContainer" ng-if="selectedProgram" class="row">
+			<br>
+			<h1>{{selectedProgram.displayName}}</h1>
+		</div>
+		<br>
 
 		<div id="tocContainer" class="row">
 			<h3 ng-if="selectedProgram" style="text-decoration: underline;">{{'dos_Table of Content'| translate}}</h3>
@@ -31,7 +37,7 @@
 
 		<div id="DossierTextContainer" ng-if="selectedService">
 			<div ui-view></div>
-		</div> 
+		</div>
 
 		<div id="sectionContainer"  ng-model="sectionList" ng-controller="dossiersProgramSectionController">
 			<div class="col-md-12"  ng-repeat="section in sections.programStageSections">
@@ -62,11 +68,11 @@
 						</tr>
 					</tbody>
 				</table>
-				
+
 			</div>
 		</div>
 
-		
+
 		<div class="col-md-12"  ng-controller="dossiersProgramIndicatorController" id="IndicatorGroupsContainer" ng-show="indicators.programIndicators[0]">
 			<h3 class="indicatorGroup" id="indicators">{{'Program indicators' | translate}}</h3>
 			<div  class="col-md-12">

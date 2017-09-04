@@ -4,20 +4,19 @@
  - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
 
  <div ng-controller="adminMainController" class="row">
-     
      <div id="headerPanel" class="col-md-12 headerPanel row">
- 		<h1>{{'idx_Admin' | translate}}</h1>
-        
+ 		    <h1>{{'idx_Admin' | translate}}</h1>
+
         <div class="col-md-12">
             <div class="alert alert-info rounded" role="alert">
                 This version of the app has been developped and tested for dhis v2.25 (revision: 8ab22be) with default locale assumed to be <u>English</u> and accepts tranlsations in <u>Spanish</u>, <u>French</u> and <u>Portuguese</u>. The latest version is available at: <a href=https://github.com/msf-ocba/HMIS_Dictionary><font color="blue">https://github.com/msf-ocba/HMIS_Dictionary</font></a>.
             </div>
         </div>
-        
+
         <div class="col-md-12">
             <div class="col-md-12">
                 <div class="col-md-6">
-                    <h3>HMIS Dictionary configuration check:</h3>
+                    <h3>Dossiers configuration check:</h3>
                     <br>
                 </div>
                 <div class="col-md-6">
@@ -28,7 +27,7 @@
                 <div class="col-md-6">
                     <div id="divUG" class="alert alert-warning" role="alert">
                         <p>A <strong>userGroup</strong> is defined for administrators:<p>
-                        
+
                         <div class="col-md-9">
                             <select class="col-md-12 form-control" ng-options="UG.name for UG in UGList.userGroups | orderBy: 'name'" name="selectUG" id="drpBoxUG" ng-model="selectedUG">
                 				<option value="" disabled>Select...</option>
@@ -51,12 +50,12 @@
                     </div>
                 </div>
             </div>
-            
+
             <div class="col-md-12">
                 <div class="col-md-6">
                     <div id="divOUGS" class="alert alert-warning" role="alert">
                         <p>An <strong>organisationUnitGroupSet</strong> is defined to contain the list of services.</p>
-                        
+
                         <div class="col-md-9">
                             <select class="col-md-12 form-control" ng-options="OUGS.name for OUGS in OUGSList.organisationUnitGroupSets | orderBy: 'name'" name="selectOUGS" id="drpBoxOUGS" ng-model="selectedOUGS">
                 				<option value="" disabled>Select...</option>
@@ -71,11 +70,11 @@
                 <div class="col-md-6">
                 </div>
             </div>
-            
+
             <div class="col-md-12">
                 <div class="col-md-6">
                     <div id="divOUG" class="alert alert-warning" role="alert">
-                        <p class="col-md-10"><strong>organisationUnitGroups</strong> are associated to the <strong>organisationUnitGroupSet</strong> as a list of services... 
+                        <p class="col-md-10"><strong>organisationUnitGroups</strong> are associated to the <strong>organisationUnitGroupSet</strong> as a list of services...
                             <br><span style="float:right;">...and each of the <strong>organisationUnitGroups</strong> have a <i>code</i>.</span>
                         </p>
                         <p><br><br></p>
@@ -83,7 +82,7 @@
                 </div>
                 <div class="col-md-6">
                     <div class="alert rounded" style="background-color:#f9f9f9"role="alert">
-                        <p>To compile the information in the 'Dossiers' panel, the app reads: 
+                        <p>To compile the information in the 'Dossiers' panel, the app reads:
                             <ul>
                                 <li>the translations form the <strong>organisationUnitGroups</strong> <i>names</i> and <i>descriptions</i> and,</li>
                                 <li>the <i>code</i> should be formatted as follows, for instance: <code>*SomeText*_CD1</code> (<code>CD1</code> would be used to associate to each service <strong>dataSets</strong> and <strong>indicatorGroups</strong>).</li>
@@ -93,7 +92,7 @@
                     </div>
                 </div>
             </div>
-            
+
             <div class="col-md-12">
                 <div class="col-md-6">
                     <div id="divA" class="alert alert-warning" role="alert">
@@ -104,31 +103,31 @@
                     <div class="alert rounded" style="background-color:#f9f9f9"role="alert">
                         <p>The <i>serviceCode</i> should correspond to, at least, one <i>code</i> of a service. They should be formatted as follows:
                         <ul>
-                            <li><code>*AnotherText*_CD1</code> where <code>CD1</code> is an example of <i>code</i> used in for a service.</li> 
+                            <li><code>*AnotherText*_CD1</code> where <code>CD1</code> is an example of <i>code</i> used in for a service.</li>
                             <li>One or more <i>code</i>s can be added in the case of <strong>dataSets</strong> or <strong>indicatorGroups</strong> used in multiple services: <code>*AnotherText*_CD1_CD2_CD3</code></li>
                         </ul><p>
                     </div>
                 </div>
             </div>
-            
+
             <div class="col-md-12">
                 <div class="col-md-6">
                     <div class="alert alert-warning" role="alert">
                         <p>[<i>Optional</i>] An array of <strong>dataSets</strong> 'UID's to blacklist form the 'Search' panel.</p>
-                        
+
                         <div class="col-md-9">
                             <input type="text" class="form-control" name="DS_UIDs" ng-model="selectedDS"/>
                         </div>
                         <div class="col-md-3">
                             <button type="submit" class="btn btn-primary" id="submitDS" ng-click="submitDS()">Submit</button>
                         </div>
-                        
+
                         <p><br><br>[<i>Optional</i>] An array of <strong>indicatorGroups</strong> 'UID's to blacklist form the 'Search' panel.</p>
 
                         <div class="col-md-9">
                             <input type="text" class="form-control" name="IG_UIDs" ng-model="selectedIG"/>
                         </div>
-                        
+
                         <div class="col-md-3">
                             <button type="submit" class="btn btn-primary" id="submitIG" ng-click="submitIG()">Submit</button>
                         </div>
@@ -141,7 +140,7 @@
                     </div>
                 </div>
             </div>
-            
+
             <div class="col-md-12">
                 <h4>About <strong>dataElements</strong> and <strong>indicators</strong>:</h4>
                 <div class="alert rounded" style="background-color:#f9f9f9"role="alert">
@@ -151,13 +150,13 @@
                             In the tables, the principal information used to display in columns is <i>Name</i>, <i>Form Name</i> and <i>Description</i> and their translations.<br><br></li>
                         <li><strong>indicators</strong> have to be associated to a <strong>indicatorGroup</strong> to appear in the 'Dossiers' and the 'Search' panels.<br>
                             In the tables, the principal information used to display in columns is <i>Name</i> and <i>Description</i> and their translations.<br>
-                            The field <i>Description</i> is splited in three parts as follows: <code>*A_general_description* NUM:*A_description_of_the_numerator* DENOM:*A_description_of_the_denominator*</code>. The key words <code>NUM:</code> and <code>DENOM:</code> should be respected to fill the related columns.</li></li> 
+                            The field <i>Description</i> is splited in three parts as follows: <code>*A_general_description* NUM:*A_description_of_the_numerator* DENOM:*A_description_of_the_denominator*</code>. The key words <code>NUM:</code> and <code>DENOM:</code> should be respected to fill the related columns.</li></li>
 
                     </ul><p>
                 </div>
             </div>
-            
+
 		</div>
-        
+
     </div>
  </div>

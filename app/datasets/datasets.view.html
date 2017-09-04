@@ -4,10 +4,11 @@
  - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
 
 <div ng-controller="datasetsMainController" id="DossierPanel" class="row">
-
-	<div id="headerDossierPanel" class="row headerPanel">
+	<div id="headerDossierPanel" class="col-md-12 headerPanel">
 		<h1>{{'Data Sets' | translate}}</h1>
 		<p>{{'Number of Data Sets' | translate}}: {{datasets.dataSets.length}}</p>
+
+
 		<div class="col-md-2">
 			<select class="form-control col-md-2" ng-options="dataset.displayName for dataset in datasets.dataSets | orderBy: 'displayName'" name="selectedDataset" id="drpBoxServices" ng-model="selectedDataset">
 				<option value="" disabled selected>{{'Select a Data Set' | translate}}</option>
@@ -15,7 +16,7 @@
 		</div>
 	</div>
 
-	<div class="row">
+	<div class="col-md-12">
 
 		<div id="DossierTitleContainer" ng-if="selectedDataset" class="row">
 			<br>
@@ -73,7 +74,7 @@
 						</tr>
 					</tbody>
 				</table>
-				
+
 			</div>
 		</div>
 
@@ -100,7 +101,7 @@
 						</tr>
 					</tbody>
 				</table>
-				
+
 			</div>
 		</div>
 
@@ -130,7 +131,7 @@
 						</tr>
 					</tbody>
 				</table>
-				
+
 			</div>
 		</div>
 

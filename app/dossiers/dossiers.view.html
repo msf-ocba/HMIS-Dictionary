@@ -4,8 +4,7 @@
  - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
 
 <div ng-controller="dossiersMainController" id="DossierPanel" class="row">
-
-	<div id="headerDossierPanel" class="row headerPanel">
+	<div id="headerDossierPanel" class="col-md-12 headerPanel">
 		<h1>{{'dos_Dossiers' | translate}}</h1>
 		<p>{{'dos_Number of Services' | translate}}: {{services.organisationUnitGroups.length}}</p>
 		<p>{{'dos_Number of DataSets in Service' | translate}}: {{serviceDataSets.dataSets.length}}</p>
@@ -17,7 +16,7 @@
 		</div>
 	</div>
 
-	<div class="row">
+	<div class="col-md-12">
 
 		<div id="DossierTitleContainer" ng-if="selectedService" class="row">
 			<br>
