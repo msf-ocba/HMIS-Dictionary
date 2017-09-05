@@ -49,7 +49,7 @@ function($scope, $translate, $anchorScroll, dossiersProgramsFactory, dossiersPro
     });
 }]);
 
-dossierProgramsModule.controller('dossiersProgramSectionController', ['$scope', '$translate', 'dossiersProgramStageSectionsFactory', 'Ping', 
+dossierProgramsModule.controller('dossiersProgramSectionController', ['$scope', '$translate', 'dossiersProgramStageSectionsFactory', 'Ping',
 function($scope, $translate, dossiersProgramStageSectionsFactory, Ping) {
 
     $scope.stages4TOC = {
@@ -67,8 +67,8 @@ function($scope, $translate, dossiersProgramStageSectionsFactory, Ping) {
                 programStageId: $scope.selectedProgram.programStages[0].id
             }, function () {
                 //if there are no sections rearrange/change TOC name
-                if ($scope.sections.programStageSections.length == 0) $scope.showProgramWithoutSections();    
-                else $scope.showProgramWithSections();            
+                if ($scope.sections.programStageSections.length == 0) $scope.showProgramWithoutSections();
+                else $scope.showProgramWithSections();
             endLoadingState(true);
         });
         }
@@ -78,12 +78,9 @@ function($scope, $translate, dossiersProgramStageSectionsFactory, Ping) {
         $scope.stages4TOC.displayName = "Data elements";
         //line needed to reuse code of the ng-repeat on the view
         $scope.sections.programStageSections =  [{displayName: "Data Elements", id:"DataElements", dataElements: $scope.sections.programStageDataElements}];
-        console.log($scope.sections);
         for (i = 0; i < $scope.sections.programStageSections[0].dataElements.length; ++i) {
             $scope.sections.programStageSections[0].dataElements[i] = $scope.sections.programStageSections[0].dataElements[i].dataElement;
         }
-        console.log("out");
-        console.log($scope.sections);
         addtoTOC($scope.toc, null, $scope.stages4TOC, "programs");
     };
 
@@ -100,7 +97,7 @@ function($scope, $translate, dossiersProgramStageSectionsFactory, Ping) {
 
 dossierProgramsModule.controller('dossiersProgramIndicatorController', ['$scope', 'dossiersProgramExpressionFactory', 'dossiersProgramFilterFactory', 'dossiersProgramIndicatorsFactory', function($scope, dossiersProgramExpressionFactory, dossiersProgramFilterFactory, dossiersProgramIndicatorsFactory) {
 
-    $scope.indicators4TOC = {   
+    $scope.indicators4TOC = {
                 displayName: "Program indicators",
                 id: "IndicatorGroupsContainer",
                 index: '1'
@@ -113,7 +110,7 @@ dossierProgramsModule.controller('dossiersProgramIndicatorController', ['$scope'
                          function (data) {
                             $scope.indicators.programIndicators[i].expression = data.description;
                             recursiveAssignExpression(i+1);
-                        }); 
+                        });
 
     }
 

@@ -132,7 +132,6 @@ dossiersEditorModule.controller('dossiersEditorMainController', ['$scope', 'doss
             }, function() {
                 console.log("original", $scope.translation.translations);
                 $scope.translation.translations.forEach(function(translation) {
-                    console.log($scope.selectedLanguage.code, translation.locale, translation.property, translation.locale != $scope.selectedLanguage.code || translation.property != "DESCRIPTION");
                     if(translation.locale != $scope.selectedLanguage.code || translation.property != "DESCRIPTION"){
                         translationsArray.push(translation);
                     }

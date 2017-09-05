@@ -33,10 +33,15 @@ appModule.controller('appSharedController', ['$scope', '$translate', '$state', '
         }
     }).fail(function() {
         console.log('appModule: Group of users authorised to administrate has not been defined yet, go to the admin panel!');
+
         $scope.show_admin = true;
+
+        // "Dossier" configuration is not mandatory anymore
+        /*
         window.location.href = dhisUrl + 'apps/HMIS_Dictionary/index.html#/admin';
+        */
     });
-    
+
     /* For services list */
     jQuery.ajax({
         url: dhisUrl + 'dataStore/HMIS_Dictionary/setup_organisationUnitGroupSet',
@@ -77,7 +82,7 @@ appModule.controller('appSharedController', ['$scope', '$translate', '$state', '
         console.log('appModule: List of blacklisted dataSets has not been identified.');
         $scope.blacklist_datasets = [];
     });
-    
+
     /* For IG blacklist */
     jQuery.ajax({
         url: dhisUrl + 'dataStore/HMIS_Dictionary/blacklist_indicatorGroups',
@@ -98,7 +103,7 @@ appModule.controller('appSharedController', ['$scope', '$translate', '$state', '
         console.log('appModule: List of blacklisted indicatorGroups has not been identified.');
         $scope.blacklist_indicatorgroups = [];
     });
-    
+
     /* For admin tab */
     jQuery.ajax({
         url: dhisUrl + 'me?fields=userGroups[name]',
@@ -115,6 +120,23 @@ appModule.controller('appSharedController', ['$scope', '$translate', '$state', '
         }
     }).fail(function() {
         console.log('appModule: Failed to check if user is authorised to administrate.');
+    });
+
+    /* For dossier tab */
+    jQuery.ajax({
+        url: dhisUrl + 'dataStore/HMIS_Dictionary/setup_dossierConfigComplete',
+        contentType: 'json',
+        method: 'GET',
+        dataType: 'text',
+        async: false
+    }).success(function(dossierConfigComplete) {
+        dossierConfigComplete = jQuery.parseJSON(dossierConfigComplete);
+        console.log('appModule: dossierConfigComplete: ', dossierConfigComplete);
+        if (dossierConfigComplete.value) {
+            $scope.show_dossiers = true;
+        }
+    }).fail(function() {
+        console.log('appModule: Failed to check if dossiers configuration is complete.');
     });
 
     /*
@@ -138,7 +160,7 @@ appModule.controller('appSharedController', ['$scope', '$translate', '$state', '
     };
 
     csv_to_json = function(csv) {
-        console.log(csv);
+        console.log('appModule: csv: ', csv);
         var lines = csv.split("\n");
         var result = [];
         var headers = lines[0].split(",");
@@ -194,5 +216,5 @@ appModule.controller('appSharedController', ['$scope', '$translate', '$state', '
         }
         $(".loading").hide();
     };
-    
+
 }]);

@@ -75,3 +75,13 @@ adminModule.factory('adminOUGFactory', ['$resource',
         });
     }
 ]);
+
+var qry_set_dossierConfigComplete = dhisUrl + 'dataStore/HMIS_Dictionary/setup_dossierConfigComplete';
+
+adminModule.factory('adminDossierConfigCompleteFactory', ['$resource', function($resource) {
+    return {
+        get_dossierConfigComplete_set:   $resource(qry_set_dossierConfigComplete, {}, { query: { method: 'GET', isArray: false  } }),
+        set_dossierConfigComplete:       $resource(qry_set_dossierConfigComplete, {}, { query: { method: 'POST', isArray: false  } }),
+        upd_dossierConfigComplete:       $resource(qry_set_dossierConfigComplete, {}, { query: { method: 'PUT', isArray: false  } }),
+    };
+}]);
