@@ -102,12 +102,12 @@ searchModule.controller('searchController', ['ExcelFactory', '$timeout', '$scope
     };
     $scope.cols_object_desc = {
         object_description: true,
-        object_den_description: true,
-        object_num_description: true
-    };
-    $scope.cols_object_desc_advanced = {
         object_den_ids: true,
         object_num_ids: true
+    };
+    $scope.cols_object_desc_advanced = {
+        object_den_description: true,
+        object_num_description: true
     };
     $scope.cols_objectGroup = {
         objectGroup_name: true
