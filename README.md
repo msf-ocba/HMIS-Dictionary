@@ -1,4 +1,4 @@
-#HMIS Dictionary
+# HMIS Dictionary
 (08/09/2017)
 
 The HMIS Dictionary is made to simplify user access to terminology and details associated with the data model. The application counts 4 panels:
@@ -9,7 +9,7 @@ The HMIS Dictionary is made to simplify user access to terminology and details a
 
 NB: HMIS refers to Health Information Management System
 
-##Panels
+## Panels
 
 - **DataSets**: displays the list of sections, data elements and associated category combos
 - **Search**: a search tool to access directly data elements (aggregate domain) and indicators
@@ -17,7 +17,7 @@ NB: HMIS refers to Health Information Management System
 - **Dossiers**: displays list of data sets and indicator groups by 'service'
 - **Admin**: configuration of the Dossiers panel and 'service' concept
 
-##Configuration
+## Configuration
 
 The configuration relies on the following elements that have to be defined through the Maintenance app:
 - an *organisationUnitGroupSet* that gather all the elements of the typology of services,
@@ -36,6 +36,6 @@ Some elements are still hardcoded:
 - Only *dataElements* in the aggregated domain are currently taken into account: [app/search/search.services.js#L7](https://github.com/msf-ocba/HMIS_Dictionary/blob/master/app/search/search.services.js#L7), [app/search/search.services.js#L11](https://github.com/msf-ocba/HMIS_Dictionary/blob/master/app/search/search.services.js#L11) and [app/search/search.services.js#L14](https://github.com/msf-ocba/HMIS_Dictionary/blob/master/app/search/search.services.js#L14)
 - The app is currently available in English, French, Spanish and Portuguese and uses the content of DHIS2 in these 4 languages (as available per MSF OCBA configuration): [app/app.config.js#L60](https://github.com/msf-ocba/HMIS_Dictionary/blob/master/app/app.config.js#L60), [app/dossiersEditor/dossiersEditor.controllers.js#L44](https://github.com/msf-ocba/HMIS_Dictionary/blob/master/app/dossiersEditor/dossiersEditor.controllers.js#L44) and [languages/](https://github.com/msf-ocba/HMIS_Dictionary/tree/master/languages).
   
-##Feedback
+## Feedback
 
 hmis@barcelona.msf.org
