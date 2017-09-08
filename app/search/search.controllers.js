@@ -210,7 +210,10 @@ searchModule.controller('searchController', ['ExcelFactory', '$timeout', '$scope
     };
 
     function getDataElementHtml(dataElementObject) {
-        return "<span title='" + dataElementObject.object_description  + "'>" + dataElementObject.object_name + "</span>";
+        return "<span class='tooltipcontainer'>" + dataElementObject.object_name + 
+                    "<span class='tooltiptext'>" + dataElementObject.object_description + 
+                    "</span>" + 
+            "</span>";
     } 
 
     function load_table_info() {
