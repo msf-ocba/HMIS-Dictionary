@@ -12,9 +12,9 @@ var qryProgramIndicators = dhisUrl + 'programs/:programId.json?fields=programInd
 var qryProgramIndicatorExpressions = dhisUrl + 'programIndicators/expression/description'
 var qryProgramIndicatorFilters = dhisUrl + 'programIndicators/filter/description'
 
-var qryEventReports = dhisUrl + 'eventReports.json?filter=program.id\\:eq\\::programId&fields=id,displayName,displayDescription&paging=false'
-var qryEventCharts = dhisUrl + 'eventCharts.json?filter=program.id\\:eq\\::programId&fields=id,displayName,displayDescription&paging=false'
-
+// Only public EventReports and EventCharts
+var qryEventReports = dhisUrl + 'eventReports.json?filter=program.id\\:eq\\::programId&filter=publicAccess:^like:r&fields=id,displayName,displayDescription&paging=false'
+var qryEventCharts = dhisUrl + 'eventCharts.json?filter=program.id\\:eq\\::programId&filter=publicAccess:^like:r&fields=id,displayName,displayDescription&paging=false'
 
 dossierProgramsModule.factory('dossiersProgramsFactory', ['$resource',
     function($resource) {
