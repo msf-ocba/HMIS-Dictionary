@@ -12,6 +12,9 @@ var qryProgramIndicators = dhisUrl + 'programs/:programId.json?fields=programInd
 var qryProgramIndicatorExpressions = dhisUrl + 'programIndicators/expression/description'
 var qryProgramIndicatorFilters = dhisUrl + 'programIndicators/filter/description'
 
+// Only public EventReports and EventCharts
+var qryEventReports = dhisUrl + 'eventReports.json?filter=program.id\\:eq\\::programId&filter=publicAccess\\:^like\\:r&fields=id,displayName,displayDescription&paging=false'
+var qryEventCharts = dhisUrl + 'eventCharts.json?filter=program.id\\:eq\\::programId&filter=publicAccess\\:^like\\:r&fields=id,displayName,displayDescription&paging=false'
 
 dossierProgramsModule.factory('dossiersProgramsFactory', ['$resource',
     function($resource) {
@@ -70,6 +73,32 @@ dossierProgramsModule.factory('dossiersProgramFilterFactory', ['$resource',
             save: {
                 method: 'POST',
                 data: '@filter',
+                isArray: false
+            }
+        });
+    }
+]);
+
+dossierProgramsModule.factory('dossiersProgramEventReportFactory', ['$resource',
+    function($resource) {
+        return $resource(qryEventReports, {
+            programId: '@programId'
+        }, {
+            query: {
+                method: 'GET',
+                isArray: false
+            }
+        });
+    }
+]);
+
+dossierProgramsModule.factory('dossiersProgramEventChartFactory', ['$resource',
+    function($resource) {
+        return $resource(qryEventCharts, {
+            programId: '@programId'
+        }, {
+            query: {
+                method: 'GET',
                 isArray: false
             }
         });

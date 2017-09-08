@@ -98,6 +98,54 @@
 			</div>
 		</div>
 
+		<div class="col-md-12"  ng-controller="dossiersProgramAnalysisController">
+			
+			<div class="col-md-12" id="EventReportsContainer" ng-show="eventReports.length > 0"> 
+				<h3 class="EventReportsGroup" id="eventReports">{{'Event Reports' | translate}}</h3>
+				<div  class="col-md-12">
+					<p>{{'Number of Event Reports' | translate}}: {{eventReports.length}}</p>
+					<table class="table table-striped">
+						<thead>
+							<tr>
+								<th>{{'Name' | translate}}</th>
+								<th>{{'Description' | translate}}</th>
+								<th>{{'Link' | translate}}</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr ng-repeat="eventReport in  eventReports | orderBy: 'displayName'">
+								<td>{{eventReport.displayName}}</td>
+								<td>{{eventReport.displayDescription}}</td>
+								<td><a ng-href="{{eventReport.url}}" class="btn btn-info" role="button">{{'OPEN' | translate}}</a></td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+
+			<div class="col-md-12" id="EventChartsContainer" ng-show="eventCharts.length > 0">
+				<h3 class="EventChartsGroup" id="eventCharts">{{'Event Charts' | translate}}</h3>
+				<div  class="col-md-12">
+					<p>{{'Number of Event Charts' | translate}}: {{eventCharts.length}}</p>
+					<table class="table table-striped">
+						<thead>
+							<tr>
+								<th>{{'Name' | translate}}</th>
+								<th>{{'Description' | translate}}</th>
+								<th>{{'Link' | translate}}</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr ng-repeat="eventChart in  eventCharts | orderBy: 'displayName'">
+								<td>{{eventChart.displayName}}</td>
+								<td>{{eventChart.displayDescription}}</td>
+								<td><a ng-href="{{eventChart.url}}" class="btn btn-info" role="button">{{'OPEN' | translate}}</a></td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
 
 	</div>
 </div>
