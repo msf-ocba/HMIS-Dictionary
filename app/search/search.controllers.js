@@ -196,18 +196,22 @@ searchModule.controller('searchController', ['ExcelFactory', '$timeout', '$scope
             .replace(dataElementRegex, function (dataElementWithCurlyBraces) {
                 var deId = dataElementWithCurlyBraces.substr(0, dataElementWithCurlyBraces.length - 1).substr(2);
 
-                return dataElements[deId] ? dataElements[deId].object_name : deId;;
+                return dataElements[deId] ? getDataElementHtml(dataElements[deId]) : deId;
             })
             .replace(dataElementCatRegex, function (dataElementCatWithCurlyBraces) {
                 var deId = dataElementCatWithCurlyBraces.split("{")[1].split(".")[0];
                 var catId = dataElementCatWithCurlyBraces.split(".")[1].split("}")[0];
 
-                var dataElement = dataElements[deId] ? dataElements[deId].object_name : deId;
+                var dataElement = dataElements[deId] ? getDataElementHtml(dataElements[deId]) : deId;
                 var categoryOptionCombo = categoryOptionCombos[catId] ? categoryOptionCombos[catId].object_name : catId;
 
                 return dataElement + " <i>(" + categoryOptionCombo + ")</i>";
             });
     };
+
+    function getDataElementHtml(dataElementObject) {
+        return "<span title='" + dataElementObject.object_description  + "'>" + dataElementObject.object_name + "</span>";
+    } 
 
     function load_table_info() {
 
