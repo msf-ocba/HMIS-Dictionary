@@ -1,15 +1,21 @@
 #HMIS Dictionary
-(02/03/2017)
+(08/09/2017)
 
-Web application for DHIS2 (open source, medical information system developped by Oslo University - https://www.dhis2.org/) made to simplify user access the terminology associated with information collected by MSF OCBA. 
+The HMIS Dictionary is made to simplify user access to terminology and details associated with the data model. The application counts 4 panels:
+- DataSets
+- Search (limited to the aggregated domain as of 1.0.0)
+- Programs
+- Custom 'Dossiers' (with additional configuration)
+
 NB: HMIS refers to Health Information Management System
 
 ##Panels
 
-- **Dossiers**: complies names, descriptions, etc. of data elements and indicators by service as medical reference for MSF OCBA HMIS users
-- **Search**: a search tool to access directly any piece of medical reference within MSF OCBA HMIS
-- **Admin**: administration of HMIS Dictionary App
-- **Graph**: graphical visualiser of MSF OCBA HMIS data model, in development...
+- **DataSets**: displays the list of sections, data elements and associated category combos
+- **Search**: a search tool to access directly data elements (aggregate domain) and indicators
+- **Programs**: displays the list of sections, data elements with optionSets, progam indicators, event reports and event charts
+- **Dossiers**: displays list of data sets and indicator groups by 'service'
+- **Admin**: configuration of the Dossiers panel and 'service' concept
 
 ##Configuration
 
@@ -28,7 +34,7 @@ Some elements are defined at the **Admin** panel:
 Some elements are still hardcoded:
 - The search panel will not show *dataElements* or *indicators* that are not associated to a *dataSet* or an *indicatorGroup*
 - Only *dataElements* in the aggregated domain are currently taken into account: [app/search/search.services.js#L7](https://github.com/msf-ocba/HMIS_Dictionary/blob/master/app/search/search.services.js#L7), [app/search/search.services.js#L11](https://github.com/msf-ocba/HMIS_Dictionary/blob/master/app/search/search.services.js#L11) and [app/search/search.services.js#L14](https://github.com/msf-ocba/HMIS_Dictionary/blob/master/app/search/search.services.js#L14)
-- The app is currently translated in English, French, Spanish and Portuguese and uses the content of DHIS2 in these 4 languages (as available per MSF OCBA configuration): [app/app.config.js#L60](https://github.com/msf-ocba/HMIS_Dictionary/blob/master/app/app.config.js#L60), [app/dossiersEditor/dossiersEditor.controllers.js#L44](https://github.com/msf-ocba/HMIS_Dictionary/blob/master/app/dossiersEditor/dossiersEditor.controllers.js#L44) and [languages/](https://github.com/msf-ocba/HMIS_Dictionary/tree/master/languages).
+- The app is currently available in English, French, Spanish and Portuguese and uses the content of DHIS2 in these 4 languages (as available per MSF OCBA configuration): [app/app.config.js#L60](https://github.com/msf-ocba/HMIS_Dictionary/blob/master/app/app.config.js#L60), [app/dossiersEditor/dossiersEditor.controllers.js#L44](https://github.com/msf-ocba/HMIS_Dictionary/blob/master/app/dossiersEditor/dossiersEditor.controllers.js#L44) and [languages/](https://github.com/msf-ocba/HMIS_Dictionary/tree/master/languages).
   
 ##Feedback
 
