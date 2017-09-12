@@ -248,13 +248,13 @@ dossierProgramsModule.controller('dossiersProgramAnalysisController', ['$scope',
     $scope.eventReports4TOC = {   
         displayName: "Event Reports",
         id: "EventReportsContainer",
-        index: '2'
+        index: '3'
     };
 
     $scope.eventCharts4TOC = {   
         displayName: "Event Charts",
         id: "EventChartsContainer",
-        index: '3'
+        index: '4'
     };
 
     getEventReportUrl = function(eventReportId) {
