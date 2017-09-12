@@ -26,8 +26,6 @@ dossierProgramsModule.factory('dossiersProgramsFactory', ['$resource',
     }
 ]);
 
-var qryProgramStageSections = dhisUrl + 'programStages/:programStageId.json?fields=programStageSections[id,displayName,dataElements[displayName,displayFormName,displayDescription,valueType,optionSetValue,optionSet[options[displayName]]]],programStageDataElements[dataElement[displayName,displayFormName,displayDescription,valueType,optionSetValue,optionSet[options[displayName]]]]&paging=false';
-
 dossierProgramsModule.factory('dossiersProgramStageSectionsFactory', ['$resource',
     function($resource) {
         return $resource(qryProgramStageSections, {

@@ -54,7 +54,6 @@ function($scope, $q, $translate, dossiersProgramStageSectionsFactory, Ping) {
 
     $scope.$watch('selectedProgram', function() {
         ping();
-        console.log("selected " + $scope.selectedProgram)
         if ($scope.selectedProgram) {
             startLoadingState(false);
             //Query sections and data elements
@@ -90,6 +89,7 @@ function($scope, $q, $translate, dossiersProgramStageSectionsFactory, Ping) {
     }
 
     function createStageWithSections (stage, index) {
+        console.log(stage);
         var toc = {
             displayName: "Stage: " + stage.displayName,
             id: "sectionContainer-" + stage.id,
@@ -107,10 +107,10 @@ function($scope, $q, $translate, dossiersProgramStageSectionsFactory, Ping) {
 dossierProgramsModule.controller('dossiersProgramIndicatorController', ['$scope', 'dossiersProgramExpressionFactory', 'dossiersProgramFilterFactory', 'dossiersProgramIndicatorsFactory', function($scope, dossiersProgramExpressionFactory, dossiersProgramFilterFactory, dossiersProgramIndicatorsFactory) {
 
     $scope.indicators4TOC = {
-                displayName: "Program indicators",
-                id: "IndicatorGroupsContainer",
-                index: '1'
-                };
+        displayName: "Program indicators",
+        id: "IndicatorGroupsContainer",
+        index: '97'
+        };
 
     //gets the "readable" expressions for each indicator expression
     recursiveAssignExpression = function(i) {
@@ -163,7 +163,7 @@ dossierProgramsModule.controller('dossierProgramGlobalIndicatorController', ['$s
     $scope.indicators4TOC = {
         displayName: "Indicators",
         id: "indicatorContainer",
-        index: '2'
+        index: '98'
     };
 
     /*
@@ -257,13 +257,13 @@ dossierProgramsModule.controller('dossiersProgramAnalysisController', ['$scope',
     $scope.eventReports4TOC = {   
         displayName: "Event Reports",
         id: "EventReportsContainer",
-        index: '3'
+        index: '99'
     };
 
     $scope.eventCharts4TOC = {   
         displayName: "Event Charts",
         id: "EventChartsContainer",
-        index: '4'
+        index: '100'
     };
 
     getEventReportUrl = function(eventReportId) {
