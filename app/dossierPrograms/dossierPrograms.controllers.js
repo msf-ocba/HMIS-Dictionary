@@ -147,9 +147,100 @@ dossierProgramsModule.controller('dossiersProgramIndicatorController', ['$scope'
         }
     });
 
+}]);        
+
+dossierProgramsModule.controller('dossierProgramGlobalIndicatorController', ['$scope', '$translate', 'programGlobalIndicators', 'programIndicatorExpression' , 'Ping', function($scope, $translate, programGlobalIndicators, programIndicatorExpression, Ping) {
+    
+    $scope.indicators4TOC = {
+        displayName: "Indicators",
+        id: "indicatorContainer",
+        index: '2'
+    };
+
+    /*
+     *  @name recursiveAssignNumerator
+     *  @description Gets the "readable" expressions for each indicator numerator
+     *  @scope dossierProgramGlobalIndicatorController
+     */
+    recursiveAssignNumerator = function(i) {
+        if (i >= $scope.indicators.length) return;
+        programIndicatorExpression.get({
+                expression: $scope.indicators[i].numerator,
+            }, function (data) {
+                $scope.indicators[i].numerator = data.description;
+                recursiveAssignNumerator(i+1);
+            },true);
+
+    }
+
+    /*
+     *  @name recursiveAssignNumerator
+     *  @description Gets the "readable" expressions for each indicator denominator
+     *  @scope dossierProgramGlobalIndicatorController
+     */
+    recursiveAssignDenominator = function(i) {
+        if (i >= $scope.indicators.length) return;
+        programIndicatorExpression.get({
+                expression: $scope.indicators[i].denominator,
+            }, function (data) {
+                $scope.indicators[i].denominator = data.description;
+                recursiveAssignDenominator(i+1);
+            },true);
+    }
+
+    /*
+     *  @name none
+     *  @description Gets the indicator information, translates it and shows it
+     *  @dependencies programGlobalIndicators, programIndicatorExpression
+     *  @scope dossierProgramGlobalIndicatorController
+     */
+    $scope.$watch('selectedProgram', function() {
+        ping();
+        if ($scope.selectedProgram) {
+            startLoadingState(false);
+            $scope.indicators = [];
+            //Query indicator information
+            
+            $scope.allIndicators = programGlobalIndicators.get(function () {   
+                endLoadingState(true);
+                $scope.allIndicators.indicators.forEach(function(indicator) {
+                    const regex = /D{(\w+)\.?\w+?}/g;
+                    const num = indicator.numerator;
+                    const den = indicator.denominator;
+                    let m;
+                    console.log($scope.selectedProgram.id);
+                    while ((m = regex.exec(num)) !== null) {
+                        // This is necessary to avoid infinite loops with zero-width matches
+                        if (m.index === regex.lastIndex) {
+                            regex.lastIndex++;
+                        }
+                        console.log(m[1]);
+                        if (m[1] == $scope.selectedProgram.id) {
+                            if ($scope.indicators.indexOf(indicator) == -1) $scope.indicators.push(indicator);
+                            return;
+                        }
+                    }
+
+                    while ((m = regex.exec(den)) !== null) {
+                        // This is necessary to avoid infinite loops with zero-width matches
+                        if (m.index === regex.lastIndex) {
+                            regex.lastIndex++;
+                        }
+                        if (m[1] == $scope.selectedProgram.id) {
+                            if ($scope.indicators.indexOf(indicator) == -1) $scope.indicators.push(indicator);
+                            return;
+                        }
+                    }
+                }, this);
+                if ($scope.indicators.length > 0) {
+                    addtoTOC($scope.toc, null, $scope.indicators4TOC, "Indicators");
+                    recursiveAssignNumerator(0);
+                    recursiveAssignDenominator(0);
+                }
+            });
+        }
+    });
 }]);
-
-
 
 dossierProgramsModule.controller('dossiersProgramAnalysisController', ['$scope', '$q', 'dossiersProgramEventReportFactory', 'dossiersProgramEventChartFactory', 
         function($scope, $q, dossiersProgramEventReportFactory, dossiersProgramEventChartFactory) {
@@ -178,7 +269,6 @@ dossierProgramsModule.controller('dossiersProgramAnalysisController', ['$scope',
         ping();
         if ($scope.selectedProgram) {
             startLoadingState(false);
-            
             var analysisElementPromises = [
                 dossiersProgramEventReportFactory.get({programId: $scope.selectedProgram.id}).$promise,
                 dossiersProgramEventChartFactory.get({programId: $scope.selectedProgram.id}).$promise
