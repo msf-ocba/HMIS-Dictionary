@@ -248,9 +248,21 @@ datasetsModule.controller('datasetCategoryComboController', ['$scope', '$transla
                 $scope.datasetDataElements.dataSetElements.forEach(function(dataElement) {
                     $scope.allIndicators.indicators.forEach(function(indicator) {
                         const regex = /#{(\w+)\.?\w+?}/g;
-                        const str = indicator.numerator;
+                        const num = indicator.numerator;
+                        const den = indicator.denominator;
                         let m;
-                        while ((m = regex.exec(str)) !== null) {
+                        while ((m = regex.exec(num)) !== null) {
+                            // This is necessary to avoid infinite loops with zero-width matches
+                            if (m.index === regex.lastIndex) {
+                                regex.lastIndex++;
+                            }
+                            if (m[1] == dataElement.dataElement.id) {
+                                if ($scope.indicators.indexOf(indicator) == -1) $scope.indicators.push(indicator);
+                                return;
+                            }
+                        }
+
+                        while ((m = regex.exec(den)) !== null) {
                             // This is necessary to avoid infinite loops with zero-width matches
                             if (m.index === regex.lastIndex) {
                                 regex.lastIndex++;
