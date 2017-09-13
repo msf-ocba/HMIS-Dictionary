@@ -3,7 +3,7 @@
 
 	<head>
 
-		<title>HMIS Dictionary</title>
+		<title>Metadata Dictionary</title>
 
 		<!-- dependencies: jQuery -->
 		<script src="bower_components/jquery/jquery.min.js">								</script>
@@ -115,7 +115,7 @@
 					<img id="header-banner" src="assets/img/logo_banner.png" style="cursor:pointer" title="View home page" onclick="window.location.href='../../../'">
 
 					<!-- HARDCODED -->
-					<span id="header-text" style="cursor:pointer" title="View home page" onclick="window.location.href='../../../'">HMIS Dictionary</span>
+					<span id="header-text" style="cursor:pointer" title="View home page" onclick="window.location.href='../../../'">Metadata Dictionary</span>
 				</div>
 				<div class="col-xs-8">
 					<div class="col-xs-11" d2-menu>
@@ -131,12 +131,12 @@
 
 			<!-- app: lateral menu -->
 			<ul id="menu-container" class="nav nav-tabs tabs-left sideways" onclick="tabSwitch()" role="tablist" >
-		      	<li id="dossiers" class="active" role="presentation" style="margin-top:48px;"><a href="#dossiers" data-toggle="tab">{{'idx_Dossiers' | translate}}</a></li>
-				<li id="dossierPrograms" role="presentation"><a href="#dossierPrograms" data-toggle="tab">{{'Programs' | translate}}</a></li>
+		    <!--<li id="dossiers" class="active" role="presentation" style="margin-top:48px;"><a href="#dossiers" data-toggle="tab">{{'idx_Dossiers' | translate}}</a></li>-->
+				<li id="dossierPrograms" class="active" role="presentation" style="margin-top:48px;"><a href="#dossierPrograms" data-toggle="tab">{{'Programs' | translate}}</a></li>
 				<li id="datasets" role="presentation"><a href="#datasets" data-toggle="tab">{{'Data Sets' | translate}}</a></li>
-			  	<li id="search" role="presentation"><a href="#search" data-toggle="tab">{{'idx_Search' | translate}}</a></li>
-				<li id="admin" ng-show="show_admin" role="presentation"><a href="#admin" data-toggle="tab">{{'idx_Admin' | translate}}</a></li>
-		    <!--<li id="graph" role="presentation"><a href="#graph" data-toggle="tab">{{'idx_Graph' | translate}}</a></li> -->
+				<li id="search" role="presentation"><a href="#search" data-toggle="tab">{{'idx_Search' | translate}}</a></li>
+			<!--<li id="admin" ng-show="show_admin" role="presentation"><a href="#admin" data-toggle="tab">{{'idx_Admin' | translate}}</a></li>-->
+		    	<li id="graph" role="presentation"><a href="#graph" data-toggle="tab">{{'idx_Graph' | translate}}</a></li> 
 			 
 		    </ul>
 			<div id="menu-background"></div>

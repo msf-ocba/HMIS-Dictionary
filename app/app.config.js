@@ -55,10 +55,10 @@ appModule.config(['$stateProvider', '$urlRouterProvider', '$translateProvider', 
             url:'/admin',
             templateUrl: 'app/admin/admin.view.html'
         })
-        /*.state('graph', {
+        .state('graph', {
             url:'/graph',
             templateUrl: 'app/graph/graph.view.html',
-        })*/;
+        });
 
     $translateProvider.useStaticFilesLoader({
         prefix: 'languages/',
