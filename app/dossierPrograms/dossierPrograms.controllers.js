@@ -28,7 +28,6 @@ function($scope, $translate, $anchorScroll, dossiersProgramsFactory, dossiersPro
      *	@todo Take header into accounts
      */
     $scope.scrollTo = function(id) {
-        console.log(id);
         $anchorScroll.yOffset = 66;
         $anchorScroll(id);
     };
@@ -111,7 +110,7 @@ dossierProgramsModule.controller('dossiersProgramIndicatorController', ['$scope'
     $scope.indicators4TOC = {
         displayName: "Program indicators",
         id: "IndicatorGroupsContainer",
-        index: '97'
+        index: 97
         };
 
     //gets the "readable" expressions for each indicator expression
@@ -165,7 +164,7 @@ dossierProgramsModule.controller('dossierProgramGlobalIndicatorController', ['$s
     $scope.indicators4TOC = {
         displayName: "Indicators",
         id: "indicatorContainer",
-        index: '98'
+        index: 98
     };
 
     /*
@@ -259,13 +258,13 @@ dossierProgramsModule.controller('dossiersProgramAnalysisController', ['$scope',
     $scope.eventReports4TOC = {   
         displayName: "Public Event Reports",
         id: "EventReportsContainer",
-        index: '99'
+        index: 99
     };
 
     $scope.eventCharts4TOC = {   
         displayName: "Public Event Charts",
         id: "EventChartsContainer",
-        index: '100'
+        index: 100
     };
 
     getEventReportUrl = function(eventReportId) {
