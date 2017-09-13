@@ -28,6 +28,7 @@ function($scope, $translate, $anchorScroll, dossiersProgramsFactory, dossiersPro
      *	@todo Take header into accounts
      */
     $scope.scrollTo = function(id) {
+        console.log(id);
         $anchorScroll.yOffset = 66;
         $anchorScroll(id);
     };
@@ -63,38 +64,39 @@ function($scope, $q, $translate, dossiersProgramStageSectionsFactory, Ping) {
 
             $q.all(stageSectionPromises).then(function (stages) {
                 $scope.stages = stages.map(function (stage, index) {
+                    var toc = {
+                        displayName: "Stage: " + stage.displayName + (stage.repeatable ? " (Repeatable)" : ""),
+                        id: stage.id,
+                        index: index
+                    };
                     if(stage.programStageSections.length == 0) 
-                        return createStageWithoutSections(stage, index);
+                        return createStageWithoutSections(stage, toc);
                     else 
-                        return createStageWithSections(stage, index);
+                        return createStageWithSections(stage, toc);
                 });
                 endLoadingState(true);
             });
         }
     });
 
-    function createStageWithoutSections (stage, index) {
-        var resultStage = {};
-        var toc = {
+    function createStageWithoutSections (stage, toc) {
+        // Line to make it compatible with view
+        stage.programStageSections = [{
             displayName: "Data Elements",
-            id: "sectionContainer-" + stage.id,
-            index: index
-        };
-        resultStage.programStageSections =  [{displayName: "Data Elements", id:"DataElements", dataElements: stage.programStageDataElements}];
+            dataElements: stage.programStageDataElements.map(function(stageDataElement) {
+                return stageDataElement.dataElement;
+            })
+        }];
+        /** 
         for (i = 0; i < resultStage.programStageSections[0].dataElements.length; ++i) {
             resultStage.programStageSections[0].dataElements[i] = resultStage.programStageSections[0].dataElements[i].dataElement;
         }
-        addtoTOC($scope.toc, null, toc, "programs")
-        return resultStage;
+        */
+        addtoTOC($scope.toc, null, toc, "programs");
+        return stage;
     }
 
-    function createStageWithSections (stage, index) {
-        console.log(stage);
-        var toc = {
-            displayName: "Stage: " + stage.displayName,
-            id: "sectionContainer-" + stage.id,
-            index: index
-        };
+    function createStageWithSections (stage, toc) {
         addtoTOC($scope.toc, stage.programStageSections, toc, "programs");
         return stage;
     }
@@ -255,13 +257,13 @@ dossierProgramsModule.controller('dossiersProgramAnalysisController', ['$scope',
         function($scope, $q, dossiersProgramEventReportFactory, dossiersProgramEventChartFactory) {
 
     $scope.eventReports4TOC = {   
-        displayName: "Event Reports",
+        displayName: "Public Event Reports",
         id: "EventReportsContainer",
         index: '99'
     };
 
     $scope.eventCharts4TOC = {   
-        displayName: "Event Charts",
+        displayName: "Public Event Charts",
         id: "EventChartsContainer",
         index: '100'
     };
