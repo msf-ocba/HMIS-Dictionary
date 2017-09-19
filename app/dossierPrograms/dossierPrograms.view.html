@@ -39,42 +39,46 @@
 			<div ui-view></div>
 		</div>
 
-		<div id="sectionContainer"  ng-model="sectionList" ng-controller="dossiersProgramSectionController">
-			<div class="col-md-12"  ng-repeat="section in sections.programStageSections">
-				<h3 class="section" id="{{section.id}}">{{section.displayName}}</h3>
-				<p>{{'Number of Elements in Section'| translate}}: {{section.dataElements.length}}</p>
-				<table class="sectionElementsTable table table-striped">
-					<thead>
-						<tr>
-							<th>{{'dos_NameElement'| translate}}</th>
-							<th>{{'dos_FormNameElement'| translate}}</th>
-							<th>{{'dos_DescriptionElement'| translate}}</th>
-							<th>{{'DataTypeElement' | translate}}</th>
-							<th>{{'Options' | translate}}</th>
-						</tr>
-					</thead>
-					<tbody>
-						<tr ng-repeat="dataElement in section.dataElements">
-							<td>{{dataElement.displayName}}</td>
-							<td>{{dataElement.displayFormName}}</td>
-							<td>{{dataElement.displayDescription}}</td>
-							<td>{{dataElement.valueType}}</td>
-							<td><ul>
-								<li ng-repeat="option in dataElement.optionSet.options">
-								<div>{{option.displayName}}</div>
-								</li>
-								</ul>
-							</td>
-						</tr>
-					</tbody>
-				</table>
+		<div id="stageContainer" ng-controller="dossiersProgramSectionController">
+			<div class="col-md-12" ng-repeat="stage in stages | orderBy:'sortOrder'">
+				<h2 class="stage" id="{{stage.id}}">{{stage.displayName}}</h2>
+				<div class="col-md-12" ng-repeat="section in stage.programStageSections">
+					<h3 class="section" id="{{section.id}}">{{section.displayName}}</h3>
+					<p>{{'Number of Elements in Section'| translate}}: {{section.dataElements.length}}</p>
+					<table class="sectionElementsTable table table-striped">
+						<thead>
+							<tr>
+								<th>{{'dos_NameElement'| translate}}</th>
+								<th>{{'dos_FormNameElement'| translate}}</th>
+								<th>{{'dos_DescriptionElement'| translate}}</th>
+								<th>{{'DataTypeElement' | translate}}</th>
+								<th>{{'Options' | translate}}</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr ng-repeat="dataElement in section.dataElements">
+								<td>{{dataElement.displayName}}</td>
+								<td>{{dataElement.displayFormName}}</td>
+								<td>{{dataElement.displayDescription}}</td>
+								<td>{{dataElement.valueType}}</td>
+								<td>
+									<ul>
+										<li ng-repeat="option in dataElement.optionSet.options">
+											<div>{{option.displayName}}</div>
+										</li>
+									</ul>
+								</td>
+							</tr>
+						</tbody>
+					</table>
 
+				</div>
 			</div>
 		</div>
 
 
 		<div class="col-md-12"  ng-controller="dossiersProgramIndicatorController" id="IndicatorGroupsContainer" ng-show="indicators.programIndicators[0]">
-			<h3 class="indicatorGroup" id="indicators">{{'Program indicators' | translate}}</h3>
+			<h2 class="indicatorGroup" id="indicators">{{'Program indicators' | translate}}</h2>
 			<div  class="col-md-12">
 				<p>{{'Number of Indicators' | translate}}: {{indicators.programIndicators.length}}</p>
 				<table class="indicatorTable table table-striped">
@@ -130,7 +134,7 @@
 		<div class="col-md-12"  ng-controller="dossiersProgramAnalysisController">
 			
 			<div class="col-md-12" id="EventReportsContainer" ng-show="eventReports.length > 0"> 
-				<h3 class="EventReportsGroup" id="eventReports">{{'Event Reports' | translate}}</h3>
+				<h2 class="EventReportsGroup" id="eventReports">{{'Event Reports' | translate}}</h2>
 				<div  class="col-md-12">
 					<p>{{'Number of Event Reports' | translate}}: {{eventReports.length}}</p>
 					<table class="table table-striped">
@@ -153,7 +157,7 @@
 			</div>
 
 			<div class="col-md-12" id="EventChartsContainer" ng-show="eventCharts.length > 0">
-				<h3 class="EventChartsGroup" id="eventCharts">{{'Event Charts' | translate}}</h3>
+				<h2 class="EventChartsGroup" id="eventCharts">{{'Event Charts' | translate}}</h2>
 				<div  class="col-md-12">
 					<p>{{'Number of Event Charts' | translate}}: {{eventCharts.length}}</p>
 					<table class="table table-striped">

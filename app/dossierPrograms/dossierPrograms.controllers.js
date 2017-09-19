@@ -49,46 +49,56 @@ function($scope, $translate, $anchorScroll, dossiersProgramsFactory, dossiersPro
     });
 }]);
 
-dossierProgramsModule.controller('dossiersProgramSectionController', ['$scope', '$translate', 'dossiersProgramStageSectionsFactory', 'Ping',
-function($scope, $translate, dossiersProgramStageSectionsFactory, Ping) {
-
-    $scope.stages4TOC = {
-        displayName: "",
-        id: "sectionContainer",
-        index: '0'
-    };
+dossierProgramsModule.controller('dossiersProgramSectionController', ['$scope', '$q', '$translate', 'dossiersProgramStageSectionsFactory', 'Ping',
+function($scope, $q, $translate, dossiersProgramStageSectionsFactory, Ping) {
 
     $scope.$watch('selectedProgram', function() {
         ping();
         if ($scope.selectedProgram) {
             startLoadingState(false);
             //Query sections and data elements
-            $scope.sections = dossiersProgramStageSectionsFactory.get({
-                programStageId: $scope.selectedProgram.programStages[0].id
-            }, function () {
-                //if there are no sections rearrange/change TOC name
-                if ($scope.sections.programStageSections.length == 0) $scope.showProgramWithoutSections();
-                else $scope.showProgramWithSections();
-            endLoadingState(true);
-        });
+            var stageSectionPromises = $scope.selectedProgram.programStages.map(function (stage) {
+                return dossiersProgramStageSectionsFactory.get({programStageId: stage.id}).$promise;
+            });
+
+            $q.all(stageSectionPromises).then(function (stages) {
+                $scope.stages = stages.map(function (stage, index) {
+                    var toc = {
+                        displayName: "Stage: " + stage.displayName + (stage.repeatable ? " (Repeatable)" : ""),
+                        id: stage.id,
+                        index: index
+                    };
+                    if(stage.programStageSections.length == 0) 
+                        return createStageWithoutSections(stage, toc);
+                    else 
+                        return createStageWithSections(stage, toc);
+                });
+                endLoadingState(true);
+            });
         }
     });
 
-   $scope.showProgramWithoutSections = function() {
-        $scope.stages4TOC.displayName = "Data elements";
-        //line needed to reuse code of the ng-repeat on the view
-        $scope.sections.programStageSections =  [{displayName: "Data Elements", id:"DataElements", dataElements: $scope.sections.programStageDataElements}];
-        for (i = 0; i < $scope.sections.programStageSections[0].dataElements.length; ++i) {
-            $scope.sections.programStageSections[0].dataElements[i] = $scope.sections.programStageSections[0].dataElements[i].dataElement;
+    function createStageWithoutSections (stage, toc) {
+        // Line to make it compatible with view
+        stage.programStageSections = [{
+            displayName: "Data Elements",
+            dataElements: stage.programStageDataElements.map(function(stageDataElement) {
+                return stageDataElement.dataElement;
+            })
+        }];
+        /** 
+        for (i = 0; i < resultStage.programStageSections[0].dataElements.length; ++i) {
+            resultStage.programStageSections[0].dataElements[i] = resultStage.programStageSections[0].dataElements[i].dataElement;
         }
-        addtoTOC($scope.toc, null, $scope.stages4TOC, "programs");
-    };
-
-    $scope.showProgramWithSections = function() {
-        $scope.stages4TOC.displayName = "Program Sections";
-        addtoTOC($scope.toc, $scope.sections.programStageSections, $scope.stages4TOC, "programs");
+        */
+        addtoTOC($scope.toc, null, toc, "programs");
+        return stage;
     }
 
+    function createStageWithSections (stage, toc) {
+        addtoTOC($scope.toc, stage.programStageSections, toc, "programs");
+        return stage;
+    }
 
 }]);
 
@@ -98,10 +108,10 @@ function($scope, $translate, dossiersProgramStageSectionsFactory, Ping) {
 dossierProgramsModule.controller('dossiersProgramIndicatorController', ['$scope', 'dossiersProgramExpressionFactory', 'dossiersProgramFilterFactory', 'dossiersProgramIndicatorsFactory', function($scope, dossiersProgramExpressionFactory, dossiersProgramFilterFactory, dossiersProgramIndicatorsFactory) {
 
     $scope.indicators4TOC = {
-                displayName: "Program indicators",
-                id: "IndicatorGroupsContainer",
-                index: '1'
-                };
+        displayName: "Program indicators",
+        id: "IndicatorGroupsContainer",
+        index: 97
+        };
 
     //gets the "readable" expressions for each indicator expression
     recursiveAssignExpression = function(i) {
@@ -154,7 +164,7 @@ dossierProgramsModule.controller('dossierProgramGlobalIndicatorController', ['$s
     $scope.indicators4TOC = {
         displayName: "Indicators",
         id: "indicatorContainer",
-        index: '2'
+        index: 98
     };
 
     /*
@@ -246,15 +256,15 @@ dossierProgramsModule.controller('dossiersProgramAnalysisController', ['$scope',
         function($scope, $q, dossiersProgramEventReportFactory, dossiersProgramEventChartFactory) {
 
     $scope.eventReports4TOC = {   
-        displayName: "Event Reports",
+        displayName: "Public Event Reports",
         id: "EventReportsContainer",
-        index: '3'
+        index: 99
     };
 
     $scope.eventCharts4TOC = {   
-        displayName: "Event Charts",
+        displayName: "Public Event Charts",
         id: "EventChartsContainer",
-        index: '4'
+        index: 100
     };
 
     getEventReportUrl = function(eventReportId) {
