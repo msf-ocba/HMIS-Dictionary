@@ -7,7 +7,7 @@ var gulp = require('gulp');
 APP = {
   src: {
     root: ".",
-    all: "app/**/*.*",
+    all: "**/**/*.*",
   },
 };
 

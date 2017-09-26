@@ -4,7 +4,7 @@
 ------------------------------------------------------------------------------------*/
 
 var dhisroot = window.location.href.split('/api/')[0]
-var dhisUrl = dhisroot + '/api/';
+var dhisUrl = dhisroot + 'api/';
 
 var qryPing = dhisUrl + 'system/ping';
 
