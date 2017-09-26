@@ -20,7 +20,10 @@
   },
   "homepage": "https://github.com/DWB-eHealth/HMIS_Dictionary#readme",
   "devDependencies": {
-    "gulp": "^3.9.1",
-    "gulp-zip": "^4.0.0"
+    "browser-sync": "^2.18.13",
+    "gulp": "3.9.1",
+    "gulp-sync": "0.1.4",
+    "gulp-zip": "^4.0.0",
+    "http-proxy-middleware": "0.16.0"
   }
 }
