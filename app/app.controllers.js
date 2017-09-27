@@ -34,7 +34,7 @@ appModule.controller('appSharedController', ['$scope', '$translate', '$state', '
     }).fail(function() {
         console.log('appModule: Group of users authorised to administrate has not been defined yet, go to the admin panel!');
         $scope.show_admin = true;
-        window.location.href = dhisUrl + 'apps/HMIS_Dictionary/index.html#/admin';
+        window.location.href = '#/admin';
     });
     
     /* For services list */
