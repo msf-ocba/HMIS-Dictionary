@@ -112,9 +112,11 @@ appModule.controller('appSharedController', ['$scope', '$translate', '$state', '
         async: false
     }).success(function(me) {
         me = jQuery.parseJSON(me);
-        me = me.userGroups[0].name == $scope.userAdminGroup;
-        console.log('appModule: User authorised to administrate: ' + me);
-        if (me) {
+        var authUser = me.userGroups.some(function(userGroup){
+            return userGroup.name == $scope.userAdminGroup
+        });
+        if (authUser) {
+            console.log('appModule: User authorised to administrate: ' + authUser);
             $scope.show_admin = true;
         }
     }).fail(function() {
