@@ -3,17 +3,18 @@
     Please refer to the LICENSE.md and LICENSES-DEP.md for complete licenses.
 ------------------------------------------------------------------------------------*/
 
-searchModule.controller('searchController', ['ExcelFactory', '$timeout', '$scope', '$translate', 'NgTableParams', 'searchAllFactory', function(ExcelFactory, $timeout, $scope, $translate, NgTableParams, searchAllFactory) {
+searchModule.controller('searchController', ['ExcelFactory', '$timeout', '$scope', '$translate', 'NgTableParams', 'searchAllFactory', function (ExcelFactory, $timeout, $scope, $translate, NgTableParams, searchAllFactory) {
 
     $('#search').tab('show');
+    
 
     if ($scope.show_dossiers) {
         console.log("searchModule: Service set defined " + $scope.serviceSetUID);
         searchAllFactory.get_organisationUnitGroupSets.query({
             ougsUID: $scope.serviceSetUID
-        }, function(response){
+        }, function (response) {
             var temp = {};
-            response.organisationUnitGroups.forEach(function(serv) {
+            response.organisationUnitGroups.forEach(function (serv) {
                 temp[serv.code.split('_')[2]] = {
                     service_id: serv.id,
                     service_code: serv.code,
@@ -28,10 +29,10 @@ searchModule.controller('searchController', ['ExcelFactory', '$timeout', '$scope
         load_table_info();
     }
 
-    var concatObjects = function(tablesList) {
+    var concatObjects = function (tablesList) {
         var temp = [];
-        tablesList.forEach(function(table) {
-            table.a.forEach(function(elem) {
+        tablesList.forEach(function (table) {
+            table.a.forEach(function (elem) {
                 elem.type = table.t;
                 temp.push(elem);
             });
@@ -55,21 +56,21 @@ searchModule.controller('searchController', ['ExcelFactory', '$timeout', '$scope
     */
     console.log("searchModule: Blacklisted dataSets: " + $scope.blacklist_datasets);
     console.log("searchModule: Blacklisted indicatorGroups: " + $scope.blacklist_indicatorgroups);
-    var filterObjects = function(obj,type) {
-        if(type == 'dataElement'){
+    var filterObjects = function (obj, type) {
+        if (type == 'dataElement') {
             var temp = obj.dataSetElements.length > 0;
             if (temp && $scope.blacklist_datasets.length > 0) {
-                 temp = false;
-                 obj.dataSetElements.forEach(function(dse) {
+                temp = false;
+                obj.dataSetElements.forEach(function (dse) {
                     temp = temp || ($scope.blacklist_datasets.indexOf(dse.dataSet.id) == -1);
-                 });
+                });
             }
             return temp;
-        }else if (type == 'indicator') {
+        } else if (type == 'indicator') {
             var temp = obj.indicatorGroups.length > 0;
             if (temp && $scope.blacklist_indicatorgroups.length > 0) {
                 temp = false;
-                obj.indicatorGroups.forEach(function(ig) {
+                obj.indicatorGroups.forEach(function (ig) {
                     temp = temp || ($scope.blacklist_indicatorgroups.indexOf(ig.id) == -1);
                 });
             }
@@ -80,7 +81,7 @@ searchModule.controller('searchController', ['ExcelFactory', '$timeout', '$scope
     var self = this;
     self.isFiltersVisible = false;
 
-    self.applyGlobalSearch = function() {
+    self.applyGlobalSearch = function () {
         var term = self.globalSearchTerm;
         //var term_or = self.globalSearchTerm.split('||');
         var filter_content = self.tableParams.filter();
@@ -98,7 +99,8 @@ searchModule.controller('searchController', ['ExcelFactory', '$timeout', '$scope
     };
     $scope.cols_object_advanced = {
         object_id: true,
-        object_code: true
+        object_code: true,
+        object_ICD10: false
     };
     $scope.cols_object_desc = {
         object_description: true,
@@ -128,26 +130,27 @@ searchModule.controller('searchController', ['ExcelFactory', '$timeout', '$scope
 
     $scope.loaded = {
         //dataElements
-        get_dataElements:               false,
-        get_dataElementsDescriptions:   false,
-        get_dataElementsGroups:         false,
+        get_dataElements: false,
+        get_dataElementsDescriptions: false,
+        get_dataElementsGroups: false,
         //indicators
-        get_indicators:                 false,
-        get_indicatorsDescriptions:     false,
-        get_indicatorGroups:            false
+        get_indicators: false,
+        get_indicatorsDescriptions: false,
+        get_indicatorGroups: false
     };
 
     $scope.allObjects = [];
-    $scope.$watch('allObjects', function(){
+    $scope.$watch('allObjects', function () {
         //console.log('$scope.allObjects update', $scope.allObjects);
-        var loaded_array = Object.keys($scope.loaded).map(function(key) { return $scope.loaded[key]; });
-        if(loaded_array.indexOf(false) == -1){
+        var loaded_array = Object.keys($scope.loaded).map(function (key) { return $scope.loaded[key]; });
+        if (loaded_array.indexOf(false) == -1) {
             self.tableParams.settings({
                 filterOptions: { filterFilterName: "filterOR" },
                 dataset: $scope.allObjects
             });
-            if($scope.table.cols){
-                $scope.table.cols.forEach(function(col) {
+            if ($scope.table.cols) {
+                $scope.table.cols.forEach(function (col) {
+                  //  console.log(col);
                     col.code = Object.keys(col.filter())[0];
                 });
             }
@@ -158,7 +161,7 @@ searchModule.controller('searchController', ['ExcelFactory', '$timeout', '$scope
     // The next three functions are repeated from dossiers controllers!
     // numerator and denominator description is in indicator description
     // (translatation doesn't work for denom and num columns) so have be extracted
-    $scope.getNumerator = function(indicator) {
+    $scope.getNumerator = function (indicator) {
         var re = /(NUM:)(.*)(DENOM:)/;
         var result = re.exec(indicator.displayDescription);
         if (result !== null) {
@@ -166,7 +169,7 @@ searchModule.controller('searchController', ['ExcelFactory', '$timeout', '$scope
         }
     };
 
-    $scope.getDenominator = function(indicator) {
+    $scope.getDenominator = function (indicator) {
         var re = /(DENOM:)(.*)/;
         var result = re.exec(indicator.displayDescription);
         if (result !== null) {
@@ -174,7 +177,7 @@ searchModule.controller('searchController', ['ExcelFactory', '$timeout', '$scope
         }
     };
 
-    $scope.getDescription = function(indicator) {
+    $scope.getDescription = function (indicator) {
         var re = /(.*)(NUM:)/;
         var result = re.exec(indicator.displayDescription);
         if (result !== null) {
@@ -184,7 +187,7 @@ searchModule.controller('searchController', ['ExcelFactory', '$timeout', '$scope
         }
     };
 
-    $scope.parseFormula = function(formula, dataElements, categoryOptionCombos) {
+    $scope.parseFormula = function (formula, dataElements, categoryOptionCombos) {
         var operatorRegex = /}\s*[\+\-\*]\s*#/g;
         var dataElementRegex = /#\{\w*}/g;
         var dataElementCatRegex = /#\{\w*.\w*}/g;
@@ -210,11 +213,11 @@ searchModule.controller('searchController', ['ExcelFactory', '$timeout', '$scope
     };
 
     function getDataElementHtml(dataElementObject) {
-        return "<span class='tooltipcontainer'>" + dataElementObject.object_name + 
-                    "<span class='tooltiptext'>" + dataElementObject.object_description + 
-                    "</span>" + 
+        return "<span class='tooltipcontainer'>" + dataElementObject.object_name +
+            "<span class='tooltiptext'>" + dataElementObject.object_description +
+            "</span>" +
             "</span>";
-    } 
+    }
 
     function load_table_info() {
 
@@ -223,11 +226,11 @@ searchModule.controller('searchController', ['ExcelFactory', '$timeout', '$scope
         var temp = {};
         var categoryOptionCombosTemp = {};
 
-        searchAllFactory.qry_dataElementsAll.query().$promise.then(function(response){
-            response.dataElements.forEach(function(obj) {
+        searchAllFactory.qry_dataElementsAll.query().$promise.then(function (response) {
+            response.dataElements.forEach(function (obj) {
 
-                if(filterObjects(obj,"dataElement")){
-
+                if (filterObjects(obj, "dataElement")) {
+                    var attribute = "";
                     //objectGroup + service
                     var temp_arr = {
                         objectGroup_id: [],
@@ -238,16 +241,16 @@ searchModule.controller('searchController', ['ExcelFactory', '$timeout', '$scope
                         service_name: []
                     };
 
-                    obj.dataSetElements.forEach(function(grp) {
-                        if($scope.servicesList && grp.dataSet.attributeValues.length > 0 && grp.dataSet.attributeValues[0].value){
+                    obj.dataSetElements.forEach(function (grp) {
+                        if ($scope.servicesList && grp.dataSet.attributeValues.length > 0 && grp.dataSet.attributeValues[0].value) {
                             var servicesCode = grp.dataSet.attributeValues[0].value.split('_');
                             servicesCode.shift();
-                            servicesCode.forEach(function(code) {
-                                if($scope.servicesList[code]){
+                            servicesCode.forEach(function (code) {
+                                if ($scope.servicesList[code]) {
                                     temp_arr.service_id.push($scope.servicesList[code].service_id);
                                     temp_arr.service_code.push($scope.servicesList[code].service_code);
                                     temp_arr.service_name.push($scope.servicesList[code].service_name);
-                                }else{
+                                } else {
                                     console.log("searchModule: Cannot find any service with code: " + code);
                                 }
                             });
@@ -257,10 +260,26 @@ searchModule.controller('searchController', ['ExcelFactory', '$timeout', '$scope
                         temp_arr.objectGroup_name.push(grp.dataSet.displayName);
                     });
 
+
+                    if (obj.attributeValues != undefined) {
+
+                        obj.attributeValues.forEach(function (att) {
+
+                            if (att.attribute.id == "zC3TBJnSxar") {
+                                attribute = att.value;
+                                $scope.cols_object_advanced.object_ICD10 = true;
+                            } else { attribute = "" }
+
+                        });
+                    }
+
+
+
                     temp[obj.id] = {
                         object_type: 'dataElement',
                         object_id: obj.id,
                         object_code: obj.code,
+                        object_ICD10: attribute,
                         object_name: obj.displayName,
                         object_form: obj.displayFormName,
                         object_description: obj.displayDescription,
@@ -271,6 +290,8 @@ searchModule.controller('searchController', ['ExcelFactory', '$timeout', '$scope
                         service_code: temp_arr.service_code.join(', '),
                         service_name: temp_arr.service_name.join(', ')
                     };
+
+
                 }
             });
 
@@ -282,20 +303,20 @@ searchModule.controller('searchController', ['ExcelFactory', '$timeout', '$scope
 
             return "done";
 
-        }).then(function() {
-            return searchAllFactory.get_categoryOptionCombosAll.query().$promise.then(function(response){
-                response.categoryOptionCombos.forEach(function(obj) {
+        }).then(function () {
+            return searchAllFactory.get_categoryOptionCombosAll.query().$promise.then(function (response) {
+                response.categoryOptionCombos.forEach(function (obj) {
                     categoryOptionCombosTemp[obj.id] = {
                         id: obj.id,
                         object_name: obj.displayName
                     }
                 });
             });
-        }).then(function(){
-            return searchAllFactory.get_indicatorsAll.query().$promise.then(function(response){
-                response.indicators.forEach(function(obj) {
+        }).then(function () {
+            return searchAllFactory.get_indicatorsAll.query().$promise.then(function (response) {
+                response.indicators.forEach(function (obj) {
 
-                    if(filterObjects(obj,"indicator")){
+                    if (filterObjects(obj, "indicator")) {
 
                         //objectGroup + service
                         var temp_arr = {
@@ -307,16 +328,16 @@ searchModule.controller('searchController', ['ExcelFactory', '$timeout', '$scope
                             service_name: []
                         };
 
-                        obj.indicatorGroups.forEach(function(grp) {
-                            if($scope.servicesList && grp.attributeValues.length > 0 && grp.attributeValues[0].value){
+                        obj.indicatorGroups.forEach(function (grp) {
+                            if ($scope.servicesList && grp.attributeValues.length > 0 && grp.attributeValues[0].value) {
                                 var servicesCode = grp.attributeValues[0].value.split('_');
                                 servicesCode.shift();
-                                servicesCode.forEach(function(code) {
+                                servicesCode.forEach(function (code) {
                                     if ($scope.servicesList[code]) {
                                         temp_arr.service_id.push($scope.servicesList[code].service_id);
                                         temp_arr.service_code.push($scope.servicesList[code].service_code);
                                         temp_arr.service_name.push($scope.servicesList[code].service_name);
-                                    }else{
+                                    } else {
                                         console.log("searchModule: Cannot find any service with code: " + code);
                                     }
                                 });
@@ -335,7 +356,7 @@ searchModule.controller('searchController', ['ExcelFactory', '$timeout', '$scope
                             object_den_description: $scope.getDenominator(obj),
                             object_den_ids: $scope.parseFormula(obj.denominator, temp, categoryOptionCombosTemp),
                             object_num_description: $scope.getNumerator(obj),
-                            object_num_ids: $scope.parseFormula(obj.numerator,temp, categoryOptionCombosTemp),
+                            object_num_ids: $scope.parseFormula(obj.numerator, temp, categoryOptionCombosTemp),
                             object_description: $scope.getDescription(obj),
                             objectGroup_id: temp_arr.objectGroup_id.join(', '),
                             objectGroup_code: temp_arr.objectGroup_code.join(', '),
@@ -352,19 +373,19 @@ searchModule.controller('searchController', ['ExcelFactory', '$timeout', '$scope
                 $scope.loaded.get_indicators = true;
                 $scope.loaded.get_indicatorsDescriptions = true;
                 $scope.loaded.get_indicatorGroups = true;
-                $scope.allObjects = Object.keys(temp).map(function(key) { return temp[key]; });
+                $scope.allObjects = Object.keys(temp).map(function (key) { return temp[key]; });
 
                 console.log("searchModule: Indicators loaded")
 
                 return "done";
             });
-        }).then(function log(){
+        }).then(function log() {
             console.log("searchModule: Loading time of search table: " + (Date.now() - start) + " milliseconds.");
         });
     }
 
-    $scope.exportToExcel = function(tableId){ // ex: '#my-table'
-        var exportHref = ExcelFactory.tableToExcel(tableId,'hmis_table');
+    $scope.exportToExcel = function (tableId) { // ex: '#my-table'
+        var exportHref = ExcelFactory.tableToExcel(tableId, 'hmis_table');
         var a = document.createElement('a');
         a.href = exportHref;
         a.download = 'hmis_table.xls';

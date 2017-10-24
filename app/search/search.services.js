@@ -4,7 +4,7 @@
 ------------------------------------------------------------------------------------*/
 
 //dataElements - 255 KB as of 20/11/2106
-var qry_dataElements = dhisUrl + 'dataElements.json?fields=id,code,displayName,displayFormName,dataSetElements[dataSet[id]]&paging=false&filter=domainType\\:eq\\:AGGREGATE';
+var qry_dataElements = dhisUrl + 'dataElements.json?fields=id,code,attributeValues[value,attribute[id]],displayName,displayFormName,dataSetElements[dataSet[id]]&paging=false&filter=domainType\\:eq\\:AGGREGATE';
 
 
 //descriptions - 286 KB as of 20/11/2106
@@ -14,7 +14,7 @@ var qry_dataElementsDescriptions = dhisUrl + 'dataElements.json?fields=id,displa
 var qry_dataElementsGroups = dhisUrl + 'dataElements.json?fields=id,dataSetElements[dataSet[displayName,id,code,attributeValues[value]]]&paging=false&filter=domainType\\:eq\\:AGGREGATE';
 
 var qry_dataElementsAll = dhisUrl + 'dataElements.json?' +
-    'fields=id,code,displayName,displayDescription,displayFormName,dataSetElements[dataSet[displayName,id,code,attributeValues[value]]]' +
+    'fields=id,code,attributeValues[value, attribute[id]],displayName,displayDescription,displayFormName,dataSetElements[dataSet[displayName,id,code,attributeValues[value]]]' +
     '&paging=false&filter=domainType\\:eq\\:AGGREGATE';
 
 
@@ -64,7 +64,7 @@ searchModule.factory('searchAllFactory', ['$resource',function($resource) {
 }]);
 
 
-var qryAllDataElements = dhisUrl + 'dataElements.json?fields=code,displayName,id,displayFormName,displayDescription,sections[displayName,id],dataSets[displayName,id]&paging=false';
+var qryAllDataElements = dhisUrl + 'dataElements.json?fields=code,displayName,id,displayFormName,displayDescription,sections[displayName,id],dataSets[displayName,id], attributeValues[value,attribute[id]]&paging=false';
 
 searchModule.factory('searchAllDataElementsFactory', ['$resource',
     function($resource) {
@@ -92,7 +92,7 @@ searchModule.factory('searchAllIndicatorsFactory', ['$resource',
 ]);
 
 
-var qryAllDataElementsBis = dhisUrl + 'dataSets.json?fields=id,code,displayName,sections[id,displayName,dataElements[code,displayName,id,displayDescription]]&paging=false';
+var qryAllDataElementsBis = dhisUrl + 'dataSets.json?fields=id,code,attributeValues[value,attribute[id]],displayName,sections[id,displayName,dataElements[code,displayName,id,displayDescription]]&paging=false';
 //var qryAllDataElementsBis = dhisUrl + 'dataSets.json?fields=id,code,displayName,sections[id,displayName,dataElements[code,displayName,id,displayDescription]],organisationUnits[parent[parent[parent[name,id,level],name,id,level],name,id,level],name,id,level]&paging=false';
 
 searchModule.factory('searchAllDataElementsBisFactory', ['$resource',
