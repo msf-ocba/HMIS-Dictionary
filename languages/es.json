@@ -56,6 +56,7 @@
     "object_form": "Nombre en el Formulario (solo datae.)",
     "object_id": "ID",
     "object_code": "Código",
+     "object_ICD10": "ICD10",
 
     "srch_SelectColumns_objDescs": "Elementos de Datos o Indicadores - Descripciones",
     "object_description": "Descripción",

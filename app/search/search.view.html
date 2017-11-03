@@ -170,6 +170,11 @@
 			<td sortable="'object_code'" filter="{object_code:'./app/search/search.table.html'}" ng-if="false" data-title="'object_code' | translate">
 				<span ng-bind-html='object.object_code | highlight: table.globalSearchTerm:params.filter():"object_code"'></span>
 			</td>
+		
+			<td sortable="'object_ICD10'" filter="{object_ICD10:'./app/search/search.table.html'}" ng-if="false" data-title="'object_ICD10' | translate">
+				<span ng-bind-html='object.object_ICD10 | highlight: table.globalSearchTerm:params.filter():"object_ICD10"'></span>
+			</td>
+		
 			<td sortable="'object_name'" filter="{object_name:'./app/search/search.table.html'}" ng-if="true" data-title="'object_name' | translate">
 				<span ng-bind-html='object.object_name | highlight: table.globalSearchTerm:params.filter():"object_name"'></span>
 			</td>
@@ -212,6 +217,8 @@
 			<td sortable="'service_name'" filter="{service_name:'./app/search/search.table.html'}" ng-if="show_dossiers" data-title="'service_name' | translate">
 				<span ng-bind-html='object.service_name | highlight: table.globalSearchTerm:params.filter():"service_name"'></span>
 			</td>
+			
+			
 
 		</tr>
 	</table>
