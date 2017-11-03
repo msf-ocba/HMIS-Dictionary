@@ -62,11 +62,10 @@
 								<td>{{dataElement.displayDescription}}</td>
 								<td>{{dataElement.valueType}}</td>
 								<td>
-									<ul>
-										<li ng-repeat="option in dataElement.optionSet.options">
-											<div>{{option.displayName}}</div>
-										</li>
-									</ul>
+									<select ng-if="dataElement.optionSet.options" class="form-control col-md-2">
+										<option selected>See options</option>
+										<option ng-repeat="option in dataElement.optionSet.options">{{option.displayName}}</option>
+									</select>
 								</td>
 							</tr>
 						</tbody>
