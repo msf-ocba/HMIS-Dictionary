@@ -103,12 +103,6 @@
 									</div>
 								</div>
 								<div class="col-xs-3">
-									<div class="col-xs-1"></div>
-									<div class="col-xs-11">
-										<label class="checkbox" ng-repeat="col in table.cols" ng-if="cols_object_desc_advanced[col.code]">
-											<input type="checkbox" ng-model-options="{ getterSetter: true }" ng-model="col.show" /> {{col.title()}}
-										</label>
-									</div>
 								</div>
 								<div class="col-xs-3">
 									<div class="col-xs-1"></div>
@@ -185,17 +179,11 @@
 			<td sortable="'object_description'" filter="{object_description:'./app/search/search.table.html'}" ng-if="true" data-title="'object_description' | translate">
 				<span ng-bind-html='object.object_description | highlight: table.globalSearchTerm:params.filter():"object_description"'></span>
 			</td>
-			<td sortable="'object_num_ids'" filter="{object_num_ids:'./app/search/search.table.html'}" ng-if="false" data-title="'object_num_ids' | translate">
-				<span ng-bind-html='object.object_num_ids | highlight: table.globalSearchTerm:params.filter():"object_num_ids"'></span>
+			<td sortable="'object_num_formula'" filter="{object_num_formula:'./app/search/search.table.html'}" ng-if="false" data-title="'object_num_formula' | translate">
+				<span ng-bind-html='object.object_num_formula | highlight: table.globalSearchTerm:params.filter():"object_num_formula"'></span>
 			</td>
-			<td sortable="'object_num_description'" filter="{object_num_description:'./app/search/search.table.html'}" ng-if="false" data-title="'object_num_description' | translate">
-				<span ng-bind-html='object.object_num_description | highlight: table.globalSearchTerm:params.filter():"object_num_description"'></span>
-			</td>
-			<td sortable="'object_den_ids'" filter="{object_den_ids:'./app/search/search.table.html'}" ng-if="false" data-title="'object_den_ids' | translate">
-				<span ng-bind-html='object.object_den_ids | highlight: table.globalSearchTerm:params.filter():"object_den_ids"'></span>
-			</td>
-			<td sortable="'object_den_description'" filter="{object_den_description:'./app/search/search.table.html'}" ng-if="false" data-title="'object_den_description' | translate">
-				<span ng-bind-html='object.object_den_description | highlight: table.globalSearchTerm:params.filter():"object_den_description"'></span>
+			<td sortable="'object_den_formula'" filter="{object_den_formula:'./app/search/search.table.html'}" ng-if="false" data-title="'object_den_formula' | translate">
+				<span ng-bind-html='object.object_den_formula | highlight: table.globalSearchTerm:params.filter():"object_den_formula"'></span>
 			</td>
 
 			<td sortable="'objectGroup_id'" filter="{objectGroup_id:'./app/search/search.table.html'}" ng-if="false" data-title="'objectGroup_id' | translate">

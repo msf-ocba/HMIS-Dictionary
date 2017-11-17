@@ -181,35 +181,6 @@ dossiersModule.controller('dossiersIndicatorController', ['$scope', 'dossiersInd
         }
     });
 
-    // The next three functions are repeated from search controllers!
-    // numerator and denominator description is in indicator description
-    // (translatation doesn't work for denom and num columns) so have be extracted
-    $scope.getNumerator = function(indicator) {
-        var re = /(NUM:)(.*)(DENOM:)/;
-        var result = re.exec(indicator.displayDescription);
-        if (result !== null) {
-            return result.length > 1 ? result[2] : "x";
-        }
-    }
-
-    $scope.getDenominator = function(indicator) {
-        var re = /(DENOM:)(.*)/;
-        var result = re.exec(indicator.displayDescription);
-        if (result !== null) {
-            return result.length > 1 ? result[2] : "x";
-        }
-    }
-
-    $scope.getDescription = function(indicator) {
-        var re = /(.*)(NUM:)/;
-        var result = re.exec(indicator.displayDescription);
-        if (result !== null) {
-            return result[1];
-        } else {
-            return indicator.displayDescription;
-        }
-    }
-
     $scope.getIndicatorGroupNames = function(indicator) {
         var indicatorGroupNames;
 

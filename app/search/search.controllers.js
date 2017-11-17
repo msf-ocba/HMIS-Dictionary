@@ -104,12 +104,8 @@ searchModule.controller('searchController', ['ExcelFactory', '$timeout', '$scope
     };
     $scope.cols_object_desc = {
         object_description: true,
-        object_den_ids: true,
-        object_num_ids: true
-    };
-    $scope.cols_object_desc_advanced = {
-        object_den_description: true,
-        object_num_description: true
+        object_den_formula: true,
+        object_num_formula: true
     };
     $scope.cols_objectGroup = {
         objectGroup_name: true
@@ -157,35 +153,6 @@ searchModule.controller('searchController', ['ExcelFactory', '$timeout', '$scope
             endLoadingState();
         }
     });
-
-    // The next three functions are repeated from dossiers controllers!
-    // numerator and denominator description is in indicator description
-    // (translatation doesn't work for denom and num columns) so have be extracted
-    $scope.getNumerator = function (indicator) {
-        var re = /(NUM:)(.*)(DENOM:)/;
-        var result = re.exec(indicator.displayDescription);
-        if (result !== null) {
-            return result.length > 1 ? result[2] : "x";
-        }
-    };
-
-    $scope.getDenominator = function (indicator) {
-        var re = /(DENOM:)(.*)/;
-        var result = re.exec(indicator.displayDescription);
-        if (result !== null) {
-            return result.length > 1 ? result[2] : "x";
-        }
-    };
-
-    $scope.getDescription = function (indicator) {
-        var re = /(.*)(NUM:)/;
-        var result = re.exec(indicator.displayDescription);
-        if (result !== null) {
-            return result[1];
-        } else {
-            return indicator.displayDescription;
-        }
-    };
 
     $scope.parseFormula = function (formula, dataElements, categoryOptionCombos) {
         var operatorRegex = /}\s*[\+\-\*]\s*#/g;
@@ -353,11 +320,9 @@ searchModule.controller('searchController', ['ExcelFactory', '$timeout', '$scope
                             object_code: obj.code,
                             object_name: obj.displayName,
                             object_form: obj.displayFormName,
-                            object_den_description: $scope.getDenominator(obj),
-                            object_den_ids: $scope.parseFormula(obj.denominator, temp, categoryOptionCombosTemp),
-                            object_num_description: $scope.getNumerator(obj),
-                            object_num_ids: $scope.parseFormula(obj.numerator, temp, categoryOptionCombosTemp),
-                            object_description: $scope.getDescription(obj),
+                            object_den_formula: $scope.parseFormula(obj.denominator, temp, categoryOptionCombosTemp),
+                            object_num_formula: $scope.parseFormula(obj.numerator, temp, categoryOptionCombosTemp),
+                            object_description: obj.displayDescription,
                             objectGroup_id: temp_arr.objectGroup_id.join(', '),
                             objectGroup_code: temp_arr.objectGroup_code.join(', '),
                             objectGroup_name: temp_arr.objectGroup_name.join(', '),

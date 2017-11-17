@@ -109,16 +109,12 @@
 						<tr>
 							<th>{{'dos_NameIndicator' | translate}}</th>
 							<th>{{'dos_DescriptionIndicator' | translate}}</th>
-							<th>{{'dos_NumeratorIndicator' | translate}}</th>
-							<th>{{'dos_DenominatorIndicator' | translate}}</th>
 						</tr>
 					</thead>
 					<tbody>
 						<tr ng-repeat="indicator in  indicatorGroup.indicators | orderBy: 'displayName'">
 							<td>{{indicator.displayName}}</td>
-							<td>{{getDescription(indicator)}}</td>
-							<td>{{getNumerator(indicator)}}</td>
-							<td>{{getDenominator(indicator)}}</td>
+							<td>{{indicator.displayDescription}}</td>
 						</tr>
 					</tbody>
 				</table>
