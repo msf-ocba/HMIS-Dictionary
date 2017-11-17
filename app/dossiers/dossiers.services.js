@@ -21,7 +21,7 @@ dossiersModule.factory('dossiersServicesFactory', ['$resource',
 
 
 //var qryServiceDataSets = dhisUrl + 'dataSets.json?fields=id,displayName,sections[id]&paging=false&filter=attributeValues.value\\:like\\::serviceCode';
-var qryServiceDataSets = dhisUrl + 'dataSets.json?fields=id,displayName,sections[id]&paging=false&filter=attributeValues.value\\:$like\\::serviceCode1&filter=attributeValues.value\\:like\\::serviceCode2&rootJunction=OR';
+var qryServiceDataSets = dhisUrl + 'dataSets.json?fields=id,displayName,sections[id]&paging=false&filter=attributeValues.value\\:like$\\::serviceCode1&filter=attributeValues.value\\:like\\::serviceCode2&rootJunction=OR';
 
 
 dossiersModule.factory('dossiersServiceDataSetsFactory', ['$resource',
@@ -57,7 +57,7 @@ dossiersModule.factory('dossiersDossierFactory', ['$resource',
 
 
 //var qryServiceIndicatorGrps = dhisUrl + 'indicatorGroups.json?fields=id,displayName&paging=false&filter=attributeValues.value\\:like\\::serviceCode';
-var qryServiceIndicatorGrps = dhisUrl + 'indicatorGroups.json?fields=id,displayName&paging=false&filter=attributeValues.value\\:$like\\::serviceCode1&filter=attributeValues.value\\:like\\::serviceCode2&rootJunction=OR';
+var qryServiceIndicatorGrps = dhisUrl + 'indicatorGroups.json?fields=id,displayName&paging=false&filter=attributeValues.value\\:like$\\::serviceCode1&filter=attributeValues.value\\:like\\::serviceCode2&rootJunction=OR';
 
 dossiersModule.factory('dossiersServiceIndicatorGrpsFactory', ['$resource',
     function($resource) {
