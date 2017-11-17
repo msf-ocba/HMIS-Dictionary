@@ -61,8 +61,8 @@
     "object_description": "Descrição",
     "object_den_description": "Denominador Descrição (ind. Somente)",
     "object_num_description": "Numerador Descrição (ind. Somente)",
-    "object_den_ids": "Fórmula Denominador (ind. Somente)",
-    "object_num_ids": "Fórmula Numerador (ind. Somente)",
+    "object_den_formula": "Fórmula Denominador (ind. Somente)",
+    "object_num_formula": "Fórmula Numerador (ind. Somente)",
 
     "srch_SelectColumns_grpBasics": "Conjuntos de Dados ou Grupos de Indicadores - Noções Básicas",
     "objectGroup_name": "Nome do Grupo",

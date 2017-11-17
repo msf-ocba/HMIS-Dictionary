@@ -104,8 +104,8 @@ searchModule.controller('searchController', ['ExcelFactory', '$timeout', '$scope
     };
     $scope.cols_object_desc = {
         object_description: true,
-        object_den_ids: true,
-        object_num_ids: true
+        object_den_formula: true,
+        object_num_formula: true
     };
     $scope.cols_objectGroup = {
         objectGroup_name: true
@@ -320,8 +320,8 @@ searchModule.controller('searchController', ['ExcelFactory', '$timeout', '$scope
                             object_code: obj.code,
                             object_name: obj.displayName,
                             object_form: obj.displayFormName,
-                            object_den_ids: $scope.parseFormula(obj.denominator, temp, categoryOptionCombosTemp),
-                            object_num_ids: $scope.parseFormula(obj.numerator, temp, categoryOptionCombosTemp),
+                            object_den_formula: $scope.parseFormula(obj.denominator, temp, categoryOptionCombosTemp),
+                            object_num_formula: $scope.parseFormula(obj.numerator, temp, categoryOptionCombosTemp),
                             object_description: obj.displayDescription,
                             objectGroup_id: temp_arr.objectGroup_id.join(', '),
                             objectGroup_code: temp_arr.objectGroup_code.join(', '),
