@@ -45,7 +45,7 @@ gulp.task(TASKS.serve, function() {
 
 gulp.task(TASKS.pack, function() {
   return gulp.src(['./**/*', '!doc/**', '!doc'])
-    .pipe(zip('HMIS_Dictionary.zip'))
+    .pipe(zip('ca-his-dictionary.zip'))
     .pipe(gulp.dest('target'));
 });
 
