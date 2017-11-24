@@ -1,7 +1,7 @@
 {
 	"version":"1.0.1",
-	"name":"HMIS Dictionary",
-	"description":"HMIS Dictionary",
+	"name":"HIS Dictionary",
+	"description":"HIS Dictionary",
 	"launch_path":"index.html",
 	"icons":{"16":null,
 	"48":"assets/img/Logo_48.png",
