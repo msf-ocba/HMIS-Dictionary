@@ -44,7 +44,7 @@ gulp.task(TASKS.serve, function() {
 });
 
 gulp.task(TASKS.pack, function() {
-  return gulp.src(['./**/*', '!doc/**', '!doc'])
+  return gulp.src(['./**/*', '!doc/**', '!doc','!target/**'])
     .pipe(zip('ca-his-dictionary.zip'))
     .pipe(gulp.dest('target'));
 });
