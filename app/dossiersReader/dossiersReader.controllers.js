@@ -11,7 +11,7 @@ dossiersReaderModule.controller('dossiersReaderMainController', ['$scope', '$sce
     };
 
     var me = dossiersReaderMeFactory.get({},function() {
-        $scope.autho = me.userGroups[0].name == $scope.userAdminGroup;
+        $scope.autho = $scope.show_admin;
         console.log('dossiersReader: User authorised to edit: ' + $scope.autho);
     });
 
