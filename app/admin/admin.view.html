@@ -3,7 +3,7 @@
     Please refer to the LICENSE.md and LICENSES-DEP.md for complete licenses.
  - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
 
- <div ng-controller="adminMainController" class="row">
+ <div ng-controller="adminMainController" ng-show="ADMIN_FEATURE_TOGGLE" ng-show="show_admin" class="row">
      
      <div id="headerPanel" class="col-md-12 headerPanel row">
  		<h1>{{'idx_Admin' | translate}}</h1>
