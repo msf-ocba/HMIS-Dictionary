@@ -6,11 +6,11 @@
 <div ng-controller="dossierProgramsMainController" id="DossierPanel" class="row">
 	<div id="headerDossierPanel" class="col-md-12 headerPanel">
 		<h1>{{'Programs' | translate}}</h1>
-		<p>{{'Number of Programs' | translate}}: {{programs.programs.length}}</p>
+		<p>{{'Number of Programs' | translate}}: {{programs.length}}</p>
 		<!--<p>{{'Number of Data Elements in Program' | translate}}: {{programDataElements.programStageDataElements.length}}</p>
 		<p>{{'Number of Indicators in Program' | translate}}: {{selectedProgram.programIndicators.length}}</p>-->
 		<div class="col-md-12">
-			<select class="col-md-2" ng-options="program.displayName for program in programs.programs | orderBy: 'displayName'" name="selectProgram" id="drpBoxServices" ng-model="selectedProgram">
+			<select class="col-md-2" ng-options="program.displayName for program in programs | orderBy: 'displayName'" name="selectProgram" id="drpBoxServices" ng-model="selectedProgram">
 				<option value="" disabled selected>Select a program</option>
 			</select>
 		</div>

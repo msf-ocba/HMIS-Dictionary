@@ -5,6 +5,8 @@
 
 var qryPrograms = dhisUrl + 'programs.json?fields=id,displayName,programStages[id]&paging=false';
 
+var qryProgramStages = dhisUrl + 'programs/:programId.json?fields=programStages[id]&paging=false';
+
 var qryProgramStageSections = dhisUrl + 'programStages/:programStageId.json?fields=programStageSections[id,displayName,programStageDataElements[dataElement[displayName,displayFormName,displayDescription,valueType,optionSetValue,optionSet[options[displayName]]]]],programStageDataElements[dataElement[displayName,displayFormName,displayDescription,valueType,optionSetValue,optionSet[options[displayName]]]&paging=false';
 
 var qryProgramIndicators = dhisUrl + 'programs/:programId.json?fields=programIndicators[displayName,displayDescription,expression,filter]';
@@ -70,6 +72,19 @@ dossierProgramsModule.factory('dossiersProgramFilterFactory', ['$resource',
             save: {
                 method: 'POST',
                 data: '@filter',
+                isArray: false
+            }
+        });
+    }
+]);
+
+dossierProgramsModule.factory('dossiersProgramStageFactory', ['$resource',
+    function($resource) {
+        return $resource(qryProgramStages,{
+            programId: '@programId'
+        },{
+            query: {
+                method: 'GET',
                 isArray: false
             }
         });

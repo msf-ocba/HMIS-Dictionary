@@ -3,10 +3,10 @@
     Please refer to the LICENSE.md and LICENSES-DEP.md for complete licenses.
 ------------------------------------------------------------------------------------*/
 
-dossierProgramsModule.controller('dossierProgramsMainController', ['$scope', '$translate', '$anchorScroll', 'dossiersProgramsFactory', 'dossiersProgramStageSectionsFactory', 'dossiersProgramIndicatorsFactory', 'dossiersProgramExpressionFactory',
-function($scope, $translate, $anchorScroll, dossiersProgramsFactory, dossiersProgramStageSectionsFactory, dossiersProgramIndicatorsFactory, dossiersProgramExpressionFactory) {
+dossierProgramsModule.controller('dossierProgramsMainController', ['$scope', '$translate', '$anchorScroll', 'dossiersProgramsFactory','dossiersProgramStageSectionsFactory', 'dossiersProgramIndicatorsFactory', 'dossiersProgramExpressionFactory','currentUserOrganisationUnitsFactory',
+function($scope, $translate, $anchorScroll, dossiersProgramsFactory,dossiersProgramStageSectionsFactory, dossiersProgramIndicatorsFactory, dossiersProgramExpressionFactory,currentUserOrganisationUnitsFactory) {
     $('#dossiersPrograms').tab('show');
-
+  
     /*
      * 	@alias appModule.controller~addtoTOC
      * 	@type {Function}
@@ -36,9 +36,25 @@ function($scope, $translate, $anchorScroll, dossiersProgramsFactory, dossiersPro
     //indicatorGroups = indicators
     //Datasets = dataElements
     startLoadingState(false);
-    $scope.programs = dossiersProgramsFactory.get(function() {
-        endLoadingState(false);
-    });
+    // $scope.programs = dossiersProgramsFactory.get(function() {
+    //     endLoadingState(false);
+    // });
+
+  var removeEmptyAndDuplicateTemplates = function(templates) {
+    return _(templates)
+      .filter(_.negate(_.isEmpty))
+      .uniqBy('id')
+      .value();
+  };
+
+  currentUserOrganisationUnitsFactory.query(function(response) {
+    var dataSets = _(response)
+      .map('programs')
+      .flatten()
+      .value();
+    $scope.programs =  removeEmptyAndDuplicateTemplates(dataSets);
+    endLoadingState(true);
+  });
 
     //Clear the TOC
     $scope.$watch('selectedProgram', function() {
@@ -49,8 +65,8 @@ function($scope, $translate, $anchorScroll, dossiersProgramsFactory, dossiersPro
     });
 }]);
 
-dossierProgramsModule.controller('dossiersProgramSectionController', ['$scope', '$translate', 'dossiersProgramStageSectionsFactory', 'Ping', 
-function($scope, $translate, dossiersProgramStageSectionsFactory, Ping) {
+dossierProgramsModule.controller('dossiersProgramSectionController', ['$scope', '$translate','dossiersProgramStageFactory','dossiersProgramStageSectionsFactory', 'Ping', 
+function($scope, $translate,dossiersProgramStageFactory,dossiersProgramStageSectionsFactory, Ping) {
 
     $scope.stages4TOC = {
         displayName: "",
@@ -63,14 +79,18 @@ function($scope, $translate, dossiersProgramStageSectionsFactory, Ping) {
         if ($scope.selectedProgram) {
             startLoadingState(false);
             //Query sections and data elements
-            $scope.sections = dossiersProgramStageSectionsFactory.get({
-                programStageId: $scope.selectedProgram.programStages[0].id
+          dossiersProgramStageFactory.query({
+              programId: $scope.selectedProgram.id
+            },function(response) {
+              $scope.sections = dossiersProgramStageSectionsFactory.get({
+                programStageId: response.programStages[0].id
             }, function () {
                 //if there are no sections rearrange/change TOC name
                 if ($scope.sections.programStageSections.length == 0) $scope.showProgramWithoutSections();    
                 else $scope.showProgramWithSections();            
             endLoadingState(true);
-        });
+            });
+            });
         }
     });
 
@@ -130,7 +150,7 @@ dossierProgramsModule.controller('dossiersProgramIndicatorController', ['$scope'
                             recursiveAssignFilter(i+1);
                         });
 
-    }
+    };
 
     $scope.$watch('selectedProgram', function() {
         ping();

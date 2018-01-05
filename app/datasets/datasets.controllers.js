@@ -7,8 +7,8 @@
  *  @name datasetsMainController
  *  @description Clears the table of content when a data set is selected and adds the scrollto function
  */
-datasetsModule.controller('datasetsMainController', ['$scope', '$translate', '$anchorScroll', 'datasetsFactory', 'datasetsDataelementsFactory',
-function($scope, $translate, $anchorScroll, datasetsFactory, datasetsDataelementsFactory) {
+datasetsModule.controller('datasetsMainController', ['$scope', '$translate', '$anchorScroll', 'datasetsFactory', 'datasetsDataelementsFactory','currentUserOrganisationUnitsFactory',
+function($scope, $translate, $anchorScroll, datasetsFactory, datasetsDataelementsFactory,currentUserOrganisationUnitsFactory) {
     $('#datasets').tab('show');
     
     /*
@@ -47,9 +47,22 @@ function($scope, $translate, $anchorScroll, datasetsFactory, datasetsDataelement
      *  @dependencies datasetsFactory
      *  @scope datasetsMainController
      */
-    $scope.datasets = datasetsFactory.get(function() {
-        endLoadingState(true);
-    });
+
+    var removeEmptyAndDuplicateTemplates = function(templates) {
+        return _(templates)
+          .filter(_.negate(_.isEmpty))
+          .uniqBy('id')
+          .value();
+    };
+    
+   currentUserOrganisationUnitsFactory.query(function(response) {
+       var dataSets = _(response)
+                        .map('dataSets')
+                        .flatten()
+                        .value();
+       $scope.datasets =  removeEmptyAndDuplicateTemplates(dataSets);
+       endLoadingState(true);
+   });
 
     $scope.datasetDataElements = {};
 
