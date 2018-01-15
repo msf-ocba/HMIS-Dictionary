@@ -5,6 +5,8 @@
     "idx_Search": "Search",
     "idx_Graph": "Graph",
     "idx_Admin": "Admin",
+    "idx_Programs": "Programs",
+    "idx_DataSets": "Data Sets",
 
     "MODULE:ALL":       "****************************",
     "OPEN": "Open",
@@ -78,6 +80,8 @@
 
     "srch_Help": "Help",
     "srch_Help_Text": "<p>This interface is made to simplify user access the terminology associated with information collected with HMIS.<br><ul><li>Via the <b>Search</b> tab you can directly search a term in all the columns of the table. You can display column filters as well, this which allow you to search information in one specific column. Use 'Clear filters' to reset all the filters. <i>Expert users can use the key word '|' (OR) to search multiple objects.</i></li><li>Via the <b>Select Columns</b> tab you can select columns to be displayed in the table. <i>Expert users can use the advanced columns to perfom detailed researchs via IDs.</i></li></ul>You can finally export the results of your search to Excel (page by page, and do not forget to save as .xls).</p>",
-    "srch_exportToExcel": "Export this page to Excel"
+    "srch_exportToExcel": "Export this page to Excel",
 
+    "MODULE:PROGRAMS": "***************************",
+    "dos_Description of Program":"Program description"
 }

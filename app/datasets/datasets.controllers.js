@@ -47,7 +47,7 @@ function($scope, $translate, $anchorScroll, datasetsFactory, datasetsDataelement
      *  @dependencies datasetsFactory
      *  @scope datasetsMainController
      */
-    $scope.datasets = datasetsFactory.get(function() {
+    $scope.datasets = datasetsFactory.get({blackList: $scope.blacklist_datasets}, function() {
         endLoadingState(true);
     });
 

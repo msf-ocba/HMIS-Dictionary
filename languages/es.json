@@ -5,6 +5,8 @@
     "idx_Search": "Busqueda",
     "idx_Graph": "Grafico",
     "idx_Admin": "Admin",
+    "idx_Programs": "Programas",
+    "idx_DataSets": "Set de datos",
 
     "MODULE:ALL":       "****************************",
     "OPEN": "Abrir",
@@ -77,6 +79,8 @@
 
     "srch_Help": "Ayuda",
     "srch_Help_Text": "<p>Ésta interfaz permite simplificar el acceso del usuario a la terminología asociada con la información recopilada con HMIS. <ul> <li> Mediante la pestaña <b>Buscar</b> puede buscar directamente un término en todas las columnas de la tabla. También puede mostrar filtros de columna, lo que le permite buscar información en una columna específica. Utilice 'Reiniciar filtros' para reiniciar todos los filtros. <i>Los usuarios expertos pueden usar la palabra clave '|' (OR) para buscar múltiples objetos.</i> </li> <li> A través de la pestaña <b>Seleccionar columnas</b> puede seleccionar las columnas que se mostrarán en la tabla. <i>Los usuarios expertos pueden utilizar las columnas avanzadas para realizar investigaciones detalladas a través los IDs.</i> </ li> </ ul>Finalmente puede exportar los resultados de su búsqueda a Excel (página por página, y no olvide guardar como .xls).</p>",
-    "srch_exportToExcel": "Exportar esta página a Excel"
+    "srch_exportToExcel": "Exportar esta página a Excel",
 
+    "MODULE:PROGRAMS": "***************************",
+    "dos_Description of Program":"Descripción del programa"
 }

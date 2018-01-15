@@ -2,7 +2,7 @@
     List of contributors: https://github.com/MSFOCBA
     Please refer to the LICENSE.md and LICENSES-DEP.md for complete licenses.
 ------------------------------------------------------------------------------------*/
-var qryPrograms = dhisUrl + 'programs.json?fields=id,displayName,programStages[id]&paging=false';
+var qryPrograms = dhisUrl + 'programs.json?fields=id,displayName,displayDescription,programStages[id]&paging=false';
 
 var qryProgramStageSections = dhisUrl + 'programStages/:programStageId.json?fields=id,displayName,repeatable,sortOrder,programStageSections[id,displayName,dataElements[displayName,displayFormName,displayDescription,valueType,optionSetValue,optionSet[options[displayName]]]],programStageDataElements[dataElement[displayName,displayFormName,displayDescription,valueType,optionSetValue,optionSet[options[displayName]]]]&paging=false';
 
