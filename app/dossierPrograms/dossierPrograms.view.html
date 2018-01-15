@@ -16,16 +16,20 @@
 		</div>
 	</div>
 
-	<div class="col-md-12">
+	<div class="col-md-12" ng-if="selectedProgram">
 
-		<div id="DossierTitleContainer" ng-if="selectedProgram" class="row">
+		<div id="DossierTitleContainer" class="row">
 			<br>
 			<h1>{{selectedProgram.displayName}}</h1>
 		</div>
 		<br>
 
 		<div id="tocContainer" class="row">
-			<h3 ng-if="selectedProgram" style="text-decoration: underline;">{{'dos_Table of Content'| translate}}</h3>
+			<h3 style="text-decoration: underline;">{{'dos_Table of Content'| translate}}</h3>
+			<ul ng-if="selectedProgram.displayDescription">
+				<li><big><b><a href="" class="pageref" ng-click='scrollTo("DossierTextTitleContainer",22)'>{{'dos_Description of Service' | translate}}</a></b></big>
+				</li>
+			</ul>
 			<ul ng-repeat="i in toc.entries | orderBy:'parent.index'">
 				<li><big><b><a href="" class="pageref" ng-click="scrollTo(i.parent.id)" target="_self">{{i.parent.displayName}}</a></b></big>
 					<ul ng-repeat="j in i.children">
@@ -35,8 +39,10 @@
 			</ul>
 		</div>
 
-		<div id="DossierTextContainer" ng-if="selectedService">
-			<div ui-view></div>
+		<div id="DossierTextTitleContainer" ng-if="selectedProgram.displayDescription" class="row headerGroup">
+			<br>
+			<h1>{{'dos_Description of Program' | translate}}</h1>
+			<div ng-bind-html="trustAsHtml(selectedProgram.displayDescription)"></div>
 		</div>
 
 		<div id="stageContainer" ng-controller="dossiersProgramSectionController">

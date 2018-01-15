@@ -3,8 +3,8 @@
     Please refer to the LICENSE.md and LICENSES-DEP.md for complete licenses.
 ------------------------------------------------------------------------------------*/
 
-dossierProgramsModule.controller('dossierProgramsMainController', ['$scope', '$translate', '$anchorScroll', 'dossiersProgramsFactory', 'dossiersProgramStageSectionsFactory', 'dossiersProgramIndicatorsFactory', 'dossiersProgramExpressionFactory',
-function($scope, $translate, $anchorScroll, dossiersProgramsFactory, dossiersProgramStageSectionsFactory, dossiersProgramIndicatorsFactory, dossiersProgramExpressionFactory) {
+dossierProgramsModule.controller('dossierProgramsMainController', ['$scope', '$translate', '$anchorScroll', '$sce', 'dossiersProgramsFactory', 'dossiersProgramStageSectionsFactory', 'dossiersProgramIndicatorsFactory', 'dossiersProgramExpressionFactory',
+function($scope, $translate, $anchorScroll, $sce, dossiersProgramsFactory, dossiersProgramStageSectionsFactory, dossiersProgramIndicatorsFactory, dossiersProgramExpressionFactory) {
     $('#dossiersPrograms').tab('show');
 
     /*
@@ -30,6 +30,10 @@ function($scope, $translate, $anchorScroll, dossiersProgramsFactory, dossiersPro
     $scope.scrollTo = function(id) {
         $anchorScroll.yOffset = 66;
         $anchorScroll(id);
+    };
+
+    $scope.trustAsHtml = function(string) {
+        return $sce.trustAsHtml(string);
     };
 
     //service = program
