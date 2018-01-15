@@ -7,8 +7,8 @@
 	<div id="headerDossierPanel" class="col-md-12 headerPanel">
 		<h1>{{'dos_Dossiers' | translate}}</h1>
 		<p>{{'dos_Number of Services' | translate}}: {{services.organisationUnitGroups.length}}</p>
-		<p>{{'dos_Number of DataSets in Service' | translate}}: {{serviceDataSets.dataSets.length}}</p>
-		<p>{{'dos_Number of IndicatorGroups in Service' | translate}}: {{indicatorGroups.indicatorGroups.length}}</p>
+		<p>{{'dos_Number of DataSets in Service' | translate}}: {{serviceDataSets.length}}</p>
+		<p>{{'dos_Number of IndicatorGroups in Service' | translate}}: {{indicatorGroups.length}}</p>
 		<div class="col-md-2">
 			<select class="form-control col-md-2" ng-options="service.displayName for service in services.organisationUnitGroups | orderBy: 'displayName'" name="selectService" id="drpBoxServices" ng-model="selectedService">
 				<option value="" disabled selected>{{'dos_Select a service' | translate}}</option>
@@ -66,7 +66,7 @@
 			<h1>{{'dos_Data Sets' | translate}}</h1>
 		</div>
 
-		<div id="ServiceDataSetContainer" class="service" ng-repeat="selectedSet in serviceDataSets.dataSets" ng-model="selectedSet" class="row">
+		<div id="ServiceDataSetContainer" class="service" ng-repeat="selectedSet in serviceDataSets" ng-model="selectedSet" class="row">
 
 			<h2 class="dataset row" id="{{selectedSet.id}}">{{'dos_Data Set' | translate}}: {{selectedSet.displayName}}</h2>
 			<div id="sectionContainer" ng-controller="dossiersSectionController" class="row">
@@ -100,7 +100,7 @@
 			<h1>{{'dos_Indicator Groups' | translate}}</h1>
 		</div>
 
-		<div id="IndicatorGroupsContainer" ng-repeat="selectedGrp in indicatorGroups.indicatorGroups | orderBy: 'displayName'" class="row">
+		<div id="IndicatorGroupsContainer" ng-repeat="selectedGrp in indicatorGroups | orderBy: 'displayName'" class="row">
 			<h2 class="indicatorGroup" id="{{selectedGrp.id}}">{{'dos_Indicator Group' | translate}}: {{selectedGrp.displayName}}</h2>
 			<div ng-controller="dossiersIndicatorController">
 				<p>{{'dos_Number of Indicators in Group' | translate}}: {{indicatorGroup.indicators.length}}</p>

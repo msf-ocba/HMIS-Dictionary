@@ -20,16 +20,11 @@ dossiersModule.factory('dossiersServicesFactory', ['$resource',
 ]);
 
 
-//var qryServiceDataSets = dhisUrl + 'dataSets.json?fields=id,displayName,sections[id]&paging=false&filter=attributeValues.value\\:like\\::serviceCode';
-var qryServiceDataSets = dhisUrl + 'dataSets.json?fields=id,displayName,sections[id]&paging=false&filter=attributeValues.value\\:like$\\::serviceCode1&filter=attributeValues.value\\:like\\::serviceCode2&rootJunction=OR';
-
+var qryServiceDataSets = dhisUrl + 'dataSets.json?fields=id,displayName,sections[id],attributeValues&paging=false';
 
 dossiersModule.factory('dossiersServiceDataSetsFactory', ['$resource',
     function($resource) {
-        return $resource(qryServiceDataSets, {
-            serviceCode1: '@serviceCode1',
-            serviceCode2: '@serviceCode2'
-        }, {
+        return $resource(qryServiceDataSets, {}, {
             query: {
                 method: 'GET',
                 isArray: false
@@ -56,15 +51,11 @@ dossiersModule.factory('dossiersDossierFactory', ['$resource',
 ]);
 
 
-//var qryServiceIndicatorGrps = dhisUrl + 'indicatorGroups.json?fields=id,displayName&paging=false&filter=attributeValues.value\\:like\\::serviceCode';
-var qryServiceIndicatorGrps = dhisUrl + 'indicatorGroups.json?fields=id,displayName&paging=false&filter=attributeValues.value\\:like$\\::serviceCode1&filter=attributeValues.value\\:like\\::serviceCode2&rootJunction=OR';
+var qryServiceIndicatorGrps = dhisUrl + 'indicatorGroups.json?fields=id,displayName,attributeValues&paging=false';
 
 dossiersModule.factory('dossiersServiceIndicatorGrpsFactory', ['$resource',
     function($resource) {
-        return $resource(qryServiceIndicatorGrps, {
-            serviceCode1: '@serviceCode1',
-            serviceCode2: '@serviceCode2'
-        }, {
+        return $resource(qryServiceIndicatorGrps, {}, {
             query: {
                 method: 'GET',
                 isArray: false
@@ -73,7 +64,6 @@ dossiersModule.factory('dossiersServiceIndicatorGrpsFactory', ['$resource',
     }
 ]);
 
-//var qryServiceSections = dhisUrl + 'sections.json?fields=displayName,id,dataElements[id]&paging=false&filter=dataSet.id\\:eq\\::datasetId';
 var qryServiceSections = dhisUrl + 'dataSets/:datasetId.json?fields=sections[dataSet,id,displayName,dataElements[id,displayName,displayFormName,displayDescription]]';
 
 dossiersModule.factory('dossiersSectionsFactory', ['$resource',

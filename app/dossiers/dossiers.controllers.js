@@ -52,7 +52,11 @@ dossiersModule.controller('dossiersMainController', ['$scope', '$translate', '$a
         endLoadingState();
     });
 
-    $scope.serviceDataSets = {};
+    var allDataSets = dossiersServiceDataSetsFactory.get();
+    var allIndicatorGroups = dossiersServiceIndicatorGrpsFactory.get();
+
+    $scope.serviceDataSets = [];
+    $scope.indicatorGroups = [];
 
     /*
      *  @name none
@@ -73,16 +77,20 @@ dossiersModule.controller('dossiersMainController', ['$scope', '$translate', '$a
 
             startLoadingState(false);
 
+            var serviceCodeRegex = new RegExp("_" + $scope.selectedService.code.split('_')[2] + "(_|$)");
+
             // indicatorGroups
-            $scope.indicatorGroups = dossiersServiceIndicatorGrpsFactory.get({
-                serviceCode1: '_' + $scope.selectedService.code.split('_')[2],
-                serviceCode2: '_' + $scope.selectedService.code.split('_')[2] + '_'
+            $scope.indicatorGroups = allIndicatorGroups.indicatorGroups.filter(function(group) {
+                return group.attributeValues.some(function(attribute) {
+                    return serviceCodeRegex.test(attribute.value);
+                });
             });
 
             // datasets
-            $scope.serviceDataSets = dossiersServiceDataSetsFactory.get({
-                serviceCode1: '_' + $scope.selectedService.code.split('_')[2],
-                serviceCode2: '_' + $scope.selectedService.code.split('_')[2] + '_'
+            $scope.serviceDataSets = allDataSets.dataSets.filter(function(dataSet) {
+                return dataSet.attributeValues.some(function(attribute) {
+                    return serviceCodeRegex.test(attribute.value);
+                });
             });
 
             // Service description
