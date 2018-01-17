@@ -24,7 +24,7 @@ var qry_indicators = dhisUrl + 'indicators.json?fields=id,code,displayName,indic
 //indicators - 254 KB as of 20/11/2106
 var qry_indicatorsDescriptions = dhisUrl + 'indicators.json?fields=id,displayDescription,numerator,denominator,indicatorGroups&paging=false';
 
-//indicators - 80 KB as of 20/11/2106
+//indicatorsGroups - 80 KB as of 20/11/2106
 var qry_indicatorGroups = dhisUrl + 'indicators.json?fields=id,indicatorGroups[id,code,displayName,attributeValues[value]]&paging=false';
 
 var qry_indicatorsAll = dhisUrl + 'indicators.json?' +
@@ -38,6 +38,9 @@ var qry_categoryComobosAll = dhisUrl + 'categoryOptionCombos.json?' +
 
 //organisationUnitGroupSets - 231 B as of 20/11/2106
 var qry_organisationUnitGroupSets = dhisUrl + 'organisationUnitGroupSets/:ougsUID?fields=organisationUnitGroups[id,code,displayName]&paging=false';
+
+//programIndicators
+var qry_programIndicatorsAll = dhisUrl + 'programIndicators.json?fields=id,displayName&paging=false';
 
 
 searchModule.factory('searchAllFactory', ['$resource',function($resource) {
@@ -60,6 +63,9 @@ searchModule.factory('searchAllFactory', ['$resource',function($resource) {
 
         //organisationUnitGroupSet
         get_organisationUnitGroupSets:  $resource(qry_organisationUnitGroupSets,{ougsUID: '@ougsUID'}, { query: {    method: 'GET',  isArray: false  }   }),
+
+        //programIndicators
+        get_programIndicatorsAll:       $resource(qry_programIndicatorsAll,     {}, { query: {    method: 'GET',  isArray: false  }   })
     };
 }]);
 
