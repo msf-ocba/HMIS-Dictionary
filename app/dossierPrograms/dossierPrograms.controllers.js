@@ -108,7 +108,7 @@ function($scope, $q, $translate, dossiersProgramStageSectionsFactory, Ping) {
 
 
 
-
+/** 
 dossierProgramsModule.controller('dossiersProgramIndicatorController', ['$scope', 'dossiersProgramExpressionFactory', 'dossiersProgramFilterFactory', 'dossiersProgramIndicatorsFactory', function($scope, dossiersProgramExpressionFactory, dossiersProgramFilterFactory, dossiersProgramIndicatorsFactory) {
 
     $scope.indicators4TOC = {
@@ -161,7 +161,8 @@ dossierProgramsModule.controller('dossiersProgramIndicatorController', ['$scope'
         }
     });
 
-}]);        
+}]);
+*/
 
 dossierProgramsModule.controller('dossierProgramGlobalIndicatorController', ['$scope', '$translate', 'programGlobalIndicators', 'programIndicatorExpression' , 'Ping', function($scope, $translate, programGlobalIndicators, programIndicatorExpression, Ping) {
     

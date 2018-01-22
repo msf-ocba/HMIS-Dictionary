@@ -154,14 +154,16 @@ searchModule.controller('searchController', ['ExcelFactory', '$timeout', '$scope
         }
     });
 
-    $scope.parseFormula = function (formula, dataElements, categoryOptionCombos) {
-        var operatorRegex = /}\s*[\+\-\*]\s*#/g;
+    $scope.parseFormula = function (formula, dataElements, categoryOptionCombos, programIndicators) {
+        var operatorRegex = /}\s*[\+\-\*]\s*(#|I)/g;
         var dataElementRegex = /#\{\w*}/g;
         var dataElementCatRegex = /#\{\w*.\w*}/g;
+        var programIndicatorRegex = /I\{\w*}/g;
         return formula
             .replace(operatorRegex, function (nexus) {
                 var operator = nexus.split("}")[1].trim().charAt(0);
-                return "}<br><b>" + operator + "</b> #";
+                var nextItemType = nexus.charAt(nexus.length - 1);
+                return "}<br><b>" + operator + "</b> " + nextItemType;
             })
             .replace(dataElementRegex, function (dataElementWithCurlyBraces) {
                 var deId = dataElementWithCurlyBraces.substr(0, dataElementWithCurlyBraces.length - 1).substr(2);
@@ -176,6 +178,11 @@ searchModule.controller('searchController', ['ExcelFactory', '$timeout', '$scope
                 var categoryOptionCombo = categoryOptionCombos[catId] ? categoryOptionCombos[catId].object_name : catId;
 
                 return dataElement + " <i>(" + categoryOptionCombo + ")</i>";
+            })
+            .replace(programIndicatorRegex, function (programIndicatorWithCurlyBraces) {
+                var piId = programIndicatorWithCurlyBraces.substr(0, programIndicatorWithCurlyBraces.length - 1).substr(2);
+
+                return programIndicators[piId] ? getProgramIndicatorHtml(programIndicators[piId]) : piId;
             });
     };
 
@@ -186,12 +193,18 @@ searchModule.controller('searchController', ['ExcelFactory', '$timeout', '$scope
             "</span>";
     }
 
+    function getProgramIndicatorHtml(programIndicatorObject) {
+        return "<span>" + programIndicatorObject.object_name +
+            "</span>";
+    }
+
     function load_table_info() {
 
         var start = new Date();
 
         var temp = {};
         var categoryOptionCombosTemp = {};
+        var programIndicatorsTemp = {};
 
         searchAllFactory.qry_dataElementsAll.query().$promise.then(function (response) {
             response.dataElements.forEach(function (obj) {
@@ -279,6 +292,15 @@ searchModule.controller('searchController', ['ExcelFactory', '$timeout', '$scope
                     }
                 });
             });
+        }).then(function() {
+            return searchAllFactory.get_programIndicatorsAll.query().$promise.then(function (response) {
+                response.programIndicators.forEach(function (obj) {
+                    programIndicatorsTemp[obj.id] = {
+                        id: obj.id,
+                        object_name: obj.displayName
+                    }
+                });
+            });
         }).then(function () {
             return searchAllFactory.get_indicatorsAll.query().$promise.then(function (response) {
                 response.indicators.forEach(function (obj) {
@@ -320,8 +342,8 @@ searchModule.controller('searchController', ['ExcelFactory', '$timeout', '$scope
                             object_code: obj.code,
                             object_name: obj.displayName,
                             object_form: obj.displayFormName,
-                            object_den_formula: $scope.parseFormula(obj.denominator, temp, categoryOptionCombosTemp),
-                            object_num_formula: $scope.parseFormula(obj.numerator, temp, categoryOptionCombosTemp),
+                            object_den_formula: $scope.parseFormula(obj.denominator, temp, categoryOptionCombosTemp, programIndicatorsTemp),
+                            object_num_formula: $scope.parseFormula(obj.numerator, temp, categoryOptionCombosTemp, programIndicatorsTemp),
                             object_description: obj.displayDescription,
                             objectGroup_id: temp_arr.objectGroup_id.join(', '),
                             objectGroup_code: temp_arr.objectGroup_code.join(', '),
