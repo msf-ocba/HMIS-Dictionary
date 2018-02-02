@@ -3,8 +3,8 @@
     Please refer to the LICENSE.md and LICENSES-DEP.md for complete licenses.
 ------------------------------------------------------------------------------------*/
 
-dossierProgramsModule.controller('dossierProgramsMainController', ['$scope', '$translate', '$anchorScroll', 'dossiersProgramsFactory','dossiersProgramStageSectionsFactory', 'dossiersProgramIndicatorsFactory', 'dossiersProgramExpressionFactory','currentUserOrganisationUnitsFactory',
-function($scope, $translate, $anchorScroll, dossiersProgramsFactory,dossiersProgramStageSectionsFactory, dossiersProgramIndicatorsFactory, dossiersProgramExpressionFactory,currentUserOrganisationUnitsFactory) {
+dossierProgramsModule.controller('dossierProgramsMainController', ['$scope', '$translate', '$anchorScroll', 'dossiersProgramsFactory','dossiersProgramStageSectionsFactory', 'dossiersProgramIndicatorsFactory', 'dossiersProgramExpressionFactory','currentUserOrganisationUnitsFactory','Config',
+function($scope, $translate, $anchorScroll, dossiersProgramsFactory,dossiersProgramStageSectionsFactory, dossiersProgramIndicatorsFactory, dossiersProgramExpressionFactory,currentUserOrganisationUnitsFactory,Config) {
     $('#dossiersPrograms').tab('show');
   
     /*
@@ -47,14 +47,21 @@ function($scope, $translate, $anchorScroll, dossiersProgramsFactory,dossiersProg
       .value();
   };
 
-  currentUserOrganisationUnitsFactory.query(function(response) {
-    var dataSets = _(response)
-      .map('programs')
-      .flatten()
-      .value();
-    $scope.programs =  removeEmptyAndDuplicateTemplates(dataSets);
-    endLoadingState(true);
-  });
+  if(Config.showUserRelatedFormsOnly) {
+    currentUserOrganisationUnitsFactory.query(function(response) {
+      var dataSets = _(response)
+        .map('programs')
+        .flatten()
+        .value();
+      $scope.programs = removeEmptyAndDuplicateTemplates(dataSets);
+      endLoadingState(true);
+    });
+  } else {
+    dossiersProgramsFactory.get().$promise.then(function(data) {
+      $scope.programs = data.programs;
+      endLoadingState(true);
+    })
+  }
 
     //Clear the TOC
     $scope.$watch('selectedProgram', function() {

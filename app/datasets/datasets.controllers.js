@@ -7,8 +7,8 @@
  *  @name datasetsMainController
  *  @description Clears the table of content when a data set is selected and adds the scrollto function
  */
-datasetsModule.controller('datasetsMainController', ['$scope', '$translate', '$anchorScroll', 'datasetsFactory', 'datasetsDataelementsFactory','currentUserOrganisationUnitsFactory',
-function($scope, $translate, $anchorScroll, datasetsFactory, datasetsDataelementsFactory,currentUserOrganisationUnitsFactory) {
+datasetsModule.controller('datasetsMainController', ['$scope', '$translate', '$anchorScroll', 'datasetsFactory', 'datasetsDataelementsFactory','currentUserOrganisationUnitsFactory','Config',
+function($scope, $translate, $anchorScroll, datasetsFactory, datasetsDataelementsFactory,currentUserOrganisationUnitsFactory,Config) {
     $('#datasets').tab('show');
     
     /*
@@ -55,14 +55,22 @@ function($scope, $translate, $anchorScroll, datasetsFactory, datasetsDataelement
           .value();
     };
     
-   currentUserOrganisationUnitsFactory.query(function(response) {
-       var dataSets = _(response)
-                        .map('dataSets')
-                        .flatten()
-                        .value();
-       $scope.datasets =  removeEmptyAndDuplicateTemplates(dataSets);
-       endLoadingState(true);
-   });
+    //showing the datasets based on logged in user
+    if(Config.showUserRelatedFormsOnly) {
+        currentUserOrganisationUnitsFactory.query(function(response) {
+            var dataSets = _(response)
+              .map('dataSets')
+              .flatten()
+              .value();
+            $scope.datasets = removeEmptyAndDuplicateTemplates(dataSets);
+            endLoadingState(true);
+        });
+    } else {
+        datasetsFactory.get().$promise.then(function(data) {
+            $scope.datasets = data.dataSets;
+            endLoadingState(true);
+        })
+    }
 
     $scope.datasetDataElements = {};
 

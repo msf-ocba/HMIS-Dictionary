@@ -3,8 +3,8 @@ appModule.factory('Config', [function() {
 			userGroupId: 'mTJVJfBK6RB',
 			organisationGroupSetId:'QSiGnQwGi92',
 			blackListDataSetsIds:['YoJjavJ432r','wcCbcAKbP'],
-			blackListIndicatorGroupIds:[]
-			
+			blackListIndicatorGroupIds:[],
+			showUserRelatedFormsOnly:true
 		}
 	}
 ]);
