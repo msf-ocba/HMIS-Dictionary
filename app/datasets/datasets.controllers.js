@@ -55,6 +55,17 @@ function($scope, $translate, $anchorScroll, datasetsFactory, datasetsDataelement
           .value();
     };
     
+    var removeBlackListDataSets = function(templates) {
+        return _(templates) 
+          .filter(function(template) {
+              return Config.blackListDataSetsIds.indexOf(template.id) < 0;
+          })
+          .value()
+    
+    };
+
+
+    
     //showing the datasets based on logged in user
     if(Config.showUserRelatedFormsOnly) {
         currentUserOrganisationUnitsFactory.query(function(response) {
@@ -62,11 +73,11 @@ function($scope, $translate, $anchorScroll, datasetsFactory, datasetsDataelement
               .map('dataSets')
               .flatten()
               .value();
-            $scope.datasets = removeEmptyAndDuplicateTemplates(dataSets);
+            $scope.datasets = removeBlackListDataSets(removeEmptyAndDuplicateTemplates(dataSets));
             endLoadingState(true);
         });
     } else {
-        datasetsFactory.get().$promise.then(function(data) {
+        datasetsFactory.get({blackList: Config.blackListDataSetsIds}).$promise.then(function(data) {
             $scope.datasets = data.dataSets;
             endLoadingState(true);
         })

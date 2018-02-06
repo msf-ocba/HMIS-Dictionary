@@ -4,7 +4,7 @@
 ------------------------------------------------------------------------------------*/
 
 
-var qryDatasets = dhisUrl + 'dataSets.json?paging=false';
+var qryDatasets = dhisUrl + 'dataSets.json?paging=false&filter=id\\:!in\\:[:blackList]';
 
 datasetsModule.factory('datasetsFactory', ['$resource',
     function($resource) {
