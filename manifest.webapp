@@ -22,7 +22,6 @@
 	"activities": {
 		"dhis": {
 	  		"href": "*",
-			"namespace": "HMIS_Dictionary"
-		}
+			}
 	}
 }
