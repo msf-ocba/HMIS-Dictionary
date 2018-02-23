@@ -1,7 +1,7 @@
 {
-	"version":"1.0.1",
-	"name":"HIS Dictionary",
-	"description":"HIS Dictionary",
+	"version":"1.2.0",
+	"name":"HMIS Dictionary",
+	"description":"HMIS Dictionary",
 	"launch_path":"index.html",
 	"url":"https://github.com/msf-ocba/HMIS_Dictionary",
 	"icons":{
