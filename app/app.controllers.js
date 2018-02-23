@@ -167,7 +167,7 @@ appModule.controller('appSharedController', ['$scope', '$translate', '$state', '
 			});
 	};
 
-    csv_to_json = function(csv) {
+	csv_to_json = function(csv) {
 		console.log(csv);
 		var lines = csv.split("\n");
 		var result = [];
@@ -186,7 +186,7 @@ appModule.controller('appSharedController', ['$scope', '$translate', '$state', '
 		return JSON.stringify(result); //JSON
 	};
 
-    /*
+	/*
 	 * 	@alias appModule.controller~tabSwitch
 	 * 	@type {Function}
 	 * 	@description Triggers ping and startLoadingState functions
@@ -197,7 +197,7 @@ appModule.controller('appSharedController', ['$scope', '$translate', '$state', '
 		startLoadingState(true);
 	};
 
-    /*
+	/*
 	 * 	@alias appModule.controller~startLoadingState
 	 * 	@type {Function}
 	 * 	@description To make sure all emelemnts and indicators are loaded before printing
