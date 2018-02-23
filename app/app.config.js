@@ -11,9 +11,10 @@ var dossiersReaderModule = angular.module('dossiersReaderModule', []);
 var searchModule = angular.module('searchModule', ['ngTable', 'ui.bootstrap']);
 var dossiersModule = angular.module('dossiersModule', ['dossiersEditorModule','dossiersReaderModule']);
 var dossierProgramsModule = angular.module('dossierProgramsModule', []);
-var datasetsModule = angular.module('datasetsModule', [])
+var datasetsModule = angular.module('datasetsModule', []);
+var userModule = angular.module('userModule',[]);
 
-var appModule = angular.module('appModule', ['ui.router', 'd2Menu', 'ngSanitize', 'pascalprecht.translate', 'ngResource', 'dossiersModule', 'dossierProgramsModule', 'datasetsModule','searchModule', 'adminModule'/*, 'graphModule'*/]);
+var appModule = angular.module('appModule', ['ui.router', 'd2Menu', 'ngSanitize', 'pascalprecht.translate', 'ngResource', 'dossiersModule', 'dossierProgramsModule', 'datasetsModule','searchModule', 'adminModule','userModule'/*, 'graphModule'*/]);
 
 /*
  * 	@alias appModule.config

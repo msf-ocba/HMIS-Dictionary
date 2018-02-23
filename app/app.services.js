@@ -2,9 +2,15 @@
     List of contributors: https://github.com/MSFOCBA
     Please refer to the LICENSE.md and LICENSES-DEP.md for complete licenses.
 ------------------------------------------------------------------------------------*/
+var dhisUrl, dhisroot;
+if(!window.location.href.includes("api/apps")){
+    dhisUrl = "/api/";
+}
+else{
+  dhisroot  = window.location.href.split('/api/')[0]
+  dhisUrl = dhisroot + '/api/';
+}
 
-var dhisroot = window.location.href.split('/api/')[0]
-var dhisUrl = dhisroot + '/api/';
 
 var qryPing = dhisUrl + 'system/ping';
 

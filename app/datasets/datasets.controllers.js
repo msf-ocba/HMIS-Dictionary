@@ -7,8 +7,8 @@
  *  @name datasetsMainController
  *  @description Clears the table of content when a data set is selected and adds the scrollto function
  */
-datasetsModule.controller('datasetsMainController', ['$scope', '$translate', '$anchorScroll', 'datasetsFactory', 'datasetsDataelementsFactory',
-function($scope, $translate, $anchorScroll, datasetsFactory, datasetsDataelementsFactory) {
+datasetsModule.controller('datasetsMainController', ['$scope', '$translate', '$anchorScroll', 'datasetsFactory', 'datasetsDataelementsFactory','currentUserOrganisationUnitsFactory','Config',
+function($scope, $translate, $anchorScroll, datasetsFactory, datasetsDataelementsFactory,currentUserOrganisationUnitsFactory,Config) {
     $('#datasets').tab('show');
     
     /*
@@ -47,9 +47,41 @@ function($scope, $translate, $anchorScroll, datasetsFactory, datasetsDataelement
      *  @dependencies datasetsFactory
      *  @scope datasetsMainController
      */
-    $scope.datasets = datasetsFactory.get({blackList: $scope.blacklist_datasets}, function() {
-        endLoadingState(true);
-    });
+
+    var removeEmptyAndDuplicateTemplates = function(templates) {
+        return _(templates)
+          .filter(_.negate(_.isEmpty))
+          .uniqBy('id')
+          .value();
+    };
+    
+    var removeBlackListDataSets = function(templates) {
+        return _(templates) 
+          .filter(function(template) {
+              return Config.blackListDataSetsIds.indexOf(template.id) < 0;
+          })
+          .value()
+    
+    };
+
+
+    
+    //showing the datasets based on logged in user
+    if(Config.showUserRelatedFormsOnly) {
+        currentUserOrganisationUnitsFactory.query(function(response) {
+            var dataSets = _(response)
+              .map('dataSets')
+              .flatten()
+              .value();
+            $scope.datasets = removeBlackListDataSets(removeEmptyAndDuplicateTemplates(dataSets));
+            endLoadingState(true);
+        });
+    } else {
+        datasetsFactory.get({blackList: Config.blackListDataSetsIds}).$promise.then(function(data) {
+            $scope.datasets = data.dataSets;
+            endLoadingState(true);
+        })
+    }
 
     $scope.datasetDataElements = {};
 

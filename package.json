@@ -1,0 +1,29 @@
+{
+  "name": "hmis-dictionary",
+  "version": "1.0.0",
+  "description": "(02/03/2017)",
+  "main": "index.js",
+  "directories": {
+    "doc": "doc"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/DWB-eHealth/HMIS_Dictionary.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/DWB-eHealth/HMIS_Dictionary/issues"
+  },
+  "homepage": "https://github.com/DWB-eHealth/HMIS_Dictionary#readme",
+  "devDependencies": {
+    "browser-sync": "^2.18.13",
+    "gulp": "3.9.1",
+    "gulp-sync": "0.1.4",
+    "gulp-zip": "^4.0.0",
+    "http-proxy-middleware": "0.16.0"
+  }
+}

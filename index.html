@@ -23,6 +23,7 @@
 		<script src="bower_components/angular-translate-loader-static-files/angular-translate-loader-static-files.min.js"></script>
 		<script src="bower_components/angular-ui-bootstrap/ui-bootstrap-tpls-2.3.0.min.js">	</script>
 		<script src="bower_components/angular-ui-router/angular-ui-router.min.js">			</script>
+		<script src="bower_components/lodash/dist/lodash.min.js">			</script>
 
 		<!-- dependencies: graph module # currently not used -->
 	<!--<script src="bower_components/angucomplete-alt/angucomplete-alt.min.js">			</script>
@@ -36,10 +37,14 @@
 
 		<!-- app: core -->
 		<script src="app/app.config.js">													</script>
+		<!--app: config-->
+		<script src="app/config/config.js"></script>
 		<script src="app/app.services.js">													</script>
 		<script src="app/app.controllers.js">												</script>
 		<link 	href="assets/fonts/rajdhani.css"											type="text/css" rel="stylesheet">
 		<link 	href="app/app.css.css"														type="text/css" rel="stylesheet" media="all">
+
+		<script src="app/user/user.services.js"></script>
 
 		<!-- app: module-dossiers -->
 		<script src="app/dossiers/dossiers.services.js">									</script>

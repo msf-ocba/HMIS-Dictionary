@@ -7,6 +7,7 @@ adminModule.controller('adminMainController', ['$scope', '$translate', 'adminOUG
     $('#admin').tab('show');
 
     $scope.loaded = false;
+    $scope.ADMIN_FEATURE_TOGGLE = false;
     startLoadingState(false);
 
     $scope.dossierConfigComplete = {

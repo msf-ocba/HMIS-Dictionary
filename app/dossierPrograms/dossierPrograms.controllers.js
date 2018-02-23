@@ -3,10 +3,10 @@
     Please refer to the LICENSE.md and LICENSES-DEP.md for complete licenses.
 ------------------------------------------------------------------------------------*/
 
-dossierProgramsModule.controller('dossierProgramsMainController', ['$scope', '$translate', '$anchorScroll', '$sce', 'dossiersProgramsFactory', 'dossiersProgramStageSectionsFactory', 'dossiersProgramIndicatorsFactory', 'dossiersProgramExpressionFactory',
-function($scope, $translate, $anchorScroll, $sce, dossiersProgramsFactory, dossiersProgramStageSectionsFactory, dossiersProgramIndicatorsFactory, dossiersProgramExpressionFactory) {
+dossierProgramsModule.controller('dossierProgramsMainController', ['$scope', '$translate', '$anchorScroll', '$sce', 'dossiersProgramsFactory', 'dossiersProgramStageSectionsFactory', 'dossiersProgramIndicatorsFactory', 'dossiersProgramExpressionFactory', 'currentUserOrganisationUnitsFactory', 'Config',
+function($scope, $translate, $anchorScroll, $sce, dossiersProgramsFactory, dossiersProgramStageSectionsFactory, dossiersProgramIndicatorsFactory, dossiersProgramExpressionFactory, currentUserOrganisationUnitsFactory, Config) {
     $('#dossiersPrograms').tab('show');
-
+  
     /*
      * 	@alias appModule.controller~addtoTOC
      * 	@type {Function}
@@ -40,9 +40,32 @@ function($scope, $translate, $anchorScroll, $sce, dossiersProgramsFactory, dossi
     //indicatorGroups = indicators
     //Datasets = dataElements
     startLoadingState(false);
-    $scope.programs = dossiersProgramsFactory.get(function() {
-        endLoadingState(false);
+    // $scope.programs = dossiersProgramsFactory.get(function() {
+    //     endLoadingState(false);
+    // });
+
+  var removeEmptyAndDuplicateTemplates = function(templates) {
+    return _(templates)
+      .filter(_.negate(_.isEmpty))
+      .uniqBy('id')
+      .value();
+  };
+
+  if(Config.showUserRelatedFormsOnly) {
+    currentUserOrganisationUnitsFactory.query(function(response) {
+      var dataSets = _(response)
+        .map('programs')
+        .flatten()
+        .value();
+      $scope.programs = removeEmptyAndDuplicateTemplates(dataSets);
+      endLoadingState(true);
     });
+  } else {
+    dossiersProgramsFactory.get().$promise.then(function(data) {
+      $scope.programs = data.programs;
+      endLoadingState(true);
+    })
+  }
 
     //Clear the TOC
     $scope.$watch('selectedProgram', function() {
@@ -141,7 +164,7 @@ dossierProgramsModule.controller('dossiersProgramIndicatorController', ['$scope'
                             recursiveAssignFilter(i+1);
                         });
 
-    }
+    };
 
     $scope.$watch('selectedProgram', function() {
         ping();
