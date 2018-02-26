@@ -61,6 +61,7 @@ appModule.controller('appSharedController', ['$scope', '$translate', '$state', '
 		var servicelist = prepareObject(response);
 		$scope.serviceSetUID = servicelist.value;
 		if($scope.serviceSetUID) {
+            $scope.show_dossiers = true;
 			console.log('appModule: List of services taken from organisationUnitGroupSet: ' + servicelist.value);
 		} else {
 			console.log('appModule: organisationUnitGroupSet to take the list of services has not been defined yet, go to the admin panel!');
@@ -69,46 +70,23 @@ appModule.controller('appSharedController', ['$scope', '$translate', '$state', '
 		console.log('appModule: organisationUnitGroupSet to take the list of services has not been identified.');
 	});
 
-	/* For DS blacklist */
-	jQuery.ajax({
-		url: dhisUrl + '/',
-		contentType: 'json',
-		method: 'GET',
-		dataType: 'text',
-		async: false
-	}).success(function(response) {
-
-		$scope.blacklist_datasets = Config.blackListDataSetsIds;
-		if($scope.blacklist_datasets) {
-			console.log('appModule: List of blacklisted dataSets: ');
-		} else {
-			console.log('appModule: List of blacklisted dataSets has not been defined yet, go to the admin panel!');
-			$scope.blacklist_datasets = [];
-		}
-	}).fail(function() {
-		console.log('appModule: List of blacklisted dataSets has not been identified.');
-		$scope.blacklist_datasets = [];
-	});
-
+	/* For DS blacklist */	
+    $scope.blacklist_datasets = Config.blackListDataSetsIds;
+    if($scope.blacklist_datasets) {
+        console.log('appModule: List of blacklisted dataSets: ' + Config.blackListDataSetsIds);
+    } else {
+        console.log('appModule: List of blacklisted dataSets has not been defined yet, go to the admin panel!');
+        $scope.blacklist_datasets = [];
+    }
+	
 	/* For IG blacklist */
-	jQuery.ajax({
-		url: dhisUrl + '/',
-		contentType: 'json',
-		method: 'GET',
-		dataType: 'text',
-		async: false
-	}).success(function(IGlist) {
-		$scope.blacklist_indicatorgroups = Config.blackListIndicatorGroupIds;
-		if($scope.blacklist_indicatorgroups) {
-			console.log('appModule: List of blacklisted indicatorGroups: ' + $scope.blacklist_indicatorgroups);
-		} else {
-			console.log('appModule: List of blacklisted indicatorGroups has not been defined yet, go to the admin panel!');
-			$scope.blacklist_indicatorgroups = [];
-		}
-	}).fail(function() {
-		console.log('appModule: List of blacklisted indicatorGroups has not been identified.');
-		$scope.blacklist_indicatorgroups = [];
-	});
+    $scope.blacklist_indicatorgroups = Config.blackListIndicatorGroupIds;
+    if($scope.blacklist_indicatorgroups) {
+        console.log('appModule: List of blacklisted indicatorGroups: ' + $scope.blacklist_indicatorgroups);
+    } else {
+        console.log('appModule: List of blacklisted indicatorGroups has not been defined yet, go to the admin panel!');
+        $scope.blacklist_indicatorgroups = [];
+    }
 
 	/* For admin tab */
 	jQuery.ajax({
@@ -128,24 +106,6 @@ appModule.controller('appSharedController', ['$scope', '$translate', '$state', '
 	}).fail(function() {
 		console.log('appModule: Failed to check if user is authorised to administrate.');
 	});
-
-
-    /* For dossier tab */
-    jQuery.ajax({
-        url: dhisUrl + 'dataStore/HMIS_Dictionary/setup_dossierConfigComplete',
-        contentType: 'json',
-        method: 'GET',
-        dataType: 'text',
-        async: false
-    }).success(function(dossierConfigComplete) {
-        dossierConfigComplete = jQuery.parseJSON(dossierConfigComplete);
-        console.log('appModule: dossierConfigComplete: ', dossierConfigComplete);
-        if (dossierConfigComplete.value) {
-            $scope.show_dossiers = true;
-        }
-    }).fail(function() {
-        console.log('appModule: Failed to check if dossiers configuration is complete.');
-    });
 
     /*
 	 * 	@alias appModule.controller~ping
