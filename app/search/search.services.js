@@ -40,7 +40,7 @@ var qry_categoryComobosAll = dhisUrl + 'categoryOptionCombos.json?' +
 var qry_organisationUnitGroupSets = dhisUrl + 'organisationUnitGroupSets/:ougsUID?fields=organisationUnitGroups[id,code,displayName]&paging=false';
 
 //programIndicators
-var qry_programIndicatorsAll = dhisUrl + 'programIndicators.json?fields=id,displayName&paging=false';
+var qry_programIndicatorsAll = dhisUrl + 'programIndicators.json?fields=id,displayName, description&paging=false';
 
 
 searchModule.factory('searchAllFactory', ['$resource',function($resource) {

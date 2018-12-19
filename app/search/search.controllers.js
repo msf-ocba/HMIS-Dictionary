@@ -194,7 +194,9 @@ searchModule.controller('searchController', ['ExcelFactory', '$timeout', '$scope
     }
 
     function getProgramIndicatorHtml(programIndicatorObject) {
-        return "<span>" + programIndicatorObject.object_name +
+        return "<span class='tooltipcontainer'>" + programIndicatorObject.object_name +
+        "<span class='tooltiptext'>" + programIndicatorObject.object_description +
+        "</span>" +
             "</span>";
     }
 
@@ -297,7 +299,8 @@ searchModule.controller('searchController', ['ExcelFactory', '$timeout', '$scope
                 response.programIndicators.forEach(function (obj) {
                     programIndicatorsTemp[obj.id] = {
                         id: obj.id,
-                        object_name: obj.displayName
+                        object_name: obj.displayName,
+                        object_description: obj.description
                     }
                 });
             });
